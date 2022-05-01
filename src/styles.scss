@@ -1,4 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+// default variables
+:root {
+  // colors
+  --primary-blue: #4c6fff;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  // dimensions
+  --big-button-width: "200px";
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.row {
+  display: flex;
+}
+
+.icon-scope {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.big-button {
+  width: 200px;
+}

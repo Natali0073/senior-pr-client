@@ -8,7 +8,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-
+import { material } from '../shared/material';
 
 @NgModule({
   declarations: [
@@ -17,11 +17,7 @@ import { MatTableModule } from '@angular/material/table';
   imports: [
     CommonModule,
     UsersRoutingModule,
-    MatButtonModule,
-    MatTableModule,
-    MatGridListModule,
-    MatIconModule,
-    MatDialogModule
+    ...material
   ]
 })
 export class UsersModule { }
