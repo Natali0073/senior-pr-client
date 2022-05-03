@@ -1,20 +1,16 @@
 import { FormGroup } from "@angular/forms";
 
-export const checkFieldValid = (form: FormGroup, fieldName: string) => {
-  return (form.get(fieldName)?.invalid &&
-    form.get(fieldName)?.touched) ||
-    form.get(fieldName)?.dirty;
-}
+export const checkFieldValid = (field: any) => (field?.invalid && field?.touched) || field?.dirty;
 
-export const formErrorMessage = (form: FormGroup, fieldName: string) => {
+export const formErrorMessage = (field: any) => {
   let message = 'Field is required';
 
   switch (true) {
-    case form.get(fieldName)?.errors?.email:
+    case field?.errors?.email:
       message = 'Email is invalid';
       break;
 
-    case form.get(fieldName)?.errors?.required:
+    case field?.errors?.required:
       message = 'Field is required';
       break;
 

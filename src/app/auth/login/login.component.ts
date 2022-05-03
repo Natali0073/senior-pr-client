@@ -24,11 +24,11 @@ export class LoginComponent {
   }
 
   checkValid(fieldName: string) {
-    return checkFieldValid(this.loginForm, fieldName);
+    return checkFieldValid(this.loginForm.get(fieldName));
   }
 
   getErrorMessage(fieldName: string) {
-    return formErrorMessage(this.loginForm, fieldName);
+    return formErrorMessage(this.loginForm.get(fieldName));
   }
 
   onSubmit() {
