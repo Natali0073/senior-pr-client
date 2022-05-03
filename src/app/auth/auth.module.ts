@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { material } from '../shared/material';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { material } from '../shared/material';
   ],
   declarations: [
     LoginComponent,
+    ForgotPasswordComponent,
   ]
 })
 export class AuthModule {}
