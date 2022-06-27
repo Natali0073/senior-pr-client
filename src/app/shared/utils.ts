@@ -1,5 +1,3 @@
-import { FormGroup } from "@angular/forms";
-
 export const checkFieldValid = (field: any) => (field?.invalid && field?.touched) || field?.dirty;
 
 export const formErrorMessage = (field: any) => {
@@ -12,6 +10,10 @@ export const formErrorMessage = (field: any) => {
 
     case field?.errors?.required:
       message = 'Field is required';
+      break;
+
+    case field?.errors?.passwordStrength:
+      message = `Password must include upper case character, number. Min 8 symbols.`;
       break;
 
     default:

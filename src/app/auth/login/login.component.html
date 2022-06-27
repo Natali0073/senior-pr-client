@@ -1,32 +1,40 @@
 <div class="login-block">
   <img src="../../../assets/login.png" alt="Login">
-  <div class="login-block__form">
-    <div class="row">
-      <h1>Welcome back</h1>
-      <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon-scope">waving_hand</mat-icon>
+  <div class="login-block__main">
+    <div class="login-block__form">
+      <div class="row">
+        <h1>Welcome back</h1>
+        <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon-scope">waving_hand</mat-icon>
+      </div>
+      <p>Sign in to manage your account.</p>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+            <mat-error *ngIf="checkValid('email')">{{getErrorMessage('email')}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-error *ngIf="checkValid('password')">{{getErrorMessage('password')}}</mat-error>
+          </mat-form-field>
+        </p>
+      </form>
+      <p class="row"><a routerLink="/forgot-password" class="link-color">Forgot password?</a></p>
+
+      <button mat-flat-button color="primary" type="submit" class="big-button" [disabled]="!loginForm.valid">
+        Sign in
+      </button>
+
     </div>
-    <p>Sign in to manage your account.</p>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email">
-          <mat-error *ngIf="checkValid('email')">{{getErrorMessage('email')}}</mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" formControlName="password">
-          <mat-error *ngIf="checkValid('password')">{{getErrorMessage('password')}}</mat-error>
-        </mat-form-field>
-      </p>
-    </form>
-    <p class="row"><a routerLink="/forgot-password" class="link-color">Forgot password?</a></p>
 
-    <button mat-flat-button color="primary" type="submit" class="big-button" [disabled]="!loginForm.valid">
-      Sign in
-    </button>
-
+    <div class="login-block__form">
+      <p class="row"> Don't have an account yet?&nbsp;
+        <a routerLink="/registration" class="link-color">Sign Up</a>
+      </p>
+    </div>
   </div>
 </div>

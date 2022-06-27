@@ -1,0 +1,68 @@
+<div class="registration-block">
+  <img src="../../../assets/sign-up.png" alt="Registration">
+  <div class="registration-block__main">
+    <div class="registration-block__form">
+      <div class="row">
+        <h1>Get started today</h1>
+      </div>
+      <p>Enter your details to create super account.</p>
+      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName">
+            <mat-error *ngIf="checkValid('firstName')">{{getErrorMessage('firstName')}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName">
+            <mat-error *ngIf="checkValid('lastName')">{{getErrorMessage('lastName')}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+            <mat-error *ngIf="checkValid('email')">{{getErrorMessage('email')}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-error *ngIf="checkValid('password')">{{getErrorMessage('password')}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Confirm password</mat-label>
+            <input matInput type="password" formControlName="passwordConfirmation">
+            <mat-error *ngIf="checkValid('passwordConfirmation')">{{getErrorMessage('passwordConfirmation')}}
+            </mat-error>
+          </mat-form-field>
+          <mat-error *ngIf="passwordMatchError()">Password does not match!
+          </mat-error>
+        </p>
+        <p>
+          <mat-checkbox formControlName="termsPolicyAgree" color="primary">
+            I agree to Product&nbsp;
+            <a routerLink="/login" class="link-color">Terms and Policy.</a>
+          </mat-checkbox>
+        </p>
+        <button mat-flat-button color="primary" type="submit" class="big-button" [disabled]="!registrationForm.valid">
+          Sign in
+        </button>
+      </form>
+
+     
+    </div>
+
+    <div class="registration-block__form">
+      <p>Already have an account?&nbsp;
+        <a routerLink="/login" class="link-color">Log in</a>
+      </p>
+    </div>
+  </div>
+</div>
