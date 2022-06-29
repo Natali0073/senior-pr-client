@@ -1,0 +1,11 @@
+.snack-bar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__action {
+    width: 24px;
+    height: 24px;
+    line-height: 0;
+  }
+}

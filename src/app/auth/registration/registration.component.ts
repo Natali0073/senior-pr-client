@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatchValidator } from 'src/app/shared/match-validator';
 import { passwordValidator } from 'src/app/shared/password-validator';
+import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils';
 import { AuthService } from '../auth.service';
 
@@ -36,7 +38,7 @@ export class RegistrationComponent {
     ]),
   }, [MatchValidator('password', 'passwordConfirmation')]);
 
-  constructor(public authService: AuthService, public router: Router) {
+  constructor(public authService: AuthService, public router: Router, private _snackBar: MatSnackBar) {
   }
 
   checkValid(fieldName: string) {
@@ -55,27 +57,23 @@ export class RegistrationComponent {
   }
 
   onSubmit() {
-    console.log(1111);
-
-    console.log(this.registrationForm);
-
-  }
-
-  login() {
-
-    this.authService.login().subscribe(() => {
-      if (this.authService.isLoggedIn) {
-        // Usually you would use the redirect URL from the auth service.
-        // However to keep the example simple, we will always redirect to `/admin`.
-        const redirectUrl = '/admin';
-
-        // Redirect the user
-        this.router.navigate([redirectUrl]);
-      }
+    this._snackBar.openFromComponent(SnackBarComponent, {
+      data: 'Account created successfully',
     });
-  }
+    return
+    // _snackBar.
+    // return;
+    const formValues = { ...this.registrationForm.value };
 
-  logout() {
-    this.authService.logout();
+    const dto = {
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      email: formValues.email,
+      password: formValues.password
+    }
+
+    this.authService.register(dto).subscribe(() => {
+
+    });
   }
 }

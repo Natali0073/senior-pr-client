@@ -7,6 +7,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { material } from '../shared/material';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { RegistrationComponent } from './registration/registration.component';
     FormsModule,
     AuthRoutingModule,
     ReactiveFormsModule,
+    SharedModule,
     ...material
   ],
   declarations: [
