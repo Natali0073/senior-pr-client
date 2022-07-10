@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { EMPTY } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { MatchValidator } from 'src/app/shared/match-validator';
 import { passwordValidator } from 'src/app/shared/password-validator';
 import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
@@ -57,12 +59,6 @@ export class RegistrationComponent {
   }
 
   onSubmit() {
-    this._snackBar.openFromComponent(SnackBarComponent, {
-      data: 'Account created successfully',
-    });
-    return
-    // _snackBar.
-    // return;
     const formValues = { ...this.registrationForm.value };
 
     const dto = {
@@ -72,8 +68,20 @@ export class RegistrationComponent {
       password: formValues.password
     }
 
-    this.authService.register(dto).subscribe(() => {
-
-    });
+    this.authService.register(dto)
+      .pipe(
+        catchError((error) => {
+          this._snackBar.openFromComponent(SnackBarComponent, {
+            data: error.error.message,
+            panelClass: 'snack-bar-error'
+          });
+          return EMPTY;
+        })
+      )
+      .subscribe(() => {
+        this._snackBar.openFromComponent(SnackBarComponent, {
+          data: 'Account created successfully',
+        });
+      });
   }
 }

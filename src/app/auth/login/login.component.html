@@ -22,15 +22,13 @@
             <mat-error *ngIf="checkValid('password')">{{getErrorMessage('password')}}</mat-error>
           </mat-form-field>
         </p>
+        <mat-error *ngIf="showLoginFailure" class="failed-login-error">Credentials are invalid! Please check email and password</mat-error>
+        <p class="row"><a routerLink="/forgot-password" class="link-color">Forgot password?</a></p>
+        <button mat-flat-button color="primary" type="submit" class="big-button" [disabled]="!loginForm.valid">
+          Sign in
+        </button>
       </form>
-      <p class="row"><a routerLink="/forgot-password" class="link-color">Forgot password?</a></p>
-
-      <button mat-flat-button color="primary" type="submit" class="big-button" [disabled]="!loginForm.valid">
-        Sign in
-      </button>
-
     </div>
-
     <div class="login-block__form">
       <p class="row"> Don't have an account yet?&nbsp;
         <a routerLink="/registration" class="link-color">Sign Up</a>

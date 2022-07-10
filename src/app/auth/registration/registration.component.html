@@ -51,7 +51,7 @@
             <a routerLink="/login" class="link-color">Terms and Policy.</a>
           </mat-checkbox>
         </p>
-        <button mat-flat-button color="primary" type="submit" class="big-button" [disabled]="registrationForm.valid">
+        <button mat-flat-button color="primary" type="submit" class="big-button" [disabled]="!registrationForm.valid">
           Sign in
         </button>
       </form>

@@ -3,38 +3,37 @@ import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
-import { User } from '../users/users.service';
+import { User } from '../home/home.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  isLoggedIn = false;
-
   // store the URL so we can redirect after logging in
-  redirectUrl: string | null = null;
+  private apiBase = '/api/auth';
+
+  authToken: string = '';
 
   constructor(private http: HttpClient) { }
 
   register(data: NewUserDto): Observable<User> {
-    return this.http.post<User>('/api/auth/signup', data);
+    return this.http.post<User>(`${this.apiBase}/register`, data);
   }
 
-  login(): Observable<boolean> {
-    return of(true).pipe(
-      delay(1000),
-      tap(() => this.isLoggedIn = true)
-    );
+  login(data: UserLoginDto): Observable<User> {
+    return this.http.post<User>(`${this.apiBase}/login`, data);
   }
 
-  logout(): void {
-    this.isLoggedIn = false;
+  logout() {
+    return this.http.post(`${this.apiBase}/logout`, {});
   }
 }
-
-export interface NewUserDto {
+export interface NewUserDto extends UserLoginDto {
   firstName: string;
   lastName: string;
+}
+
+export interface UserLoginDto {
   email: string;
   password: string;
 }

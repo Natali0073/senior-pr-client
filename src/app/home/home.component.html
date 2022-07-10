@@ -1,3 +1,14 @@
+<mat-toolbar>
+  <span>Yo!</span>
+  <span class="example-spacer"></span>
+  <button mat-button [matMenuTriggerFor]="menu" aria-label="Menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="openMyProfile()">My profile</button>
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+</mat-toolbar>
 <section>
 
   <table mat-table [dataSource]="usersList" class="mat-elevation-z8">
@@ -24,7 +35,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-<div class="add-button"><button mat-raised-button (click)="addUser()">Add user</button></div>
-  
-
 </section>
