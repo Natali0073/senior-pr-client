@@ -2,17 +2,18 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils';
+import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
 import { catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
+import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+@AutoUnsubscribe
 export class LoginComponent {
   loginForm = new FormGroup({
     email: new FormControl('', [

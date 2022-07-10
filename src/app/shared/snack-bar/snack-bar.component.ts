@@ -8,7 +8,7 @@ import { MatSnackBarRef, MAT_SNACK_BAR_DATA, MAT_SNACK_BAR_DEFAULT_OPTIONS } fro
 })
 export class SnackBarComponent {
   constructor(public snackBarRef: MatSnackBarRef<SnackBarComponent>,
-    @Inject(MAT_SNACK_BAR_DATA) public data: string = 'alalla') {
+    @Inject(MAT_SNACK_BAR_DATA) public data: string = 'Oops. Something went wrong!') {
   }
 }
 

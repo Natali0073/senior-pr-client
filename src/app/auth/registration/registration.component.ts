@@ -4,17 +4,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MatchValidator } from 'src/app/shared/match-validator';
-import { passwordValidator } from 'src/app/shared/password-validator';
+import { MatchValidator } from 'src/app/shared/utils/match-validator';
+import { passwordValidator } from 'src/app/shared/utils/password-validator';
 import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
-import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils';
+import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
 import { AuthService } from '../auth.service';
+import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
+@AutoUnsubscribe
 export class RegistrationComponent {
   registrationForm = new FormGroup({
     firstName: new FormControl('', [
