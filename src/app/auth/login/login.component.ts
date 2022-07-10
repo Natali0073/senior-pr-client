@@ -43,26 +43,13 @@ export class LoginComponent {
       .pipe(
         catchError((error) => {
           if (error.status === 401) this.showLoginFailure = true;
-          else this._snackBar.openFromComponent(SnackBarComponent, {
-            data: error.error.message,
-            panelClass: 'snack-bar-error'
-          });
-          console.log(error);
           return EMPTY;
         })
       )
-      .subscribe((result) => {
-        result.accessToken && window.localStorage.setItem('token', result.accessToken);
-        // Usually you would use the redirect URL from the auth service.
-        // However to keep the example simple, we will always redirect to `/admin`.
-        const redirectUrl = '/';
-
-        // Redirect the user
-        this.router.navigate([redirectUrl]);
+      .subscribe(() => {
+        this.router.navigate(['/']);
       })
-
   }
-
 
   logout() {
     this.authService.logout();

@@ -69,15 +69,6 @@ export class RegistrationComponent {
     }
 
     this.authService.register(dto)
-      .pipe(
-        catchError((error) => {
-          this._snackBar.openFromComponent(SnackBarComponent, {
-            data: error.error.message,
-            panelClass: 'snack-bar-error'
-          });
-          return EMPTY;
-        })
-      )
       .subscribe(() => {
         this._snackBar.openFromComponent(SnackBarComponent, {
           data: 'Account created successfully',

@@ -17,15 +17,14 @@ export class AuthGuard implements CanActivate {
   }
 
   checkLogin(url: string): true | UrlTree {
-    return true;
-    // const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem('token');
 
-    // if (token) {
-    //   this.authService.authToken = token;
-    //   return true;
-    // }
+    if (token) {
+      this.authService.authToken = token;
+      return true;
+    }
 
-    // // Redirect to the login page
-    // return this.router.parseUrl('/login');
+    // Redirect to the login page
+    return this.router.parseUrl('/login');
   }
 }

@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { User, HomeService } from './home.service';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -34,25 +33,8 @@ export class HomeComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout().subscribe(response => {
-      window.localStorage.setItem('token', '');
+    this.authService.logout().subscribe(() => {
       this.router.navigate(['/login']);
     })
   }
-
-  deleteUser(id: number) {
-    // this.userService.deleteUser(id)
-    //   .subscribe(response => {
-    //     this.usersList = this.usersList.filter(user => user.id !== response.id);
-
-    //   });
-  }
-
-  addUser() {
-    // this.userService.addUser({ name: `Test${this.usersList.length}`, email: `test${this.usersList.length}@mail.com` })
-    //   .subscribe(response => {
-    //     this.usersList = [...this.usersList, ...response];
-    //   });
-  }
-
 }
