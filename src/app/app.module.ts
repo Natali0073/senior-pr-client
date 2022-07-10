@@ -9,10 +9,13 @@ import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
 import { HomeModule } from './home/home.module';
 import { ErrorCatchingInterceptor } from './shared/utils/error-catching.interceptor';
+import { TermsAndPolicy } from './TermsAndPolicy/terms-and-policy.component';
+import { material } from './shared/material';
 
 @NgModule({
   declarations: [
     AppComponent,
+    TermsAndPolicy
   ],
   imports: [
     BrowserModule,
@@ -21,7 +24,8 @@ import { ErrorCatchingInterceptor } from './shared/utils/error-catching.intercep
     BrowserAnimationsModule,
     AuthModule,
     SharedModule,
-    HomeModule
+    HomeModule,
+    ...material
   ],
   providers: [
     {

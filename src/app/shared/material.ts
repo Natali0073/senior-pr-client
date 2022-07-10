@@ -9,6 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
 
 export const material = [
   MatButtonModule,
@@ -21,6 +22,7 @@ export const material = [
   MatCheckboxModule,
   MatSnackBarModule,
   MatToolbarModule,
-  MatMenuModule
+  MatMenuModule,
+  MatCardModule
 ];
 
