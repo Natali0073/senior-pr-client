@@ -1,4 +1,5 @@
 .terms-and-policy {
+  height: 100%;
   &__toolbar {
     background-color: #040D32;
     color: #EAEDF3;
@@ -7,6 +8,7 @@
   &__content {
     width: 80%;
     margin: auto;
+    margin-top: 20px;
   }
 
   &__content-title {
