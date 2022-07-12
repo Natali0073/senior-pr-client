@@ -1,10 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { Observable, of } from 'rxjs';
-import { tap, delay } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { User } from '../home/home.service';
 
+export interface NewUserDto extends UserLoginDto {
+  firstName: string;
+  lastName: string;
+}
+
+export interface UserLoginDto {
+  email: string;
+  password: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -27,13 +34,8 @@ export class AuthService {
   logout() {
     return this.http.post(`${this.apiBase}/logout`, {});
   }
-}
-export interface NewUserDto extends UserLoginDto {
-  firstName: string;
-  lastName: string;
-}
 
-export interface UserLoginDto {
-  email: string;
-  password: string;
+  resetPassword(userEmail: string) {
+    return this.http.post(`${this.apiBase}/password-reset/mail`, { userEmail: userEmail });
+  }
 }
