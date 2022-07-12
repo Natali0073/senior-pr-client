@@ -8,6 +8,7 @@ import { material } from '../shared/material';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { SharedModule } from '../shared/shared.module';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     LoginComponent,
     ForgotPasswordComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ResetPasswordComponent
   ]
 })
 export class AuthModule {}
