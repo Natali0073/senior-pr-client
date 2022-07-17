@@ -11,11 +11,13 @@ import { HomeModule } from './home/home.module';
 import { ErrorCatchingInterceptor } from './shared/utils/error-catching.interceptor';
 import { TermsAndPolicy } from './TermsAndPolicy/terms-and-policy.component';
 import { material } from './shared/material';
+import { PageNotFound } from './PageNotFound/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TermsAndPolicy
+    TermsAndPolicy,
+    PageNotFound
   ],
   imports: [
     BrowserModule,
