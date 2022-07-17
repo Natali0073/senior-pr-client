@@ -42,7 +42,7 @@
             <mat-error *ngIf="checkValid('passwordConfirmation')">{{getErrorMessage('passwordConfirmation')}}
             </mat-error>
           </mat-form-field>
-          <mat-error *ngIf="passwordMatchError()">Password does not match!
+          <mat-error *ngIf="passwordMatchError()" class="password-not-mach">Password does not match!
           </mat-error>
         </p>
         <p>

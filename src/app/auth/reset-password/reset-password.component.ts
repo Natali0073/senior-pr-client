@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { MatchValidator } from 'src/app/shared/utils/match-validator';
@@ -15,7 +16,8 @@ import { AuthService } from '../auth.service';
 })
 @AutoUnsubscribe
 export class ResetPasswordComponent implements OnInit {
-  resetPasswordForm = new FormGroup({
+  userEmail: string = '';
+  changePasswordForm = new FormGroup({
     password: new FormControl('', [
       Validators.required,
       passwordValidator()
@@ -26,27 +28,44 @@ export class ResetPasswordComponent implements OnInit {
     ]),
   }, [MatchValidator('password', 'passwordConfirmation')]);
 
-  constructor(private authService: AuthService, private _snackBar: MatSnackBar) { }
+  constructor(private authService: AuthService, private _snackBar: MatSnackBar,
+    private route: ActivatedRoute, public router: Router) { }
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.userEmail = params.get('email') || '';
+    });
   }
 
   checkValid(fieldName: string) {
-    return checkFieldValid(this.resetPasswordForm.get(fieldName));
+    return checkFieldValid(this.changePasswordForm.get(fieldName));
   }
 
   getErrorMessage(fieldName: string) {
-    return formErrorMessage(this.resetPasswordForm.get(fieldName));
+    return formErrorMessage(this.changePasswordForm.get(fieldName));
   }
 
   passwordMatchError() {
     return (
-      this.resetPasswordForm.getError('mismatch') &&
-      this.resetPasswordForm.get('passwordConfirmation')?.touched
+      this.changePasswordForm.getError('mismatch') &&
+      this.changePasswordForm.get('passwordConfirmation')?.touched
     );
   }
 
   onSubmit() {
+    const formValues = { ...this.changePasswordForm.value };
 
+    const dto = {
+      email: this.userEmail,
+      password: formValues.password
+    }
+
+    this.authService.changePassword(dto)
+      .subscribe(() => {
+        this._snackBar.openFromComponent(SnackBarComponent, {
+          data: 'Password changed successfully!',
+        });
+        this.router.navigate(['/login']);
+      });
   }
 }

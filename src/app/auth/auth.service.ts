@@ -38,4 +38,8 @@ export class AuthService {
   resetPassword(userEmail: string) {
     return this.http.post(`${this.apiBase}/password-reset/mail`, { userEmail: userEmail });
   }
+
+  changePassword(data: UserLoginDto) {
+    return this.http.post<User>(`${this.apiBase}/change-password`, data);
+  }
 }
