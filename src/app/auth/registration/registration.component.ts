@@ -74,7 +74,12 @@ export class RegistrationComponent {
       .subscribe(() => {
         this._snackBar.openFromComponent(SnackBarComponent, {
           data: 'Account created successfully',
+          duration: 1500
         });
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 2000)
+
       });
   }
 }

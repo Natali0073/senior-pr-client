@@ -39,4 +39,9 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/login']);
     })
   }
+
+  fileUpload(event: any) {
+    console.log(event.target.files[0]);
+
+  }
 }
