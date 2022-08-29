@@ -1,0 +1,69 @@
+<h2 mat-dialog-title>Manage your account</h2>
+<mat-dialog-content>
+  <mat-tab-group (selectedTabChange)="onTabChange($event)">
+    <mat-tab label="Edit Information">
+      <h3 class="tab-title">Change your information</h3>
+      <form [formGroup]="userProfile">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName">
+            <mat-error *ngIf="checkValid(userProfile, 'firstName')">{{getErrorMessage(userProfile, 'firstName')}}
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName">
+            <mat-error *ngIf="checkValid(userProfile, 'lastName')">{{getErrorMessage(userProfile, 'lastName')}}
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <input matInput [value]="selectedFileNames.length ? selectedFileNames : 'Select Image'" style="caret-color: transparent;"/>
+            <input type="file" id="fileInput" name="fileInput" formControlName="avatar" accept="image/*"
+              (change)="selectFiles($event)" />
+          </mat-form-field>
+          <img [src]="preview" alt="" *ngIf="preview" width="300px">
+          <!-- <mat-error *ngIf="checkValid(userProfile, 'lastName')">{{getErrorMessage(userProfile, 'lastName')}}
+            </mat-error> -->
+        </p>
+      </form>
+    </mat-tab>
+    <mat-tab label="Change Password">
+      <h3 class="tab-title">Change your password</h3>
+      <form [formGroup]="changePassword">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-error *ngIf="checkValid(changePassword, 'password')">{{getErrorMessage(changePassword, 'password')}}
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Confirm password</mat-label>
+            <input matInput type="password" formControlName="passwordConfirmation">
+            <mat-error *ngIf="checkValid(changePassword, 'passwordConfirmation')">{{getErrorMessage(changePassword,
+              'passwordConfirmation')}}
+            </mat-error>
+          </mat-form-field>
+          <mat-error *ngIf="passwordMatchError()" class="password-not-mach">Password does not match!
+          </mat-error>
+        </p>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <ng-container *ngIf="activeTabIndex === 0;else changePw">
+    <button mat-flat-button color="primary" [disabled]="!userProfile.valid" (click)="submitUserData()">Submit</button>
+  </ng-container>
+  <ng-template #changePw>
+    <button mat-flat-button color="primary" [disabled]="!changePassword.valid" (click)="submitPassword()">Change password</button>
+  </ng-template>
+</mat-dialog-actions>

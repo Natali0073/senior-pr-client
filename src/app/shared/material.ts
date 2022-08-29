@@ -10,6 +10,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 
 export const material = [
   MatButtonModule,
@@ -23,6 +24,7 @@ export const material = [
   MatSnackBarModule,
   MatToolbarModule,
   MatMenuModule,
-  MatCardModule
+  MatCardModule,
+  MatTabsModule
 ];
 
