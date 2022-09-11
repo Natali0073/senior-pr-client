@@ -12,7 +12,8 @@ import { ErrorCatchingInterceptor } from './shared/utils/error-catching.intercep
 import { TermsAndPolicy } from './TermsAndPolicy/terms-and-policy.component';
 import { material } from './shared/material';
 import { PageNotFound } from './PageNotFound/page-not-found.component';
-
+import { StoreModule } from '@ngrx/store';
+import { currentUserReducer, usersReducer } from './state/users.reducer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +28,7 @@ import { PageNotFound } from './PageNotFound/page-not-found.component';
     AuthModule,
     SharedModule,
     HomeModule,
+    StoreModule.forRoot({ usersStore: usersReducer }),
     ...material
   ],
   providers: [

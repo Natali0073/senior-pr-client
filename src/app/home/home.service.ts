@@ -12,6 +12,10 @@ export class HomeService {
   getUsers() {
     return this.http.get<User[]>('api/users');
   }
+
+  getCurrentUser() {
+    return this.http.get<User>('api/current-user');
+  }
 }
 
 export interface User {
@@ -19,5 +23,9 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
+  avatar:string | null;
+  createdAt:string;
+  role:string;
+  updatedAt:string;
   accessToken?: string;
 }

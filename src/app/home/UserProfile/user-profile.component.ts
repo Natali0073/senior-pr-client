@@ -3,23 +3,40 @@ import { FormGroup, FormControl, Validators, Form } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/auth/auth.service';
 import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
+import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { MatchValidator } from 'src/app/shared/utils/match-validator';
 import { passwordValidator } from 'src/app/shared/utils/password-validator';
 import { checkFieldValid, formErrorMessage, validateImageSize } from 'src/app/shared/utils/utils';
+import { getCurrentUser } from 'src/app/state/users.actions';
+import { selectCurrentUser } from 'src/app/state/users.selectors';
+import { User } from '../home.service';
 
 @Component({
   selector: 'user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss']
 })
+@AutoUnsubscribe
 export class UserProfileComponent {
+  currentUser: User | null = null;
+  preview: string = '../../../assets/avatar.png';
+  currentUserSelector: any = this.store.select(selectCurrentUser as any).subscribe(
+    (user: any) => {
+      if (user) {
+        this.currentUser = user;
+        this.preview = user.avatar || this.preview;
+      }
+    }
+  );
+
   userProfile = new FormGroup({
-    firstName: new FormControl('', [
+    firstName: new FormControl(this.currentUser ? this.currentUser.firstName : '', [
       Validators.required
     ]),
-    lastName: new FormControl('', [
+    lastName: new FormControl(this.currentUser ? this.currentUser.lastName : '', [
       Validators.required
     ]),
   });
@@ -39,11 +56,10 @@ export class UserProfileComponent {
   selectedFileNames: string[] = [];
   selectedFiles?: FileList;
   message: string[] = [];
-  preview: string = '../../../assets/avatar.png';
   validImage: boolean = true;
 
   constructor(private authService: AuthService, private _snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<UserProfileComponent>) {
+    public dialogRef: MatDialogRef<UserProfileComponent>, private store: Store) {
   }
 
   onTabChange(event: MatTabChangeEvent) {
@@ -89,13 +105,15 @@ export class UserProfileComponent {
     this.selectedFiles && formData.append('avatar', this.selectedFiles[0]);
 
     this.authService.updatePersonalInfo(formData)
-    .subscribe(() => {
-      this._snackBar.openFromComponent(SnackBarComponent, {
-        data: 'Account updated successfully',
-        duration: 1500
+      .subscribe((user) => {
+
+        this._snackBar.openFromComponent(SnackBarComponent, {
+          data: 'Account updated successfully',
+          duration: 1500
+        });
+        this.dialogRef.close();
+        this.store.dispatch(getCurrentUser({ user }))
       });
-      this.dialogRef.close();
-    });
 
   }
 
