@@ -20,15 +20,19 @@
             </mat-error>
           </mat-form-field>
         </p>
-        <p>
-          <mat-form-field appearance="outline">
-            <input matInput [value]="selectedFileNames.length ? selectedFileNames : 'Select Image'" style="caret-color: transparent;"/>
-            <input type="file" id="fileInput" name="fileInput" formControlName="avatar" accept="image/*"
-              (change)="selectFiles($event)" />
-          </mat-form-field>
-          <img [src]="preview" alt="" *ngIf="preview" width="300px">
-          <!-- <mat-error *ngIf="checkValid(userProfile, 'lastName')">{{getErrorMessage(userProfile, 'lastName')}}
-            </mat-error> -->
+        <p class="avatar-countainer">
+          <mat-label _ngcontent-als-c192="" class="ng-tns-c85-2 ng-star-inserted avatar-countainer__label">Change your
+            photo
+            <button mat-icon-button matTooltip="Upload image size can be only up to 2MB" matTooltipPosition="right"
+              class="avatar-countainer__tooltip">
+              <mat-icon>help</mat-icon>
+            </button>
+          </mat-label>
+          <user-avatar [preview]="preview" [widthFromProp]="'100px'" [heightFromProp]="'100px'"></user-avatar>
+          <input type="file" class="avatar-countainer__file-input" name="fileInput"
+            accept="image/*" (change)="selectFiles($event)" />
+          <mat-error *ngIf="!validImage">Image size is invalid, please reupload 
+          </mat-error>
         </p>
       </form>
     </mat-tab>
@@ -61,9 +65,10 @@
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
   <ng-container *ngIf="activeTabIndex === 0;else changePw">
-    <button mat-flat-button color="primary" [disabled]="!userProfile.valid" (click)="submitUserData()">Submit</button>
+    <button mat-flat-button color="primary" [disabled]="!userProfile.valid || !validImage" (click)="submitUserData()">Submit</button>
   </ng-container>
   <ng-template #changePw>
-    <button mat-flat-button color="primary" [disabled]="!changePassword.valid" (click)="submitPassword()">Change password</button>
+    <button mat-flat-button color="primary" [disabled]="!changePassword.valid" (click)="submitPassword()">Change
+      password</button>
   </ng-template>
 </mat-dialog-actions>

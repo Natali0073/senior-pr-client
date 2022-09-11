@@ -13,7 +13,8 @@ import { UserProfileComponent } from './UserProfile/user-profile.component';
 @AutoUnsubscribe
 export class HomeComponent implements OnInit {
   usersList: User[] = [];
-  displayedColumns: string[] = ['name', 'email'];
+  displayedColumns: string[] = ['name', 'email', 'role'];
+  preview: string = '../../assets/avatar.png';
 
   constructor(
     private userService: HomeService,

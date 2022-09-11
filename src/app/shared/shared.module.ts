@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SnackBarComponent, snackBarDefaultOptions } from "./snack-bar/snack-bar.component";
 import { material } from "./material";
+import { UserVatarComponent } from "./user-avatar/user-avatar.component";
 
 @NgModule({
   imports: [
@@ -12,9 +13,12 @@ import { material } from "./material";
     ...material
   ],
   declarations: [
-    SnackBarComponent
+    SnackBarComponent,
+    UserVatarComponent
   ],
-  exports: [],
+  exports: [
+    UserVatarComponent
+  ],
   providers: [
     snackBarDefaultOptions
   ]

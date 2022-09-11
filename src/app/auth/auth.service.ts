@@ -42,4 +42,8 @@ export class AuthService {
   changePassword(data: UserLoginDto) {
     return this.http.post<User>(`${this.apiBase}/change-password`, data);
   }
+
+  updatePersonalInfo(data: FormData) {
+    return this.http.put<User>(`/api/user-update`, data);
+  }
 }

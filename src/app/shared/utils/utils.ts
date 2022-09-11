@@ -23,3 +23,5 @@ export const formErrorMessage = (field: any) => {
 
   return message;
 }
+
+export const validateImageSize = (imageSize: number) => imageSize <= 2048000;

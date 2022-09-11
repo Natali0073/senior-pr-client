@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, Form } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { AuthService } from 'src/app/auth/auth.service';
+import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
 import { MatchValidator } from 'src/app/shared/utils/match-validator';
 import { passwordValidator } from 'src/app/shared/utils/password-validator';
-import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
+import { checkFieldValid, formErrorMessage, validateImageSize } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'user-profile',
@@ -18,7 +22,6 @@ export class UserProfileComponent {
     lastName: new FormControl('', [
       Validators.required
     ]),
-    avatar: new FormControl('', []),
   });
 
   changePassword = new FormGroup({
@@ -36,9 +39,11 @@ export class UserProfileComponent {
   selectedFileNames: string[] = [];
   selectedFiles?: FileList;
   message: string[] = [];
-  preview: string = '';
+  preview: string = '../../../assets/avatar.png';
+  validImage: boolean = true;
 
-  constructor() {
+  constructor(private authService: AuthService, private _snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<UserProfileComponent>) {
   }
 
   onTabChange(event: MatTabChangeEvent) {
@@ -46,7 +51,6 @@ export class UserProfileComponent {
   }
 
   selectFiles(event: any) {
-    console.log(event.target?.files);
     this.message = [];
     this.selectedFileNames = [];
     this.selectedFiles = event.target.files;
@@ -57,6 +61,7 @@ export class UserProfileComponent {
       };
       reader.readAsDataURL(this.selectedFiles[0]);
       this.selectedFileNames.push(this.selectedFiles[0].name);
+      this.validImage = validateImageSize(this.selectedFiles[0].size);
     }
   }
 
@@ -75,13 +80,22 @@ export class UserProfileComponent {
     );
   }
 
-  uploadFiles(): void {
-
-  }
-
   submitUserData() {
     const formValues = { ...this.userProfile.value };
-    console.log(formValues);
+
+    const formData: any = new FormData();
+    formData.append('firstName', formValues.firstName);
+    formData.append('lastName', formValues.lastName);
+    this.selectedFiles && formData.append('avatar', this.selectedFiles[0]);
+
+    this.authService.updatePersonalInfo(formData)
+    .subscribe(() => {
+      this._snackBar.openFromComponent(SnackBarComponent, {
+        data: 'Account updated successfully',
+        duration: 1500
+      });
+      this.dialogRef.close();
+    });
 
   }
 

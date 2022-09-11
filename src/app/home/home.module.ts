@@ -7,6 +7,7 @@ import { material } from '../shared/material';
 import { SharedModule } from '../shared/shared.module';
 import { UserProfileComponent } from './UserProfile/user-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserVatarComponent } from '../shared/user-avatar/user-avatar.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   declarations: [
     HomeComponent,
-    UserProfileComponent
+    UserProfileComponent,
   ]
 })
 export class HomeModule { }
