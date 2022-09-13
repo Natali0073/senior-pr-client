@@ -42,6 +42,9 @@ export class UserProfileComponent {
   });
 
   changePassword = new FormGroup({
+    oldPassword: new FormControl('', [
+      Validators.required
+    ]),
     password: new FormControl('', [
       Validators.required,
       passwordValidator()
@@ -106,19 +109,25 @@ export class UserProfileComponent {
 
     this.authService.updatePersonalInfo(formData)
       .subscribe((user) => {
-
         this._snackBar.openFromComponent(SnackBarComponent, {
           data: 'Account updated successfully',
-          duration: 1500
         });
         this.dialogRef.close();
         this.store.dispatch(getCurrentUser({ user }))
       });
-
   }
 
   submitPassword() {
-    const formValues = { ...this.changePassword.value };
+    const { oldPassword, password } = this.changePassword.value;
+
+    this.authService.changePassword({ oldPassword: oldPassword, password: password })
+      .subscribe((user) => {
+        this._snackBar.openFromComponent(SnackBarComponent, {
+          data: 'Password updated successfully',
+        });
+        this.dialogRef.close();
+        this.store.dispatch(getCurrentUser({ user }))
+      });
   }
 
 }

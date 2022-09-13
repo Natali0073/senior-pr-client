@@ -60,7 +60,7 @@ export class ResetPasswordComponent implements OnInit {
       password: formValues.password
     }
 
-    this.authService.changePassword(dto)
+    this.authService.resetPassword(dto)
       .subscribe(() => {
         this._snackBar.openFromComponent(SnackBarComponent, {
           data: 'Password changed successfully!',

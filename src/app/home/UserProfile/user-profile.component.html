@@ -41,7 +41,15 @@
       <form [formGroup]="changePassword">
         <p>
           <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
+            <mat-label>Old password</mat-label>
+            <input matInput type="password" formControlName="oldPassword">
+            <mat-error *ngIf="checkValid(changePassword, 'oldPassword')">{{getErrorMessage(changePassword, 'oldPassword')}}
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>New password</mat-label>
             <input matInput type="password" formControlName="password">
             <mat-error *ngIf="checkValid(changePassword, 'password')">{{getErrorMessage(changePassword, 'password')}}
             </mat-error>

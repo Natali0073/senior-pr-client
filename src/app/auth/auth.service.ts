@@ -12,6 +12,11 @@ export interface UserLoginDto {
   email: string;
   password: string;
 }
+
+export interface ChangePwDto {
+  oldPassword: string;
+  password: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -35,11 +40,15 @@ export class AuthService {
     return this.http.post(`${this.apiBase}/logout`, {});
   }
 
-  resetPassword(userEmail: string) {
-    return this.http.post(`${this.apiBase}/password-reset/mail`, { userEmail: userEmail });
+  resetPasswordRequest(userEmail: string) {
+    return this.http.post(`${this.apiBase}/reset-password/mail`, { userEmail: userEmail });
   }
 
-  changePassword(data: UserLoginDto) {
+  resetPassword(data: UserLoginDto) {
+    return this.http.post<User>(`${this.apiBase}/reset-password`, data);
+  }
+
+  changePassword(data: ChangePwDto) {
     return this.http.post<User>(`${this.apiBase}/change-password`, data);
   }
 
