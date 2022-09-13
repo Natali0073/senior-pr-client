@@ -32,7 +32,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   resetEmail() {
-    this.authService.resetPassword(this.email.value)
+    this.authService.resetPasswordRequest(this.email.value)
       .subscribe(() => {
         this._snackBar.openFromComponent(SnackBarComponent, {
           data: 'Recovery letter is sent! Please check your mail box.',
