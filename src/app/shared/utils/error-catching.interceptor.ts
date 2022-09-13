@@ -19,7 +19,7 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
           return res
         }),
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 403) {
+          if (error.status === 403 || error.status === 401) {
             this.router.navigate(['/login']);
             return throwError(error);
           }
