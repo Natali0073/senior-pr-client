@@ -13,6 +13,11 @@ export interface UserLoginDto {
   password: string;
 }
 
+export interface ResetPasswordDto {
+  token: string;
+  password: string;
+}
+
 export interface ChangePwDto {
   oldPassword: string;
   password: string;
@@ -44,7 +49,7 @@ export class AuthService {
     return this.http.post(`${this.apiBase}/reset-password/mail`, { userEmail: userEmail });
   }
 
-  resetPassword(data: UserLoginDto) {
+  resetPassword(data: ResetPasswordDto) {
     return this.http.post<User>(`${this.apiBase}/reset-password`, data);
   }
 

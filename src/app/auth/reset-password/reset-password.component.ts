@@ -16,7 +16,7 @@ import { AuthService } from '../auth.service';
 })
 @AutoUnsubscribe
 export class ResetPasswordComponent implements OnInit {
-  userEmail: string = '';
+  userToken: string = '';
   changePasswordForm = new FormGroup({
     password: new FormControl('', [
       Validators.required,
@@ -33,7 +33,7 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.userEmail = params.get('email') || '';
+      this.userToken = params.get('token') || '';
     });
   }
 
@@ -56,7 +56,7 @@ export class ResetPasswordComponent implements OnInit {
     const formValues = { ...this.changePasswordForm.value };
 
     const dto = {
-      email: this.userEmail,
+      token: this.userToken,
       password: formValues.password
     }
 
