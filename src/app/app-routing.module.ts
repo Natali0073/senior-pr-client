@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'users', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'reset-password/:email', component: ResetPasswordComponent },
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'terms-and-policy', component: TermsAndPolicy },
   { path: '', redirectTo: 'users', pathMatch: 'full' },
