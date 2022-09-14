@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SnackBarComponent, snackBarDefaultOptions } from "./snack-bar/snack-bar.component";
 import { material } from "./material";
 import { UserVatarComponent } from "./user-avatar/user-avatar.component";
+import { PassWordFieldComponent } from "./password-field/password-field.component";
 
 @NgModule({
   imports: [
@@ -14,10 +15,12 @@ import { UserVatarComponent } from "./user-avatar/user-avatar.component";
   ],
   declarations: [
     SnackBarComponent,
-    UserVatarComponent
+    UserVatarComponent,
+    PassWordFieldComponent
   ],
   exports: [
-    UserVatarComponent
+    UserVatarComponent,
+    PassWordFieldComponent
   ],
   providers: [
     snackBarDefaultOptions

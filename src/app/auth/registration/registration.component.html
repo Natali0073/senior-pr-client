@@ -29,19 +29,13 @@
           </mat-form-field>
         </p>
         <p>
-          <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
-            <input matInput type="password" formControlName="password">
-            <mat-error *ngIf="checkValid('password')">{{getErrorMessage('password')}}</mat-error>
-          </mat-form-field>
+          <password-field formControlName="password" label="Password" [passwordInvalid]="checkValid('password')"
+            [errorMessage]="getErrorMessage('password')"></password-field>
         </p>
         <p>
-          <mat-form-field appearance="outline">
-            <mat-label>Confirm password</mat-label>
-            <input matInput type="password" formControlName="passwordConfirmation">
-            <mat-error *ngIf="checkValid('passwordConfirmation')">{{getErrorMessage('passwordConfirmation')}}
-            </mat-error>
-          </mat-form-field>
+          <password-field formControlName="passwordConfirmation" label="Confirm password"
+            [passwordInvalid]="checkValid('passwordConfirmation')"
+            [errorMessage]="getErrorMessage('passwordConfirmation')"></password-field>
           <mat-error *ngIf="passwordMatchError()" class="password-not-mach">Password does not match!
           </mat-error>
         </p>

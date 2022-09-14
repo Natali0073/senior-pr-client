@@ -15,7 +15,7 @@ import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 })
 @AutoUnsubscribe
 export class LoginComponent {
-  loginForm = new FormGroup({
+  loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [
       Validators.required,
       Validators.email

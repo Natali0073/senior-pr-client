@@ -29,9 +29,9 @@
             </button>
           </mat-label>
           <user-avatar [preview]="preview" [widthFromProp]="'100px'" [heightFromProp]="'100px'"></user-avatar>
-          <input type="file" class="avatar-countainer__file-input" name="fileInput"
-            accept="image/*" (change)="selectFiles($event)" />
-          <mat-error *ngIf="!validImage">Image size is invalid, please reupload 
+          <input type="file" class="avatar-countainer__file-input" name="fileInput" accept="image/*"
+            (change)="selectFiles($event)" />
+          <mat-error *ngIf="!validImage">Image size is invalid, please reupload
           </mat-error>
         </p>
       </form>
@@ -40,29 +40,19 @@
       <h3 class="tab-title">Change your password</h3>
       <form [formGroup]="changePassword">
         <p>
-          <mat-form-field appearance="outline">
-            <mat-label>Old password</mat-label>
-            <input matInput type="password" formControlName="oldPassword">
-            <mat-error *ngIf="checkValid(changePassword, 'oldPassword')">{{getErrorMessage(changePassword, 'oldPassword')}}
-            </mat-error>
-          </mat-form-field>
+          <password-field formControlName="oldPassword" label="Old password"
+            [passwordInvalid]="checkValid(changePassword, 'oldPassword')"
+            [errorMessage]="getErrorMessage(changePassword, 'oldPassword')"></password-field>
         </p>
         <p>
-          <mat-form-field appearance="outline">
-            <mat-label>New password</mat-label>
-            <input matInput type="password" formControlName="password">
-            <mat-error *ngIf="checkValid(changePassword, 'password')">{{getErrorMessage(changePassword, 'password')}}
-            </mat-error>
-          </mat-form-field>
+          <password-field formControlName="password" label="New password"
+            [passwordInvalid]="checkValid(changePassword, 'password')"
+            [errorMessage]="getErrorMessage(changePassword, 'password')"></password-field>
         </p>
         <p>
-          <mat-form-field appearance="outline">
-            <mat-label>Confirm password</mat-label>
-            <input matInput type="password" formControlName="passwordConfirmation">
-            <mat-error *ngIf="checkValid(changePassword, 'passwordConfirmation')">{{getErrorMessage(changePassword,
-              'passwordConfirmation')}}
-            </mat-error>
-          </mat-form-field>
+          <password-field formControlName="passwordConfirmation" label="Confirm password"
+            [passwordInvalid]="checkValid(changePassword, 'passwordConfirmation')"
+            [errorMessage]="getErrorMessage(changePassword, 'passwordConfirmation')"></password-field>
           <mat-error *ngIf="passwordMatchError()" class="password-not-mach">Password does not match!
           </mat-error>
         </p>
@@ -73,7 +63,8 @@
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
   <ng-container *ngIf="activeTabIndex === 0;else changePw">
-    <button mat-flat-button color="primary" [disabled]="!userProfile.valid || !validImage" (click)="submitUserData()">Submit</button>
+    <button mat-flat-button color="primary" [disabled]="!userProfile.valid || !validImage"
+      (click)="submitUserData()">Submit</button>
   </ng-container>
   <ng-template #changePw>
     <button mat-flat-button color="primary" [disabled]="!changePassword.valid" (click)="submitPassword()">Change
