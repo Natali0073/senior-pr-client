@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EMPTY, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { MatchValidator } from 'src/app/shared/utils/match-validator';
@@ -61,6 +63,17 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     this.authService.resetPassword(dto)
+      .pipe(
+        catchError((error) => {
+          if (error.status === 401) {
+            this._snackBar.openFromComponent(SnackBarComponent, {
+              data: 'Sorry, you request expired or invalid!',
+              panelClass: 'snack-bar-error'
+            });
+          }
+          return EMPTY;
+        })
+      )
       .subscribe(() => {
         this._snackBar.openFromComponent(SnackBarComponent, {
           data: 'Password changed successfully!',

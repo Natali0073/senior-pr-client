@@ -5,6 +5,7 @@ import { catchError, map } from "rxjs/operators";
 import { Router } from '@angular/router';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { redirectionIsAvailable } from './utils';
 
 @Injectable()
 export class ErrorCatchingInterceptor implements HttpInterceptor {
@@ -19,7 +20,7 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
           return res
         }),
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 403 || error.status === 401) {
+          if ((error.status === 403 || error.status === 401) && redirectionIsAvailable(request)) {
             this.router.navigate(['/login']);
             return throwError(error);
           }

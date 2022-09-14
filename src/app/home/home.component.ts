@@ -8,7 +8,7 @@ import { UserProfileComponent } from './UserProfile/user-profile.component';
 import { Store } from '@ngrx/store';
 import { selectCurrentUser } from '../state/users.selectors';
 import { getCurrentUser } from '../state/users.actions';
-import { PartialObserver, Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -63,9 +63,5 @@ export class HomeComponent implements OnInit {
     this.authService.logout().subscribe(() => {
       this.router.navigate(['/login']);
     })
-  }
-
-  fileUpload(event: any) {
-    console.log(event.target.files[0]);
   }
 }

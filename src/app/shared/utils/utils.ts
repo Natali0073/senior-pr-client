@@ -1,3 +1,5 @@
+import { HttpRequest } from "@angular/common/http";
+
 export const checkFieldValid = (field: any) => (field?.invalid && field?.touched) || field?.dirty;
 
 export const formErrorMessage = (field: any) => {
@@ -25,3 +27,5 @@ export const formErrorMessage = (field: any) => {
 }
 
 export const validateImageSize = (imageSize: number) => imageSize <= 2048000;
+
+export const redirectionIsAvailable = (request: HttpRequest<unknown>) => request.url !== '/api/auth/reset-password';

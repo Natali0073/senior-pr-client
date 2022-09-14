@@ -19,8 +19,6 @@
           <password-field formControlName="password" label="Password" [passwordInvalid]="checkValid('password')"
             [errorMessage]="getErrorMessage('password')"></password-field>
         </p>
-        <mat-error *ngIf="showLoginFailure" class="failed-login-error">Credentials are invalid! Please check email and
-          password</mat-error>
         <p class="row"><a routerLink="/forgot-password" class="link-color">Forgot password?</a></p>
         <button mat-flat-button color="primary" type="submit" class="big-button" [disabled]="!loginForm.valid">
           Sign in

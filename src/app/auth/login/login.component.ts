@@ -7,6 +7,7 @@ import { catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
+import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'app-login',
@@ -25,8 +26,6 @@ export class LoginComponent {
     ]),
   });
 
-  showLoginFailure = false;
-
   constructor(public authService: AuthService, public router: Router, private _snackBar: MatSnackBar) {
   }
 
@@ -43,7 +42,12 @@ export class LoginComponent {
     this.authService.login(formValues)
       .pipe(
         catchError((error) => {
-          if (error.status === 401) this.showLoginFailure = true;
+          if (error.status === 401 || error.status === 404) {
+            this._snackBar.openFromComponent(SnackBarComponent, {
+              data: 'Credentials are invalid! Please check email and password',
+              panelClass: 'snack-bar-error'
+            });
+          }
           return EMPTY;
         })
       )
