@@ -10,6 +10,7 @@ import { MatchValidator } from 'src/app/shared/utils/match-validator';
 import { passwordValidator } from 'src/app/shared/utils/password-validator';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
 import { AuthService } from '../auth.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-reset-password',
@@ -29,6 +30,8 @@ export class ResetPasswordComponent implements OnInit {
       passwordValidator()
     ]),
   }, [MatchValidator('password', 'passwordConfirmation')]);
+
+  loading = false;
 
   constructor(private authService: AuthService, private _snackBar: MatSnackBar,
     private route: ActivatedRoute, public router: Router) { }
@@ -61,8 +64,11 @@ export class ResetPasswordComponent implements OnInit {
       token: this.userToken,
       password: formValues.password
     }
-
+    this.loading = true;
     this.authService.resetPassword(dto)
+      .pipe(
+        finalize(() => this.loading = false),
+      )
       .pipe(
         catchError((error) => {
           if (error.status === 401) {

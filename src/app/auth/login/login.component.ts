@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
-import { catchError } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
@@ -26,6 +26,8 @@ export class LoginComponent {
     ]),
   });
 
+  loading = false;
+
   constructor(public authService: AuthService, public router: Router, private _snackBar: MatSnackBar) {
   }
 
@@ -39,6 +41,7 @@ export class LoginComponent {
 
   onSubmit() {
     const formValues = { ...this.loginForm.value };
+    this.loading = true;
     this.authService.login(formValues)
       .pipe(
         catchError((error) => {
@@ -49,7 +52,8 @@ export class LoginComponent {
             });
           }
           return EMPTY;
-        })
+        }),
+        finalize(() => this.loading = false)
       )
       .subscribe(() => {
         this.router.navigate(['/']);

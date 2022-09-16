@@ -10,6 +10,7 @@ import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
 import { AuthService } from '../auth.service';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration',
@@ -42,6 +43,8 @@ export class RegistrationComponent {
     ]),
   }, [MatchValidator('password', 'passwordConfirmation')]);
 
+  loading = false;
+
   constructor(public authService: AuthService, public router: Router, private _snackBar: MatSnackBar) {
   }
 
@@ -69,8 +72,11 @@ export class RegistrationComponent {
       email: formValues.email,
       password: formValues.password
     }
-
+    this.loading = true;
     this.authService.register(dto)
+      .pipe(
+        finalize(() => this.loading = false),
+      )
       .subscribe(() => {
         this._snackBar.openFromComponent(SnackBarComponent, {
           data: 'Account created successfully',

@@ -13,6 +13,7 @@ import { checkFieldValid, formErrorMessage, validateImageSize } from 'src/app/sh
 import { getCurrentUser } from 'src/app/state/users.actions';
 import { selectCurrentUser } from 'src/app/state/users.selectors';
 import { User } from '../home.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'user-profile',
@@ -60,6 +61,7 @@ export class UserProfileComponent {
   selectedFiles?: FileList;
   message: string[] = [];
   validImage: boolean = true;
+  loading = false;
 
   constructor(private authService: AuthService, private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<UserProfileComponent>, private store: Store) {
@@ -106,8 +108,11 @@ export class UserProfileComponent {
     formData.append('firstName', formValues.firstName);
     formData.append('lastName', formValues.lastName);
     this.selectedFiles && formData.append('avatar', this.selectedFiles[0]);
-
+    this.loading = true;
     this.authService.updatePersonalInfo(formData)
+      .pipe(
+        finalize(() => this.loading = false),
+      )
       .subscribe((user) => {
         this._snackBar.openFromComponent(SnackBarComponent, {
           data: 'Account updated successfully',
@@ -119,8 +124,11 @@ export class UserProfileComponent {
 
   submitPassword() {
     const { oldPassword, password } = this.changePassword.value;
-
+    this.loading = true;
     this.authService.changePassword({ oldPassword: oldPassword, password: password })
+      .pipe(
+        finalize(() => this.loading = false),
+      )
       .subscribe((user) => {
         this._snackBar.openFromComponent(SnackBarComponent, {
           data: 'Password updated successfully',

@@ -63,11 +63,11 @@
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
   <ng-container *ngIf="activeTabIndex === 0;else changePw">
-    <button mat-flat-button color="primary" [disabled]="!userProfile.valid || !validImage"
-      (click)="submitUserData()">Submit</button>
+    <app-button [disabled]="!userProfile.valid || !validImage" (onClick)="submitUserData()" label="Submit"
+      [loading]="loading"></app-button>
   </ng-container>
   <ng-template #changePw>
-    <button mat-flat-button color="primary" [disabled]="!changePassword.valid" (click)="submitPassword()">Change
-      password</button>
+    <app-button [disabled]="!changePassword.valid" (onClick)="submitPassword()" label="Change password"
+      [loading]="loading"></app-button>
   </ng-template>
 </mat-dialog-actions>
