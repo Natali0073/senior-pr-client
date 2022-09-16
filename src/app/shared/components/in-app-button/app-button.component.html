@@ -11,4 +11,8 @@
       </ng-template>
     </button>
   </div>
+
+  <div *ngSwitchCase="'matDialogClose'" class="button-container">
+    <button mat-button mat-dialog-close>{{label}}</button>
+  </div>
 </container-element>

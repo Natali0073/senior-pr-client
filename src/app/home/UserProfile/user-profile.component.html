@@ -61,7 +61,7 @@
   </mat-tab-group>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
+  <app-button label="Cancel" materialType="matDialogClose"></app-button>
   <ng-container *ngIf="activeTabIndex === 0;else changePw">
     <app-button [disabled]="!userProfile.valid || !validImage" (onClick)="submitUserData()" label="Submit"
       [loading]="loading"></app-button>
