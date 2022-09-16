@@ -8,6 +8,7 @@ import { UserProfileComponent } from './UserProfile/user-profile.component';
 import { Store } from '@ngrx/store';
 import { selectCurrentUser } from '../state/users.selectors';
 import { getCurrentUser } from '../state/users.actions';
+import { ChatService } from '../chat/chat.service';
 
 @Component({
   selector: 'app-home',
@@ -31,13 +32,24 @@ export class HomeComponent implements OnInit {
     public dialog: MatDialog,
     private authService: AuthService,
     public router: Router,
-    private store: Store
+    private store: Store,
+    private chatService: ChatService
   ) {
   }
 
   ngOnInit(): void {
     this.getCurrentUser();
     this.getUsers();
+    this.chatService.getMessage().subscribe(message => {
+      console.log(111, message);
+
+    });
+  }
+
+  sendMessage() {
+    console.log(1);
+    
+    this.chatService.sendMessage('lalala');
   }
 
   getUsers() {

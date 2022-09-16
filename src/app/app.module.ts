@@ -13,7 +13,11 @@ import { TermsAndPolicy } from './TermsAndPolicy/terms-and-policy.component';
 import { material } from './shared/material';
 import { PageNotFound } from './PageNotFound/page-not-found.component';
 import { StoreModule } from '@ngrx/store';
-import { currentUserReducer, usersReducer } from './state/users.reducer';
+import { usersReducer } from './state/users.reducer';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +33,7 @@ import { currentUserReducer, usersReducer } from './state/users.reducer';
     SharedModule,
     HomeModule,
     StoreModule.forRoot({ usersStore: usersReducer }),
+    SocketIoModule.forRoot(config),
     ...material
   ],
   providers: [

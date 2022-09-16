@@ -1,10 +1,11 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { SnackBarComponent, snackBarDefaultOptions } from "./snack-bar/snack-bar.component";
 import { material } from "./material";
-import { UserVatarComponent } from "./user-avatar/user-avatar.component";
-import { PassWordFieldComponent } from "./password-field/password-field.component";
+import { AppButtonComponent } from "./components/in-app-button/app-button.component";
+import { PassWordFieldComponent } from "./components/password-field copy/password-field.component";
+import { SnackBarComponent, snackBarDefaultOptions } from "./components/snack-bar/snack-bar.component";
+import { UserVatarComponent } from "./components/user-avatar/user-avatar.component";
 
 @NgModule({
   imports: [
@@ -16,11 +17,13 @@ import { PassWordFieldComponent } from "./password-field/password-field.componen
   declarations: [
     SnackBarComponent,
     UserVatarComponent,
-    PassWordFieldComponent
+    PassWordFieldComponent,
+    AppButtonComponent
   ],
   exports: [
     UserVatarComponent,
-    PassWordFieldComponent
+    PassWordFieldComponent,
+    AppButtonComponent
   ],
   providers: [
     snackBarDefaultOptions

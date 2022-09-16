@@ -1,0 +1,16 @@
+.button-container {
+  height: 36px;
+  
+  &__spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 0;
+  }
+}
+
+
+.button-container ::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #ffffff;
+}

@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
+import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { MatchValidator } from 'src/app/shared/utils/match-validator';
 import { passwordValidator } from 'src/app/shared/utils/password-validator';

@@ -35,4 +35,8 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+  <button mat-flat-button color="primary" type="button" class="big-button" (click)="sendMessage()">
+    Message
+  </button>
 </section>

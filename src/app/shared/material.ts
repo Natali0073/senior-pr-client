@@ -12,6 +12,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 export const material = [
   MatButtonModule,
@@ -27,6 +28,7 @@ export const material = [
   MatMenuModule,
   MatCardModule,
   MatTabsModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatProgressSpinnerModule
 ];
 

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
+import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
 import { AuthService } from '../auth.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-forgot-password',
@@ -17,6 +18,7 @@ export class ForgotPasswordComponent implements OnInit {
     Validators.required,
     Validators.email,
   ]);
+  loading = false;
 
   constructor(private authService: AuthService, private _snackBar: MatSnackBar) { }
 
@@ -32,7 +34,11 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   resetEmail() {
+    this.loading = true;
     this.authService.resetPasswordRequest(this.email.value)
+      .pipe(
+        finalize(() => this.loading = false),
+      )
       .subscribe(() => {
         this._snackBar.openFromComponent(SnackBarComponent, {
           data: 'Recovery letter is sent! Please check your mail box.',

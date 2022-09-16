@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
-import { SnackBarComponent } from 'src/app/shared/snack-bar/snack-bar.component';
+import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'app-login',
