@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
+import { Socket } from 'ngx-socket-io';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private socket: Socket) { }
 
   getUsers() {
     return this.http.get<User[]>('api/users');
@@ -15,6 +17,14 @@ export class HomeService {
 
   getCurrentUser() {
     return this.http.get<User>('api/current-user');
+  }
+
+  sendMessage(msg: string) {
+    this.socket.emit('fromClient', {message: msg});
+  }
+
+  getMessage() {
+    return this.socket.fromEvent('message').pipe(map((data: any) => data.msg));
   }
 }
 

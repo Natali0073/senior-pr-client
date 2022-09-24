@@ -1,12 +1,37 @@
-table {
-  width: 60%;
-  margin: 10px;
-}
+.home-dashboard {
+  &__spacer {
+    flex: 1 1 auto;
+  }
 
-.add-button {
-  margin: 10px;
-}
+  &__logo {
+    display: flex;
+  }
 
-.example-spacer {
-  flex: 1 1 auto;
+  &__toolbar {
+    padding-left: 0;
+  }
+
+  &__content {
+    padding: 15px 25px;
+  }
+
+  &__header {
+    h2 {
+      margin: 0;
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+
+  &__new-chat-button {
+    width: 100px;
+  }
+
+  &__empty-data {
+    text-align: center;
+    opacity: 0.5;
+  }
 }

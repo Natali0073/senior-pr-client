@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { AutoUnsubscribe } from '../shared/utils/AutoUnsubscribe';
 import { User, HomeService } from './home.service';
-import { UserProfileComponent } from './UserProfile/user-profile.component';
+import { UserProfileComponent } from './userProfile/user-profile.component';
 import { Store } from '@ngrx/store';
 import { selectCurrentUser } from '../state/users.selectors';
 import { getCurrentUser } from '../state/users.actions';
-import { ChatService } from '../chat/chat.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-home',
@@ -17,48 +18,46 @@ import { ChatService } from '../chat/chat.service';
 })
 @AutoUnsubscribe
 export class HomeComponent implements OnInit {
-  usersList: User[] = [];
-  displayedColumns: string[] = ['name', 'email', 'role'];
   preview: string = '../../assets/avatar.png';
-
-  currentUserSelector: any = this.store.select(selectCurrentUser as any).subscribe(
-    (user: any) => {
-      if (user && user.avatar) this.preview = user.avatar;
-    }
-  );
+  chatsList: any[] = [];
 
   constructor(
-    private userService: HomeService,
+    private chatService: HomeService,
     public dialog: MatDialog,
     private authService: AuthService,
     public router: Router,
     private store: Store,
-    private chatService: ChatService
   ) {
   }
+
 
   ngOnInit(): void {
     this.getCurrentUser();
     this.getUsers();
     this.chatService.getMessage().subscribe(message => {
-      console.log(111, message);
-
     });
+
+    this.store.select(selectCurrentUser as any).subscribe(
+      (user: any) => {
+        if (user && user.avatar) this.preview = user.avatar;
+      }
+    );
   }
 
   sendMessage() {
-    console.log(1);
-    
     this.chatService.sendMessage('lalala');
   }
 
   getUsers() {
-    this.userService.getUsers()
-      .subscribe((users: User[]) => this.usersList = users);
+    this.chatService.getUsers()
+      .subscribe((users: User[]) => {
+        this.chatsList = users;
+        
+      });
   }
 
   getCurrentUser() {
-    this.userService.getCurrentUser()
+    this.chatService.getCurrentUser()
       .subscribe((user: User) => {
         this.store.dispatch(getCurrentUser({ user }))
       });

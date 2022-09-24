@@ -5,9 +5,9 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { material } from '../shared/material';
 import { SharedModule } from '../shared/shared.module';
-import { UserProfileComponent } from './UserProfile/user-profile.component';
+import { UserProfileComponent } from './userProfile/user-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UserVatarComponent } from '../shared/components/user-avatar/user-avatar.component';
+import { ChatsListComponent } from './chats-list/chats-list.component';
 
 @NgModule({
   imports: [
@@ -21,6 +21,7 @@ import { UserVatarComponent } from '../shared/components/user-avatar/user-avatar
   declarations: [
     HomeComponent,
     UserProfileComponent,
+    ChatsListComponent
   ]
 })
 export class HomeModule { }

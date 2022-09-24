@@ -1,42 +1,35 @@
-<mat-toolbar>
-  <span>Yo!</span>
-  <span class="example-spacer"></span>
-  <user-avatar [preview]="preview"></user-avatar>
-  <button mat-button [matMenuTriggerFor]="menu" aria-label="Menu">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="openMyProfile()">My profile</button>
-    <button mat-menu-item (click)="logout()">Logout</button>
-  </mat-menu>
-</mat-toolbar>
-<section>
-  <table mat-table [dataSource]="usersList" class="mat-elevation-z8">
+<div class="home-dashboard">
+  <mat-toolbar class="home-dashboard__toolbar">
+    <div class="home-dashboard__logo">
+      <img src="../../assets/logo.png" width="150px" />
+    </div>
+    <span class="home-dashboard__spacer"></span>
+    <user-avatar [preview]="preview"></user-avatar>
+    <button mat-button [matMenuTriggerFor]="menu" aria-label="Menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openMyProfile()">My profile</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+  </mat-toolbar>
+  <section class="home-dashboard__content">
+    <div class="home-dashboard__header">
+      <h2>Chats</h2>
+      <button mat-flat-button color="primary" type="button" class="big-button home-dashboard__new-chat-button"
+        (click)="sendMessage()">
+        + New chat
+      </button>
+    </div>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}}</td>
-    </ng-container>
+    <section *ngIf="!chatsList.length; else showChats" class="home-dashboard__empty-data">
+      You don't have active chats yet. <br /><br />
+      Click on "New chat" button to start messaging with other users.
+    </section>
+    <ng-template #showChats>
+      <chats-list [chatsList]="chatsList"></chats-list>
+    </ng-template>
+  </section>
 
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> Email </th>
-      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-    </ng-container>
 
-    <ng-container matColumnDef="role">
-      <th mat-header-cell *matHeaderCellDef> Role </th>
-      <td mat-cell *matCellDef="let element"> {{element.role}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef></th>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  <button mat-flat-button color="primary" type="button" class="big-button" (click)="sendMessage()">
-    Message
-  </button>
-</section>
+</div>
