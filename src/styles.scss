@@ -11,6 +11,7 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -37,8 +38,9 @@ body {
   color: #155724 !important; // green
   background-color: #d4edda !important;
   border-color: #c3e6cb !important;
+
   .mat-simple-snackbar-action {
-      color: #155724 !important;
+    color: #155724 !important;
   }
 }
 
@@ -46,12 +48,14 @@ body {
   color: #571518 !important; // green
   background-color: #edd4d4 !important;
   border-color: #e6c3c4 !important;
+
   .mat-simple-snackbar-action {
-      color: #571518 !important;
+    color: #571518 !important;
   }
 }
 
-.my-profile-modal {
+.my-profile-modal,
+.users-list-modal {
   width: 600px;
 }
 

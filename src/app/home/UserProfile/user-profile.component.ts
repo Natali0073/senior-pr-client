@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, Form } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -21,18 +21,9 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./user-profile.component.scss']
 })
 @AutoUnsubscribe
-export class UserProfileComponent {
+export class UserProfileComponent implements OnInit {
   currentUser: User | null = null;
   preview: string = '../../../assets/avatar.png';
-  currentUserSelector: any = this.store.select(selectCurrentUser as any).subscribe(
-    (user: any) => {
-      if (user) {
-        this.currentUser = user;
-        this.preview = user.avatar || this.preview;
-      }
-    }
-  );
-
   userProfile = new FormGroup({
     firstName: new FormControl(this.currentUser ? this.currentUser.firstName : '', [
       Validators.required
@@ -65,6 +56,21 @@ export class UserProfileComponent {
 
   constructor(private authService: AuthService, private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<UserProfileComponent>, private store: Store) {
+  }
+
+  ngOnInit(): void {
+    this.store.select(selectCurrentUser as any).subscribe(
+      (user: any) => {
+        if (user) {
+          this.currentUser = user;
+          this.preview = user.avatar || this.preview;
+          this.userProfile.setValue({
+            firstName: user.firstName, 
+            lastName: user.lastName
+          });
+        }
+      }
+    );
   }
 
   onTabChange(event: MatTabChangeEvent) {

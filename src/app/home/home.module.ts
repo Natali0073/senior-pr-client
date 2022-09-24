@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { UserProfileComponent } from './userProfile/user-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatsListComponent } from './chats-list/chats-list.component';
+import { UsersListComponent } from './users-list/users-list.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { ChatsListComponent } from './chats-list/chats-list.component';
   declarations: [
     HomeComponent,
     UserProfileComponent,
-    ChatsListComponent
+    ChatsListComponent,
+    UsersListComponent
   ]
 })
 export class HomeModule { }

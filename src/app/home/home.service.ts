@@ -20,11 +20,17 @@ export class HomeService {
   }
 
   sendMessage(msg: string) {
-    this.socket.emit('fromClient', {message: msg});
+    this.socket.emit('fromClient', { message: msg });
   }
 
   getMessage() {
     return this.socket.fromEvent('message').pipe(map((data: any) => data.msg));
+  }
+
+  getAllChats(pagination: any) {
+    return this.http.get<any[]>('api/chats', {
+      params: pagination
+    },);
   }
 }
 
@@ -33,9 +39,9 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
-  avatar:string | null;
-  createdAt:string;
-  role:string;
-  updatedAt:string;
+  avatar: string | null;
+  createdAt: string;
+  role: string;
+  updatedAt: string;
   accessToken?: string;
 }
