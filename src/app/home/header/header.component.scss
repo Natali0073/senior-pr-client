@@ -1,0 +1,12 @@
+.header-container {
+  padding-left: 0;
+
+  &__spacer {
+    flex: 1 1 auto;
+  }
+
+  &__logo {
+    display: flex;
+    cursor: pointer;
+  }
+}

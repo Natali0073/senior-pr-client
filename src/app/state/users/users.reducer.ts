@@ -1,6 +1,6 @@
 import { combineReducers } from "@ngrx/store";
 import { createReducer, on } from '@ngrx/store';
-import { User } from "../home/home.service";
+import { User } from "src/app/home/home.service";
 import { getCurrentUser, getUsers } from './users.actions';
 
 export interface UsersStore {

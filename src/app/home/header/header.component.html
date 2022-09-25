@@ -1,0 +1,14 @@
+<mat-toolbar class="header-container">
+  <div class="header-container__logo">
+    <img src="../../../assets/logo.png" width="150px" routerLink="/"/>
+  </div>
+  <span class="header-container__spacer"></span>
+  <user-avatar [preview]="preview"></user-avatar>
+  <button mat-button [matMenuTriggerFor]="menu" aria-label="Menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="openMyProfile()">My profile</button>
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+</mat-toolbar>

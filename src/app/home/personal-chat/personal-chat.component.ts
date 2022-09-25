@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
+import { selectChats } from 'src/app/state/chats/chats.selectors';
 import { HomeService } from '../home.service';
 
 @Component({
@@ -16,7 +18,11 @@ export class PersonalChatComponent implements OnInit, AfterViewInit {
   loading: boolean;
   messages: any[];
 
-  constructor(private chatService: HomeService, private route: ActivatedRoute) {
+  constructor(
+    private chatService: HomeService, 
+    private route: ActivatedRoute,
+    private store: Store
+    ) {
   }
 
   ngAfterViewInit() {
@@ -27,6 +33,13 @@ export class PersonalChatComponent implements OnInit, AfterViewInit {
       this.currentChatId = params.get('id') || '';
     });
     if (this.currentChatId) this.getMessages();
+
+    this.store.select(selectChats as any).subscribe(
+      (chats: any) => {
+        console.log('chats', chats);
+        
+      }
+    );
   }
 
   getMessages() {

@@ -10,10 +10,10 @@ import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { MatchValidator } from 'src/app/shared/utils/match-validator';
 import { passwordValidator } from 'src/app/shared/utils/password-validator';
 import { checkFieldValid, formErrorMessage, validateImageSize } from 'src/app/shared/utils/utils';
-import { getCurrentUser } from 'src/app/state/users.actions';
-import { selectCurrentUser } from 'src/app/state/users.selectors';
+import { getCurrentUser } from 'src/app/state/users/users.actions';
 import { User } from '../home.service';
 import { finalize } from 'rxjs/operators';
+import { selectCurrentUser } from 'src/app/state/users/users.selectors';
 
 @Component({
   selector: 'user-profile',

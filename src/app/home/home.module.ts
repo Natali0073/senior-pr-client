@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatsListComponent } from './chats-list/chats-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { PersonalChatComponent } from './personal-chat/personal-chat.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { PersonalChatComponent } from './personal-chat/personal-chat.component';
     UserProfileComponent,
     ChatsListComponent,
     UsersListComponent,
-    PersonalChatComponent
+    PersonalChatComponent,
+    HeaderComponent
   ]
 })
 export class HomeModule { }

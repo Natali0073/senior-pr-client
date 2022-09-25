@@ -1,19 +1,5 @@
 .home-dashboard {
-  &__spacer {
-    flex: 1 1 auto;
-  }
-
-  &__logo {
-    display: flex;
-  }
-
-  &__toolbar {
-    padding-left: 0;
-  }
-
   &__content {
     padding: 15px 25px;
   }
-
- 
 }

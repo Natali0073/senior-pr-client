@@ -13,8 +13,9 @@ import { TermsAndPolicy } from './terms-and-policy/terms-and-policy.component';
 import { material } from './shared/material';
 import { PageNotFound } from './pag-not-found/page-not-found.component';
 import { StoreModule } from '@ngrx/store';
-import { usersReducer } from './state/users.reducer';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { usersReducer } from './state/users/users.reducer';
+import { chatssReducer } from './state/chats/chats.reducer';
 
 const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
 
@@ -32,7 +33,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
     AuthModule,
     SharedModule,
     HomeModule,
-    StoreModule.forRoot({ usersStore: usersReducer }),
+    StoreModule.forRoot({ usersStore: usersReducer, chatsStore: chatssReducer }),
     SocketIoModule.forRoot(config),
     ...material
   ],

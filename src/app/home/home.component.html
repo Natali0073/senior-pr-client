@@ -1,18 +1,5 @@
 <div class="home-dashboard">
-  <mat-toolbar class="home-dashboard__toolbar">
-    <div class="home-dashboard__logo">
-      <img src="../../assets/logo.png" width="150px" routerLink="/"/>
-    </div>
-    <span class="home-dashboard__spacer"></span>
-    <user-avatar [preview]="preview"></user-avatar>
-    <button mat-button [matMenuTriggerFor]="menu" aria-label="Menu">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="openMyProfile()">My profile</button>
-      <button mat-menu-item (click)="logout()">Logout</button>
-    </mat-menu>
-  </mat-toolbar>
+  <header [preview]="preview"></header>
   <section class="home-dashboard__content">
     <router-outlet></router-outlet>
   </section>

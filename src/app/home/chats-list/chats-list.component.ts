@@ -5,6 +5,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { UsersListComponent } from '../users-list/users-list.component';
 import { HomeService } from '../home.service';
+import { Store } from '@ngrx/store';
+import { getChats } from 'src/app/state/chats/chats.actions';
+import { selectChats } from 'src/app/state/chats/chats.selectors';
 
 @Component({
   selector: 'chats-list',
@@ -19,7 +22,11 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(public dialog: MatDialog, private chatService: HomeService) {
+  constructor(
+    public dialog: MatDialog, 
+    private chatService: HomeService,
+    private store: Store
+    ) {
   }
 
   ngAfterViewInit() {
@@ -33,6 +40,9 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
   getAllChats() {
     this.chatService.getAllChats({ page: 0, size: 10 }).subscribe((data: any) => {
       this.chatsListTable.data = data.chats;
+      console.log(1);
+      
+      this.store.dispatch(getChats({ chats: data }))
     });
   }
 
@@ -41,6 +51,4 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(() => {
     });
   }
-
-
 }

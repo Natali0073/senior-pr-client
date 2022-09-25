@@ -1,13 +1,9 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
+import { Component, OnInit } from '@angular/core';
 import { AutoUnsubscribe } from '../shared/utils/AutoUnsubscribe';
 import { User, HomeService } from './home.service';
-import { UserProfileComponent } from './userProfile/user-profile.component';
 import { Store } from '@ngrx/store';
-import { selectCurrentUser } from '../state/users.selectors';
-import { getCurrentUser } from '../state/users.actions';
+import { selectCurrentUser } from '../state/users/users.selectors';
+import { getCurrentUser } from '../state/users/users.actions';
 
 @Component({
   selector: 'app-home',
@@ -21,17 +17,14 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private chatService: HomeService,
-    public dialog: MatDialog,
-    private authService: AuthService,
-    public router: Router,
     private store: Store,
   ) {
   }
 
   ngOnInit(): void {
     this.getCurrentUser();
-    
     this.chatService.getMessage().subscribe(message => {
+      console.log('getMessage from socket', message);
     });
 
     this.store.select(selectCurrentUser as any).subscribe(
@@ -41,23 +34,10 @@ export class HomeComponent implements OnInit {
     );
   }
 
-
   getCurrentUser() {
     this.chatService.getCurrentUser()
       .subscribe((user: User) => {
-        this.store.dispatch(getCurrentUser({ user }))
+        this.store.dispatch(getCurrentUser({ user }));
       });
-  }
-
-  openMyProfile() {
-    const dialogRef = this.dialog.open(UserProfileComponent, { panelClass: 'my-profile-modal' });
-    dialogRef.afterClosed().subscribe(() => {
-    });
-  }
-
-  logout() {
-    this.authService.logout().subscribe(() => {
-      this.router.navigate(['/login']);
-    })
   }
 }
