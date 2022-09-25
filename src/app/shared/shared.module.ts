@@ -6,6 +6,7 @@ import { AppButtonComponent } from "./components/in-app-button/app-button.compon
 import { PassWordFieldComponent } from "./components/password-field copy/password-field.component";
 import { SnackBarComponent, snackBarDefaultOptions } from "./components/snack-bar/snack-bar.component";
 import { UserVatarComponent } from "./components/user-avatar/user-avatar.component";
+import { PassedTimePipe } from "./pipes/passedTime.pipe";
 
 @NgModule({
   imports: [
@@ -18,12 +19,14 @@ import { UserVatarComponent } from "./components/user-avatar/user-avatar.compone
     SnackBarComponent,
     UserVatarComponent,
     PassWordFieldComponent,
-    AppButtonComponent
+    AppButtonComponent,
+    PassedTimePipe
   ],
   exports: [
     UserVatarComponent,
     PassWordFieldComponent,
-    AppButtonComponent
+    AppButtonComponent,
+    PassedTimePipe
   ],
   providers: [
     snackBarDefaultOptions

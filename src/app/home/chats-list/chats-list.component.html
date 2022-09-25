@@ -27,7 +27,7 @@
 
       <ng-container matColumnDef="lastMessage">
         <th mat-header-cell *matHeaderCellDef> lastMessage </th>
-        <td mat-cell *matCellDef="let element"> 2h </td>
+        <td mat-cell *matCellDef="let element"> {{ element.updatedAt | passedTime }} </td>
       </ng-container>
 
       <ng-container matColumnDef="action">
