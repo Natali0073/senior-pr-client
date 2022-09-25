@@ -19,10 +19,6 @@ export class HomeService {
     return this.http.get<User>('api/current-user');
   }
 
-  sendMessage(msg: string) {
-    this.socket.emit('fromClient', { message: msg });
-  }
-
   getMessage() {
     return this.socket.fromEvent('message').pipe(map((data: any) => data.msg));
   }
@@ -33,8 +29,16 @@ export class HomeService {
 
   startConversation(receiverData: any) {
     return this.http.get<any[]>('api/chat', { params: receiverData });
-
   }
+
+  getMessagesByChat(chatId: string, pagination: any) {
+    return this.http.get<any[]>(`/api/chat/${chatId}/messages`, { params: pagination });
+  }
+
+  sendMessage(chatId: string, message: string) {
+    return this.http.post<any[]>(`/api/chat/${chatId}/send`, { text: message });
+  }
+
 }
 
 export interface User {

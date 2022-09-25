@@ -1,1 +1,18 @@
 Chat page
+{{currentChatId}}
+<div>
+  <div style="display: flex;
+  flex-direction: column-reverse;">
+    <div *ngFor="let message of messages; index as i; first as isFirst">
+      {{message.text}} ---  {{message.date}}
+    </div>
+  </div>
+  
+  <mat-form-field class="example-form-field" appearance="fill">
+    <mat-label>Message</mat-label>
+    <input matInput type="text" [(ngModel)]="message">
+  </mat-form-field>
+  <app-button [disabled]="!message" (onClick)="sendMessage()" label="Submit"
+      [loading]="loading"></app-button>
+</div>
+

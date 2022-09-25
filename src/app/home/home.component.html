@@ -1,7 +1,7 @@
 <div class="home-dashboard">
   <mat-toolbar class="home-dashboard__toolbar">
     <div class="home-dashboard__logo">
-      <img src="../../assets/logo.png" width="150px" />
+      <img src="../../assets/logo.png" width="150px" routerLink="/"/>
     </div>
     <span class="home-dashboard__spacer"></span>
     <user-avatar [preview]="preview"></user-avatar>
@@ -14,7 +14,6 @@
     </mat-menu>
   </mat-toolbar>
   <section class="home-dashboard__content">
-    <!-- <chats-list></chats-list> -->
     <router-outlet></router-outlet>
   </section>
 </div>

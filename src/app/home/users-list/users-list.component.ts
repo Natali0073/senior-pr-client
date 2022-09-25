@@ -34,11 +34,8 @@ export class UsersListComponent implements OnInit {
   startConversation(user: User) {
     this.chatService.startConversation({ receiverId: user.id })
       .subscribe((chat: any) => {
-        console.log(chat);
-
         this.router.navigate([`/chats/${chat.id}`]);
         this.dialogRef.close();
-
       });
   }
 
