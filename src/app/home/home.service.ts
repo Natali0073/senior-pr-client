@@ -28,9 +28,12 @@ export class HomeService {
   }
 
   getAllChats(pagination: any) {
-    return this.http.get<any[]>('api/chats', {
-      params: pagination
-    },);
+    return this.http.get<any[]>('api/chats', { params: pagination });
+  }
+
+  startConversation(receiverData: any) {
+    return this.http.get<any[]>('api/chat', { params: receiverData });
+
   }
 }
 

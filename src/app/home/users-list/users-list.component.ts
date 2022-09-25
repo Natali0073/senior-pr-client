@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { HomeService, User } from '../home.service';
@@ -16,7 +17,8 @@ export class UsersListComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<UsersListComponent>,
-    private chatService: HomeService
+    private chatService: HomeService,
+    private router: Router
   ) {
   }
 
@@ -29,8 +31,15 @@ export class UsersListComponent implements OnInit {
       .subscribe((users: User[]) => this.usersList = users);
   }
 
-  startConversation() {
-    
+  startConversation(user: User) {
+    this.chatService.startConversation({ receiverId: user.id })
+      .subscribe((chat: any) => {
+        console.log(chat);
+
+        this.router.navigate([`/chats/${chat.id}`]);
+        this.dialogRef.close();
+
+      });
   }
 
 }

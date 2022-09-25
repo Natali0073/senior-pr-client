@@ -8,7 +8,6 @@ import { UserProfileComponent } from './userProfile/user-profile.component';
 import { Store } from '@ngrx/store';
 import { selectCurrentUser } from '../state/users.selectors';
 import { getCurrentUser } from '../state/users.actions';
-import { UsersListComponent } from './users-list/users-list.component';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +30,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrentUser();
-    this.getAllChats();
+    
     this.chatService.getMessage().subscribe(message => {
     });
 
@@ -42,11 +41,6 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  getAllChats() {
-    this.chatService.getAllChats({ page: 0, size: 10 }).subscribe((chats: any[]) => {
-      this.chatsList = chats;
-    });
-  }
 
   getCurrentUser() {
     this.chatService.getCurrentUser()
@@ -57,12 +51,6 @@ export class HomeComponent implements OnInit {
 
   openMyProfile() {
     const dialogRef = this.dialog.open(UserProfileComponent, { panelClass: 'my-profile-modal' });
-    dialogRef.afterClosed().subscribe(() => {
-    });
-  }
-
-  openUsersList() {
-    const dialogRef = this.dialog.open(UsersListComponent, { panelClass: 'users-list-modal' });
     dialogRef.afterClosed().subscribe(() => {
     });
   }

@@ -8,13 +8,13 @@ import { PageNotFound } from './PageNotFound/page-not-found.component';
 import { TermsAndPolicy } from './TermsAndPolicy/terms-and-policy.component';
 
 const routes: Routes = [
-  { path: 'users', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+  { path: 'chats', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password/:token', component: ResetPasswordComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'terms-and-policy', component: TermsAndPolicy },
-  { path: '', redirectTo: 'users', pathMatch: 'full' },
+  { path: '', redirectTo: 'chats', pathMatch: 'full' },
   { path: '**', pathMatch: 'full', component: PageNotFound }
 ];
 
