@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
-import { UserProfileComponent } from '../userProfile/user-profile.component';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
 
 @Component({
   selector: 'header',

@@ -9,7 +9,6 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
-      { path: '', component: ChatsListComponent },
       { path: ':id', component: PersonalChatComponent },
     ]
   },

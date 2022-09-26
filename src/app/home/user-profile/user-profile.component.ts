@@ -59,13 +59,17 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.selectUserStore;
+  }
+
+  selectUserStore() {
     this.store.select(selectCurrentUser as any).subscribe(
       (user: any) => {
         if (user) {
           this.currentUser = user;
           this.preview = user.avatar || this.preview;
           this.userProfile.setValue({
-            firstName: user.firstName, 
+            firstName: user.firstName,
             lastName: user.lastName
           });
         }

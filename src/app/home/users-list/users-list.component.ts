@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { HomeService, User } from '../home.service';
 

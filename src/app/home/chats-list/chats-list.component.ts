@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { MatPaginator } from '@angular/material/paginator';
@@ -7,7 +7,6 @@ import { UsersListComponent } from '../users-list/users-list.component';
 import { HomeService } from '../home.service';
 import { Store } from '@ngrx/store';
 import { getChats } from 'src/app/state/chats/chats.actions';
-import { selectChats } from 'src/app/state/chats/chats.selectors';
 
 @Component({
   selector: 'chats-list',
@@ -21,12 +20,14 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
   chatsListTable = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @Output() openUsersListHandler = new EventEmitter();
+  @Input() currentChatId: string;
 
   constructor(
-    public dialog: MatDialog, 
+    public dialog: MatDialog,
     private chatService: HomeService,
     private store: Store
-    ) {
+  ) {
   }
 
   ngAfterViewInit() {
@@ -41,14 +42,12 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
     this.chatService.getAllChats({ page: 0, size: 10 }).subscribe((data: any) => {
       this.chatsListTable.data = data.chats;
       console.log(1);
-      
+
       this.store.dispatch(getChats({ chats: data }))
     });
   }
 
   openUsersList() {
-    const dialogRef = this.dialog.open(UsersListComponent, { panelClass: 'users-list-modal' });
-    dialogRef.afterClosed().subscribe(() => {
-    });
+    this.openUsersListHandler.emit();
   }
 }

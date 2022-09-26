@@ -11,7 +11,7 @@ import { HomeService } from '../home.service';
   styleUrls: ['./personal-chat.component.scss']
 })
 @AutoUnsubscribe
-export class PersonalChatComponent implements OnInit, AfterViewInit {
+export class PersonalChatComponent implements OnInit {
 
   currentChatId: string;
   message: string;
@@ -19,25 +19,27 @@ export class PersonalChatComponent implements OnInit, AfterViewInit {
   messages: any[];
 
   constructor(
-    private chatService: HomeService, 
+    private chatService: HomeService,
     private route: ActivatedRoute,
     private store: Store
-    ) {
-  }
-
-  ngAfterViewInit() {
+  ) {
   }
 
   ngOnInit() {
+    this.getRouteParams();
+    if (this.currentChatId) this.getMessages();
+    this.getChatStore();
+  }
+
+  getRouteParams() {
     this.route.paramMap.subscribe(params => {
       this.currentChatId = params.get('id') || '';
     });
-    if (this.currentChatId) this.getMessages();
+  }
 
+  getChatStore() {
     this.store.select(selectChats as any).subscribe(
       (chats: any) => {
-        console.log('chats', chats);
-        
       }
     );
   }

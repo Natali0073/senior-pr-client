@@ -1,7 +1,7 @@
 <div class="chats-dashboard">
   <div class="chats-dashboard__header">
-    <h2>Chats</h2>
-    <button mat-flat-button color="primary" type="button" class="big-button chats-dashboard__new-chat-button"
+    <h2>Chats {{currentChatId}}</h2>
+    <button *ngIf="currentChatId" mat-flat-button color="primary" type="button" class="big-button chats-dashboard__new-chat-button"
       (click)="openUsersList()">
       + New chat
     </button>

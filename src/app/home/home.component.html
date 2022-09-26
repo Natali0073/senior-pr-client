@@ -1,6 +1,11 @@
 <div class="home-dashboard">
   <header [preview]="preview"></header>
-  <section class="home-dashboard__content">
-    <router-outlet></router-outlet>
-  </section>
+  <mat-drawer-container class="home-dashboard__content">
+    <mat-drawer mode="side" opened class="home-dashboard__side-bar">
+      <chats-list (openUsersListHandler)="openUsersList()" [currentChatId]="currentChatId"></chats-list>
+    </mat-drawer>
+    <mat-drawer-content class="home-dashboard__main">
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>
 </div>

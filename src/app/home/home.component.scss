@@ -1,5 +1,19 @@
 .home-dashboard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
   &__content {
     padding: 15px 25px;
+    height: 100%;
+  }
+
+  &__side-bar {
+    width: 40%;
+  }
+
+  &__main {
+    width: 60%;
   }
 }
