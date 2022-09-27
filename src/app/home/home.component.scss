@@ -5,15 +5,13 @@
   align-items: stretch;
 
   &__content {
-    padding: 15px 25px;
     height: 100%;
+    display: flex;
   }
 
-  &__side-bar {
-    width: 40%;
-  }
-
+  &__side-bar,
   &__main {
-    width: 60%;
+    transition: width 1s ease-in-out;
   }
+
 }

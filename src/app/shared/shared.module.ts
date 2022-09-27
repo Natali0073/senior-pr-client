@@ -7,6 +7,7 @@ import { PassWordFieldComponent } from "./components/password-field copy/passwor
 import { SnackBarComponent, snackBarDefaultOptions } from "./components/snack-bar/snack-bar.component";
 import { UserVatarComponent } from "./components/user-avatar/user-avatar.component";
 import { PassedTimePipe } from "./pipes/passedTime.pipe";
+import { SideBarSwitchDirective } from "./directives/side-bar-switch.directive";
 
 @NgModule({
   imports: [
@@ -20,13 +21,15 @@ import { PassedTimePipe } from "./pipes/passedTime.pipe";
     UserVatarComponent,
     PassWordFieldComponent,
     AppButtonComponent,
-    PassedTimePipe
+    PassedTimePipe,
+    SideBarSwitchDirective
   ],
   exports: [
     UserVatarComponent,
     PassWordFieldComponent,
     AppButtonComponent,
-    PassedTimePipe
+    PassedTimePipe,
+    SideBarSwitchDirective
   ],
   providers: [
     snackBarDefaultOptions

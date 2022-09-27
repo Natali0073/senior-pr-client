@@ -41,8 +41,6 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
   getAllChats() {
     this.chatService.getAllChats({ page: 0, size: 10 }).subscribe((data: any) => {
       this.chatsListTable.data = data.chats;
-      console.log(1);
-
       this.store.dispatch(getChats({ chats: data }))
     });
   }

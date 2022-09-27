@@ -12,7 +12,6 @@ import { HomeService } from '../home.service';
 })
 @AutoUnsubscribe
 export class PersonalChatComponent implements OnInit {
-
   currentChatId: string;
   message: string;
   loading: boolean;

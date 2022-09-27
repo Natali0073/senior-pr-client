@@ -6,7 +6,8 @@ import { selectCurrentUser } from '../state/users/users.selectors';
 import { getCurrentUser } from '../state/users/users.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersListComponent } from './users-list/users-list.component';
-import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RoutesRecognized } from '@angular/router';
+import { variable } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-home',
@@ -38,28 +39,18 @@ export class HomeComponent implements OnInit {
   }
 
   getRouteParams() {
-    // this.route.paramMap.subscribe(params => {
-    //   console.log(1111, params);
-      
-    //   this.currentChatId = params.get('id') || '';
-    // });
-
-//     this.router.events.subscribe(val => {
-// console.log(111, val);
-
-//       if (val instanceof RoutesRecognized) {
-
-//           console.log(val.state.root.firstChild.params);
-
-//       }
-//   });
- 
-     this.route.firstChild?.params.subscribe(
-      (params) => 
-      { 
+    this.route.firstChild?.params.subscribe(
+      (params) => {
         this.currentChatId = params.id || '';
-       });
-     
+      });
+
+    this.router.events.subscribe(val => {
+      if (val instanceof NavigationEnd) {
+        const urlSplit = val.urlAfterRedirects.split('/');
+        const id = urlSplit.reverse()[0];
+        this.currentChatId = id !== 'chats' ? id : '';
+      }
+    });
   }
 
   getCurrentUser() {
