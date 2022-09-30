@@ -59,7 +59,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectUserStore;
+    this.selectUserStore();
   }
 
   selectUserStore() {
