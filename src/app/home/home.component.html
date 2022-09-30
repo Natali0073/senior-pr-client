@@ -1,11 +1,1 @@
-<div class="home-dashboard">
-  <header [preview]="preview"></header>
-  <div class="home-dashboard__content">
-    <div class="home-dashboard__side-bar" [appSideBarSwitch]="currentChatId">
-      <chats-list (openUsersListHandler)="openUsersList()" [currentChatId]="currentChatId"></chats-list>
-    </div>
-    <div class="home-dashboard__main" [ngStyle]="{'width': currentChatId ? '60%' : '0px'}">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</div>
+<dashboard></dashboard>

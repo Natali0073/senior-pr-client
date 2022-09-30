@@ -1,0 +1,17 @@
+.home-dashboard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  &__content {
+    height: 100%;
+    display: flex;
+  }
+
+  &__side-bar,
+  &__main {
+    transition: width 1s ease-in-out;
+  }
+
+}

@@ -4,8 +4,8 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
-import { PageNotFound } from './pag-not-found/page-not-found.component';
-import { TermsAndPolicy } from './terms-and-policy/terms-and-policy.component';
+import { PageNotFound } from './components/page-not-found/page-not-found.component';
+import { TermsAndPolicy } from './components/terms-and-policy/terms-and-policy.component';
 
 const routes: Routes = [
   { path: 'chats', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
