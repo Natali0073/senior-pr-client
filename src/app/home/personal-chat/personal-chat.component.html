@@ -1,18 +1,39 @@
-Chat page
-{{currentChatId}}
-<div>
-  <div style="display: flex;
-  flex-direction: column-reverse;">
-    <div *ngFor="let message of messages; index as i; first as isFirst">
-      {{message.text}} ---  {{message.date}}
+<div class="chat-container flex">
+  <div class="chat-container__toolbar flex">
+    <div class="chat-container__toolbar-main flex">
+      <button mat-icon-button aria-label="back icon" routerLink="/chats">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <div class="chat-container__user-info flex">
+        <user-avatar [preview]="avatarLink"></user-avatar>
+        <div class="chat-container__user-name flex">
+          <span>Name FirstName</span>
+          <span class="user-status-online">Online
+            <span class="status-marker-online"></span>
+          </span>
+        </div>
+      </div>
     </div>
+    <button mat-icon-button aria-label="menu icon">
+      <mat-icon>more_vert</mat-icon>
+    </button>
   </div>
-  
-  <mat-form-field class="example-form-field" appearance="fill">
-    <mat-label>Message</mat-label>
-    <input matInput type="text" [(ngModel)]="message">
-  </mat-form-field>
-  <app-button [disabled]="!message" (onClick)="sendMessage()" label="Submit"
-      [loading]="loading"></app-button>
+  <div class="chat-container__content flex">
+    <div class="chat-container__messages flex">
+      <div *ngFor="let message of messages; index as i; first as isFirst">
+        <div class="chat-container__message-container">
+          <user-avatar [preview]="avatarLink"></user-avatar>
+          <span>{{message.text}}</span>
+           --- {{message.formttedDate}}
+        </div>
+      </div>
+    </div>
+    <mat-form-field appearance="outline" class="chat-container__message-field">
+      <mat-label>Message</mat-label>
+      <textarea matInput placeholder="Enter your message here" [(ngModel)]="message"></textarea>
+      <button matSuffix mat-icon-button [disabled]="!message" aria-label="Clear" type="button" (click)="sendMessage()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
 </div>
-

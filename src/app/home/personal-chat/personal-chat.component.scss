@@ -1,0 +1,79 @@
+.chat-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 1px solid rgba(0, 0, 0, .1);
+
+  .flex {
+    display: flex;
+  }
+
+  &__toolbar {
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    padding: 20px;
+    align-items: center;
+  }
+
+
+  &__content {
+    flex-direction: column;
+    padding: 0 20px;
+    position: relative;
+  }
+
+  &__user-name {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 10px;
+  }
+
+  .user-status-online,
+  .user-status-offline {
+    font-size: 0.8em;
+  }
+
+  .user-status-offline {
+    opacity: .7;
+  }
+
+  .status-marker-online,
+  .status-marker-offline {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    top: -1px;
+  }
+
+  .status-marker-online {
+    background-color: #2E5BFF;
+  }
+
+  .status-marker-offline {
+    background-color: #a7a7a7;
+  }
+
+  &__message-field {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+
+    .mat-input-element {
+      resize: none;
+    }
+  }
+
+  &__messages {
+    flex-direction: column-reverse;
+    overflow: auto;
+    height: calc(100% - 95px);
+  }
+
+  &__message-container {
+
+  }
+
+}

@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { selectChats } from 'src/app/state/chats/chats.selectors';
 import { HomeService } from '../home.service';
@@ -16,6 +17,7 @@ export class PersonalChatComponent implements OnInit {
   message: string;
   loading: boolean;
   messages: any[];
+  avatarLink: string;
 
   constructor(
     private chatService: HomeService,
@@ -49,6 +51,11 @@ export class PersonalChatComponent implements OnInit {
       size: 10
     };
     this.chatService.getMessagesByChat(this.currentChatId, pagination)
+      .pipe(
+        map(response => {
+          return response.map(message => ({...message, formttedDate: this.formatDisplayDate(message.date)}));
+        })
+      )
       .subscribe((response: any) => {
         this.messages = response
       });
@@ -60,5 +67,16 @@ export class PersonalChatComponent implements OnInit {
         this.message = '';
       });
   }
+
+  formatDisplayDate(date: string) {
+    const hours = new Date(date).getHours();
+    const mins = new Date(date).getMinutes();
+    const month = new Date(date).getMonth();
+    const day = new Date(date).getDate();
+
+    return `${day}/${month} ${hours}:${mins < 10 ? '0' + mins : mins}`;
+  }
+
+  
 
 }
