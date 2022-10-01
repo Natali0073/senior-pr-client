@@ -1,0 +1,7 @@
+<div [ngClass]="{'message-container': true, 'message-container-left-side': messageLeftPosition}">
+  <span [ngClass]="{'message-container__text-box-left': messageLeftPosition, 'message-container__text-box-right': !messageLeftPosition}">
+    {{text}}
+    <span class="message-container__time">{{date}}</span>
+  </span>
+  <user-avatar [preview]="avatarLink"></user-avatar>
+</div>

@@ -5,7 +5,7 @@
         <mat-icon>keyboard_arrow_left</mat-icon>
       </button>
       <div class="chat-container__user-info flex">
-        <user-avatar [preview]="avatarLink"></user-avatar>
+        <user-avatar [preview]="friendAvatarLink"></user-avatar>
         <div class="chat-container__user-name flex">
           <span>Name FirstName</span>
           <span class="user-status-online">Online
@@ -19,15 +19,13 @@
     </button>
   </div>
   <div class="chat-container__messages flex">
-    <div *ngFor="let message of messages; index as i; first as isFirst">
-      <div class="chat-container__message-container">
-        <user-avatar [preview]="avatarLink"></user-avatar>
-        <span class="chat-container__message-box">
-          {{message.text}}
-          <span class="chat-container__message-time">{{message.formttedDate}}</span>
-        </span>
-
-      </div>
+    <div *ngFor="let message of messages; index as i;">
+      <chat-message 
+      [currentUser]="message.senderId === currentUser.id" 
+      [avatarLink]="message.senderId === currentUser.id ? currentUserAvatarLink : friendAvatarLink" 
+      [text]="message.text" 
+      [date]="message.formattedDate">
+      </chat-message>
     </div>
   </div>
   <mat-form-field appearance="outline" class="chat-container__message-field">

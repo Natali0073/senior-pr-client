@@ -4,7 +4,8 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { selectChats } from 'src/app/state/chats/chats.selectors';
-import { HomeService } from '../home.service';
+import { selectCurrentUser } from 'src/app/state/users/users.selectors';
+import { HomeService, User } from '../home.service';
 
 @Component({
   selector: 'personal-chat',
@@ -17,7 +18,10 @@ export class PersonalChatComponent implements OnInit {
   message: string;
   loading: boolean;
   messages: any[];
-  avatarLink: string;
+
+  currentUser: User;
+  currentUserAvatarLink: string;
+  friendAvatarLink: string;
 
   constructor(
     private chatService: HomeService,
@@ -30,6 +34,18 @@ export class PersonalChatComponent implements OnInit {
     this.getRouteParams();
     if (this.currentChatId) this.getMessages();
     this.getChatStore();
+    this.selectUserStore();
+  }
+
+  selectUserStore() {
+    this.store.select(selectCurrentUser as any).subscribe(
+      (user: any) => {
+        if (user) {
+          this.currentUser = user;
+          this.currentUserAvatarLink = user.avatar;
+        }
+      }
+    );
   }
 
   getRouteParams() {
@@ -53,10 +69,12 @@ export class PersonalChatComponent implements OnInit {
     this.chatService.getMessagesByChat(this.currentChatId, pagination)
       .pipe(
         map(response => {
-          return response.map(message => ({...message, formttedDate: this.formatDisplayDate(message.date)}));
+          return response.map(message => ({ ...message, formattedDate: this.formatDisplayDate(message.date) }));
         })
       )
       .subscribe((response: any) => {
+        console.log(response);
+
         this.messages = response
       });
   }
@@ -77,6 +95,6 @@ export class PersonalChatComponent implements OnInit {
     return `${day}/${month} ${hours}:${mins < 10 ? '0' + mins : mins}`;
   }
 
-  
+
 
 }

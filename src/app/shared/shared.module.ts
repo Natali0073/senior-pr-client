@@ -9,6 +9,7 @@ import { UserVatarComponent } from "./components/user-avatar/user-avatar.compone
 import { PassedTimePipe } from "./pipes/passedTime.pipe";
 import { SideBarWidthSwitchDirective } from "./directives/side-bar-width-switch.directive";
 import { ChatSwitchDirective } from "./directives/chat-width-switch.directive";
+import { ChatMessageComponent } from "./components/chat-message/chat-message.component";
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { ChatSwitchDirective } from "./directives/chat-width-switch.directive";
     AppButtonComponent,
     PassedTimePipe,
     SideBarWidthSwitchDirective,
-    ChatSwitchDirective
+    ChatSwitchDirective,
+    ChatMessageComponent
   ],
   exports: [
     UserVatarComponent,
@@ -32,7 +34,8 @@ import { ChatSwitchDirective } from "./directives/chat-width-switch.directive";
     AppButtonComponent,
     PassedTimePipe,
     SideBarWidthSwitchDirective,
-    ChatSwitchDirective
+    ChatSwitchDirective,
+    ChatMessageComponent
   ],
   providers: [
     snackBarDefaultOptions
