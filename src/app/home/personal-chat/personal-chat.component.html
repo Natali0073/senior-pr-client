@@ -1,4 +1,4 @@
-<div class="chat-container flex">
+<div class="chat-container">
   <div class="chat-container__toolbar flex">
     <div class="chat-container__toolbar-main flex">
       <button mat-icon-button aria-label="back icon" routerLink="/chats">
@@ -18,22 +18,23 @@
       <mat-icon>more_vert</mat-icon>
     </button>
   </div>
-  <div class="chat-container__content flex">
-    <div class="chat-container__messages flex">
-      <div *ngFor="let message of messages; index as i; first as isFirst">
-        <div class="chat-container__message-container">
-          <user-avatar [preview]="avatarLink"></user-avatar>
-          <span>{{message.text}}</span>
-           --- {{message.formttedDate}}
-        </div>
+  <div class="chat-container__messages flex">
+    <div *ngFor="let message of messages; index as i; first as isFirst">
+      <div class="chat-container__message-container">
+        <user-avatar [preview]="avatarLink"></user-avatar>
+        <span class="chat-container__message-box">
+          {{message.text}}
+          <span class="chat-container__message-time">{{message.formttedDate}}</span>
+        </span>
+
       </div>
     </div>
-    <mat-form-field appearance="outline" class="chat-container__message-field">
-      <mat-label>Message</mat-label>
-      <textarea matInput placeholder="Enter your message here" [(ngModel)]="message"></textarea>
-      <button matSuffix mat-icon-button [disabled]="!message" aria-label="Clear" type="button" (click)="sendMessage()">
-        <mat-icon>send</mat-icon>
-      </button>
-    </mat-form-field>
   </div>
+  <mat-form-field appearance="outline" class="chat-container__message-field">
+    <mat-label>Message</mat-label>
+    <textarea matInput placeholder="Enter your message here" [(ngModel)]="message"></textarea>
+    <button matSuffix mat-icon-button [disabled]="!message" aria-label="Clear" type="button" (click)="sendMessage()">
+      <mat-icon>send</mat-icon>
+    </button>
+  </mat-form-field>
 </div>

@@ -9,6 +9,8 @@
     width: 80%;
     margin: auto;
     margin-top: 20px;
+    max-height: 80%;
+    overflow: auto;
   }
 
   &__content-title {

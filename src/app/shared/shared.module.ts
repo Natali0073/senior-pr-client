@@ -7,7 +7,8 @@ import { PassWordFieldComponent } from "./components/password-field/password-fie
 import { SnackBarComponent, snackBarDefaultOptions } from "./components/snack-bar/snack-bar.component";
 import { UserVatarComponent } from "./components/user-avatar/user-avatar.component";
 import { PassedTimePipe } from "./pipes/passedTime.pipe";
-import { SideBarSwitchDirective } from "./directives/side-bar-switch.directive";
+import { SideBarWidthSwitchDirective } from "./directives/side-bar-width-switch.directive";
+import { ChatSwitchDirective } from "./directives/chat-width-switch.directive";
 
 @NgModule({
   imports: [
@@ -22,14 +23,16 @@ import { SideBarSwitchDirective } from "./directives/side-bar-switch.directive";
     PassWordFieldComponent,
     AppButtonComponent,
     PassedTimePipe,
-    SideBarSwitchDirective
+    SideBarWidthSwitchDirective,
+    ChatSwitchDirective
   ],
   exports: [
     UserVatarComponent,
     PassWordFieldComponent,
     AppButtonComponent,
     PassedTimePipe,
-    SideBarSwitchDirective
+    SideBarWidthSwitchDirective,
+    ChatSwitchDirective
   ],
   providers: [
     snackBarDefaultOptions
