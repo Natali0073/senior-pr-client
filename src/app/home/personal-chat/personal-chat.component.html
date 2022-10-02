@@ -15,7 +15,7 @@
       </div>
     </div>
   </div>
-  <div class="chat-container__messages flex">
+  <div class="chat-container__messages flex" (scroll)="onScroll()" #content>
     <div class="chat-container__empty-block" *ngIf="messages.length === 0; else messegasList">
       You don't have messages yet.
   </div>

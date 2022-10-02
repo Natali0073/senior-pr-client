@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
@@ -14,6 +14,8 @@ import { HomeService, User } from '../home.service';
 })
 @AutoUnsubscribe
 export class PersonalChatComponent implements OnInit {
+  @ViewChild('content') content: ElementRef;
+
   currentChatId: string;
   message: string;
   loading: boolean;
@@ -72,11 +74,13 @@ export class PersonalChatComponent implements OnInit {
     );
   }
 
-  getMessages() {
+  getMessages(lastMessageDate?: string) {
     const pagination = {
-      // lastMessageDate: undefined, 
+      lastMessageDate: lastMessageDate,
       size: 10
     };
+    if (!lastMessageDate) delete pagination.lastMessageDate;
+
     this.chatService.getMessagesByChat(this.currentChatId, pagination)
       .pipe(
         map(response => {
@@ -84,12 +88,25 @@ export class PersonalChatComponent implements OnInit {
         })
       )
       .subscribe((response: any) => {
-        this.messages = response
+        console.log([...this.messages]);
+        
+        this.messages.push(...response);
+        console.log(this.messages);
+        
       });
   }
 
   onEnter() {
     this.sendMessage();
+  }
+
+  onScroll() {
+    let element = this.content.nativeElement;
+    let atTop = (element.scrollHeight + element.scrollTop) === element.clientHeight;
+    if (atTop) {
+      const lastMessageDate = this.messages[this.messages.length - 1].date;
+      this.getMessages(lastMessageDate);
+    }
   }
 
   sendMessage() {
