@@ -36,7 +36,7 @@
   <div class="chat-container__message-field">
     <mat-form-field appearance="outline">
       <mat-label>Message</mat-label>
-      <textarea matInput placeholder="Enter your message here" [(ngModel)]="message"></textarea>
+      <textarea matInput placeholder="Enter your message here" [(ngModel)]="message" (keyup.enter)="onEnter()"></textarea>
       <button matSuffix mat-icon-button [disabled]="!message" aria-label="Clear" type="button" (click)="sendMessage()">
         <mat-icon>send</mat-icon>
       </button>

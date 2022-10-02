@@ -84,10 +84,12 @@ export class PersonalChatComponent implements OnInit {
         })
       )
       .subscribe((response: any) => {
-        console.log(response);
-
         this.messages = response
       });
+  }
+
+  onEnter() {
+    this.sendMessage();
   }
 
   sendMessage() {
