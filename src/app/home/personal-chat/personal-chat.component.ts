@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
@@ -17,7 +17,7 @@ export class PersonalChatComponent implements OnInit {
   currentChatId: string;
   message: string;
   loading: boolean;
-  messages: any[];
+  messages: any[] = [];
 
   currentUser: User;
   currentUserAvatarLink: string;
@@ -26,15 +26,26 @@ export class PersonalChatComponent implements OnInit {
   constructor(
     private chatService: HomeService,
     private route: ActivatedRoute,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) {
+    this.routeEventSubscribe();
   }
 
   ngOnInit() {
-    this.getRouteParams();
-    if (this.currentChatId) this.getMessages();
     this.getChatStore();
     this.selectUserStore();
+  }
+
+  routeEventSubscribe() {
+    this.router.events.subscribe(val => {
+      if (val instanceof NavigationEnd) {
+        const urlSplit = val.urlAfterRedirects.split('/');
+        const id = urlSplit.reverse()[0];
+        this.currentChatId = id !== 'chats' ? id : '';
+        if (this.currentChatId) this.getMessages();
+      }
+    });
   }
 
   selectUserStore() {

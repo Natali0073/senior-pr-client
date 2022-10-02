@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
 @Component({
   selector: 'chat-message',
@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['chat-message.component.scss'],
 })
 
-export class ChatMessageComponent implements OnInit {
+export class ChatMessageComponent implements OnChanges {
   constructor() {
   }
 
@@ -17,7 +17,7 @@ export class ChatMessageComponent implements OnInit {
 
   messageLeftPosition: boolean;
 
-  ngOnInit() {
+  ngOnChanges() {
     this.messageLeftPosition = !this.currentUser;
   }
 
