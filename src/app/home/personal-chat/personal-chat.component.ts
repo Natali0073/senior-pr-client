@@ -24,6 +24,7 @@ export class PersonalChatComponent implements OnInit {
   currentUser: User;
   currentUserAvatarLink: string;
   friendAvatarLink: string;
+  lastMessagedateSearched?: string;
 
   constructor(
     private chatService: HomeService,
@@ -81,6 +82,7 @@ export class PersonalChatComponent implements OnInit {
     };
     if (!lastMessageDate) delete pagination.lastMessageDate;
 
+    this.lastMessagedateSearched = pagination.lastMessageDate;
     this.chatService.getMessagesByChat(this.currentChatId, pagination)
       .pipe(
         map(response => {
@@ -88,11 +90,7 @@ export class PersonalChatComponent implements OnInit {
         })
       )
       .subscribe((response: any) => {
-        console.log([...this.messages]);
-        
         this.messages.push(...response);
-        console.log(this.messages);
-        
       });
   }
 
@@ -105,6 +103,9 @@ export class PersonalChatComponent implements OnInit {
     let atTop = (element.scrollHeight + element.scrollTop) === element.clientHeight;
     if (atTop) {
       const lastMessageDate = this.messages[this.messages.length - 1].date;
+      // don't call get messages, if oldest is already present
+      if (this.lastMessagedateSearched === lastMessageDate) return;
+
       this.getMessages(lastMessageDate);
     }
   }
@@ -112,8 +113,22 @@ export class PersonalChatComponent implements OnInit {
   sendMessage() {
     this.chatService.sendMessage(this.currentChatId, this.message)
       .subscribe(() => {
+        this.addLatestMessage();
         this.message = '';
       });
+  }
+
+  addLatestMessage() {
+    const date = new Date().toISOString();
+    const newMessage = {
+      chatId: this.currentChatId,
+      date: date,
+      senderId: this.currentUser.id,
+      text: this.message,
+      formattedDate: this.formatDisplayDate(date),
+      id: 'asdsad'
+    }
+    this.messages.unshift(newMessage);
   }
 
   formatDisplayDate(date: string) {
@@ -122,9 +137,11 @@ export class PersonalChatComponent implements OnInit {
     const month = new Date(date).getMonth();
     const day = new Date(date).getDate();
 
-    return `${day}/${month} ${hours}:${mins < 10 ? '0' + mins : mins}`;
+    return `${this.formatValue(day)}/${this.formatValue(month)} ${this.formatValue(hours)}:${this.formatValue(mins)}`;
   }
 
-
+  formatValue(number: number) {
+    return `${number < 10 ? '0' : ''}${number}`;
+  }
 
 }

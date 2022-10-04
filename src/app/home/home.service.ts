@@ -36,6 +36,7 @@ export class HomeService {
   }
 
   sendMessage(chatId: string, message: string) {
+    this.socket.emit('fromClient', { message: message, chatId: chatId });
     return this.http.post<any[]>(`/api/chat/${chatId}/send`, { text: message });
   }
 
