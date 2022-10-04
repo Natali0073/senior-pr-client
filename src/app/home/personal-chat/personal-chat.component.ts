@@ -38,6 +38,7 @@ export class PersonalChatComponent implements OnInit {
   ngOnInit() {
     this.getChatStore();
     this.selectUserStore();
+    this.socketMessageSubscribe();
   }
 
   routeEventSubscribe() {
@@ -94,6 +95,12 @@ export class PersonalChatComponent implements OnInit {
       });
   }
 
+  socketMessageSubscribe() {
+    this.chatService.socketChatSubscribe(this.currentChatId).subscribe(message => {
+      this.messages.unshift({ ...message, formattedDate: this.formatDisplayDate(message.date) });
+    });
+  }
+
   onEnter() {
     this.sendMessage();
   }
@@ -113,22 +120,20 @@ export class PersonalChatComponent implements OnInit {
   sendMessage() {
     this.chatService.sendMessage(this.currentChatId, this.message)
       .subscribe(() => {
-        this.addLatestMessage();
+        this.emitMessage();
         this.message = '';
       });
   }
 
-  addLatestMessage() {
+  emitMessage() {
     const date = new Date().toISOString();
     const newMessage = {
       chatId: this.currentChatId,
       date: date,
       senderId: this.currentUser.id,
-      text: this.message,
-      formattedDate: this.formatDisplayDate(date),
-      id: 'asdsad'
+      text: this.message
     }
-    this.messages.unshift(newMessage);
+    this.chatService.emitSocketMessage(newMessage);
   }
 
   formatDisplayDate(date: string) {

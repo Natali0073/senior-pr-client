@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   preview: string = '../../assets/avatar.png';
   chatsList: any[] = [];
   currentChatId: string;
+  currentUser: User;
 
   constructor(
     private chatService: HomeService,
@@ -32,9 +33,6 @@ export class DashboardComponent implements OnInit {
     this.getRouteParams();
     this.getCurrentUser();
     this.selectUserStore();
-    this.chatService.getMessage().subscribe(message => {
-      console.log('getMessage from socket', message);
-    });
   }
 
   getRouteParams() {
@@ -55,7 +53,9 @@ export class DashboardComponent implements OnInit {
   getCurrentUser() {
     this.chatService.getCurrentUser()
       .subscribe((user: User) => {
+        this.currentUser = user;
         this.store.dispatch(getCurrentUser({ user }));
+        this.socketMessageSubscribe();
       });
   }
 
@@ -65,6 +65,13 @@ export class DashboardComponent implements OnInit {
         if (user && user.avatar) this.preview = user.avatar;
       }
     );
+  }
+
+  socketMessageSubscribe() {
+    if (this.currentUser) this.chatService.socketGlobalSubscribe(this.currentUser.id)
+      .subscribe(data => {
+        console.log('getMessage from socket', data);
+      });
   }
 
   openUsersList() {
