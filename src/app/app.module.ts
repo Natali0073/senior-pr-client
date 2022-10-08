@@ -17,7 +17,7 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { usersReducer } from './state/users/users.reducer';
 import { chatssReducer } from './state/chats/chats.reducer';
 
-const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:80', options: {} };
 
 @NgModule({
   declarations: [
