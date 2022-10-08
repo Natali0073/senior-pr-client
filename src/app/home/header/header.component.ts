@@ -1,8 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
+import { logoutAction } from 'src/app/state/global/global.actions';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 
 @Component({
@@ -18,7 +20,8 @@ export class HeaderComponent {
     private readonly unsubscriber: UnsubscriberService,
     public dialog: MatDialog,
     private authService: AuthService,
-    public router: Router
+    public router: Router,
+    protected store: Store
   ) {
   }
 
@@ -31,6 +34,7 @@ export class HeaderComponent {
     this.authService.logout()
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe(() => {
+        this.store.dispatch(logoutAction());
         this.router.navigate(['/login']);
       })
   }

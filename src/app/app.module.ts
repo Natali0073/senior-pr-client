@@ -16,6 +16,7 @@ import { StoreModule } from '@ngrx/store';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { usersReducer } from './state/users/users.reducer';
 import { chatssReducer } from './state/chats/chats.reducer';
+import { metaReducers } from './state/global/metaReducers';
 
 const config: SocketIoConfig = { url: 'http://localhost:80', options: {} };
 
@@ -33,7 +34,10 @@ const config: SocketIoConfig = { url: 'http://localhost:80', options: {} };
     AuthModule,
     SharedModule,
     HomeModule,
-    StoreModule.forRoot({ usersStore: usersReducer, chatsStore: chatssReducer }),
+    StoreModule.forRoot(
+      { usersStore: usersReducer, chatsStore: chatssReducer },
+      { metaReducers }
+    ),
     SocketIoModule.forRoot(config),
     ...material
   ],
