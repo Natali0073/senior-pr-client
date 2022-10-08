@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
-import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
+import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 import { selectChats } from 'src/app/state/chats/chats.selectors';
 import { selectCurrentUser } from 'src/app/state/users/users.selectors';
 import { HomeService, User } from '../home.service';
@@ -10,9 +10,9 @@ import { HomeService, User } from '../home.service';
 @Component({
   selector: 'personal-chat',
   templateUrl: './personal-chat.component.html',
-  styleUrls: ['./personal-chat.component.scss']
+  styleUrls: ['./personal-chat.component.scss'],
+  providers: [UnsubscriberService]
 })
-@AutoUnsubscribe
 export class PersonalChatComponent implements OnInit {
   @ViewChild('content') content: ElementRef;
 
@@ -27,6 +27,7 @@ export class PersonalChatComponent implements OnInit {
   lastMessagedateSearched?: string;
 
   constructor(
+    private readonly unsubscriber: UnsubscriberService,
     private chatService: HomeService,
     private route: ActivatedRoute,
     private store: Store,
@@ -42,38 +43,46 @@ export class PersonalChatComponent implements OnInit {
   }
 
   routeEventSubscribe() {
-    this.router.events.subscribe(val => {
-      if (val instanceof NavigationEnd) {
-        const urlSplit = val.urlAfterRedirects.split('/');
-        const id = urlSplit.reverse()[0];
-        this.currentChatId = id !== 'chats' ? id : '';
-        if (this.currentChatId) this.getMessages();
-      }
-    });
+    this.router.events
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe(val => {
+        if (val instanceof NavigationEnd) {
+          const urlSplit = val.urlAfterRedirects.split('/');
+          const id = urlSplit.reverse()[0];
+          this.currentChatId = id !== 'chats' ? id : '';
+          if (this.currentChatId) this.getMessages();
+        }
+      });
   }
 
   selectUserStore() {
-    this.store.select(selectCurrentUser as any).subscribe(
-      (user: any) => {
-        if (user) {
-          this.currentUser = user;
-          this.currentUserAvatarLink = user.avatar;
+    this.store.select(selectCurrentUser as any)
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe(
+        (user: any) => {
+          if (user) {
+            this.currentUser = user;
+            this.currentUserAvatarLink = user.avatar;
+          }
         }
-      }
-    );
+      );
   }
 
   getRouteParams() {
-    this.route.paramMap.subscribe(params => {
-      this.currentChatId = params.get('id') || '';
-    });
+    this.route.paramMap
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe(params => {
+        this.currentChatId = params.get('id') || '';
+      });
   }
 
   getChatStore() {
-    this.store.select(selectChats as any).subscribe(
-      (chats: any) => {
-      }
-    );
+    this.store.select(selectChats as any)
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe(
+        (chats: any) => {
+        }
+      );
   }
 
   getMessages(lastMessageDate?: string) {
@@ -86,6 +95,7 @@ export class PersonalChatComponent implements OnInit {
     this.lastMessagedateSearched = pagination.lastMessageDate;
     this.chatService.getMessagesByChat(this.currentChatId, pagination)
       .pipe(
+        this.unsubscriber.takeUntilDestroy,
         map(response => {
           return response.map(message => ({ ...message, formattedDate: this.formatDisplayDate(message.date) }));
         })
@@ -96,9 +106,11 @@ export class PersonalChatComponent implements OnInit {
   }
 
   socketMessageSubscribe() {
-    this.chatService.socketChatSubscribe(this.currentChatId).subscribe(message => {
-      this.messages.unshift({ ...message, formattedDate: this.formatDisplayDate(message.date) });
-    });
+    this.chatService.socketChatSubscribe(this.currentChatId)
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe(message => {
+        this.messages.unshift({ ...message, formattedDate: this.formatDisplayDate(message.date) });
+      });
   }
 
   onEnter() {
@@ -119,6 +131,7 @@ export class PersonalChatComponent implements OnInit {
 
   sendMessage() {
     this.chatService.sendMessage(this.currentChatId, this.message)
+      .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe(() => {
         this.emitMessage();
         this.message = '';
@@ -148,5 +161,4 @@ export class PersonalChatComponent implements OnInit {
   formatValue(number: number) {
     return `${number < 10 ? '0' : ''}${number}`;
   }
-
 }

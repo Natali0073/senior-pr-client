@@ -1,20 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
-import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
+import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 
 @Component({
   selector: 'header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  providers: [UnsubscriberService]
 })
-@AutoUnsubscribe
 export class HeaderComponent {
   @Input() preview: string;
 
   constructor(
+    private readonly unsubscriber: UnsubscriberService,
     public dialog: MatDialog,
     private authService: AuthService,
     public router: Router
@@ -22,16 +23,16 @@ export class HeaderComponent {
   }
 
   openMyProfile() {
-    const dialogRef = this.dialog.open(UserProfileComponent, { panelClass: 'my-profile-modal' });
-    dialogRef.afterClosed().subscribe(() => {
-    });
+    this.dialog.open(UserProfileComponent, { panelClass: 'my-profile-modal' });
   }
 
 
   logout() {
-    this.authService.logout().subscribe(() => {
-      this.router.navigate(['/login']);
-    })
+    this.authService.logout()
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe(() => {
+        this.router.navigate(['/login']);
+      })
   }
 
 }

@@ -6,15 +6,15 @@ import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
 import { catchError, finalize } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
+import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [UnsubscriberService]
 })
-@AutoUnsubscribe
 export class LoginComponent {
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [
@@ -28,7 +28,12 @@ export class LoginComponent {
 
   loading = false;
 
-  constructor(public authService: AuthService, public router: Router, private _snackBar: MatSnackBar) {
+  constructor(
+    private readonly unsubscriber: UnsubscriberService,
+    public authService: AuthService,
+    public router: Router,
+    private _snackBar: MatSnackBar
+  ) {
   }
 
   checkValid(fieldName: string) {
@@ -44,6 +49,7 @@ export class LoginComponent {
     this.loading = true;
     this.authService.login(formValues)
       .pipe(
+        this.unsubscriber.takeUntilDestroy,
         catchError((error) => {
           if (error.status === 401 || error.status === 404) {
             this._snackBar.openFromComponent(SnackBarComponent, {

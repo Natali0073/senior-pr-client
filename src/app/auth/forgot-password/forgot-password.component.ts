@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
-import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
 import { AuthService } from '../auth.service';
 import { finalize } from 'rxjs/operators';
+import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss']
+  styleUrls: ['./forgot-password.component.scss'],
+  providers: [UnsubscriberService]
 })
-@AutoUnsubscribe
 export class ForgotPasswordComponent implements OnInit {
   email = new FormControl('', [
     Validators.required,
@@ -20,7 +20,11 @@ export class ForgotPasswordComponent implements OnInit {
   ]);
   loading = false;
 
-  constructor(private authService: AuthService, private _snackBar: MatSnackBar) { }
+  constructor(
+    private readonly unsubscriber: UnsubscriberService,
+    private authService: AuthService,
+    private _snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
   }
@@ -37,6 +41,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.loading = true;
     this.authService.resetPasswordRequest(this.email.value)
       .pipe(
+        this.unsubscriber.takeUntilDestroy,
         finalize(() => this.loading = false),
       )
       .subscribe(() => {

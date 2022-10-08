@@ -1,19 +1,18 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { UsersListComponent } from '../users-list/users-list.component';
 import { HomeService } from '../home.service';
 import { Store } from '@ngrx/store';
 import { getChats } from 'src/app/state/chats/chats.actions';
+import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 
 @Component({
   selector: 'chats-list',
   templateUrl: './chats-list.component.html',
-  styleUrls: ['./chats-list.component.scss']
+  styleUrls: ['./chats-list.component.scss'],
+  providers: [UnsubscriberService]
 })
-@AutoUnsubscribe
 export class ChatsListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['avatar', 'name', 'lastMessage', 'action'];
   preview: string = '../../assets/avatar.png';
@@ -24,6 +23,7 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
   @Input() currentChatId: string;
 
   constructor(
+    private readonly unsubscriber: UnsubscriberService,
     public dialog: MatDialog,
     private chatService: HomeService,
     private store: Store
@@ -39,10 +39,12 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
   }
 
   getAllChats() {
-    this.chatService.getAllChats({ page: 0, size: 10 }).subscribe((data: any) => {
-      this.chatsListTable.data = data.chats;
-      this.store.dispatch(getChats({ chats: data }))
-    });
+    this.chatService.getAllChats({ page: 0, size: 10 })
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe((data: any) => {
+        this.chatsListTable.data = data.chats;
+        this.store.dispatch(getChats({ chats: data }))
+      });
   }
 
   openUsersList() {

@@ -2,22 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, throwError } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
-import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { MatchValidator } from 'src/app/shared/utils/match-validator';
 import { passwordValidator } from 'src/app/shared/utils/password-validator';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
 import { AuthService } from '../auth.service';
 import { finalize } from 'rxjs/operators';
+import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss']
+  styleUrls: ['./reset-password.component.scss'],
+  providers: [UnsubscriberService]
 })
-@AutoUnsubscribe
 export class ResetPasswordComponent implements OnInit {
   userToken: string = '';
   changePasswordForm = new FormGroup({
@@ -33,13 +33,20 @@ export class ResetPasswordComponent implements OnInit {
 
   loading = false;
 
-  constructor(private authService: AuthService, private _snackBar: MatSnackBar,
-    private route: ActivatedRoute, public router: Router) { }
+  constructor(
+    private readonly unsubscriber: UnsubscriberService,
+    private authService: AuthService,
+    private _snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    public router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.userToken = params.get('token') || '';
-    });
+    this.route.paramMap
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe(params => {
+        this.userToken = params.get('token') || '';
+      });
   }
 
   checkValid(fieldName: string) {
@@ -67,9 +74,7 @@ export class ResetPasswordComponent implements OnInit {
     this.loading = true;
     this.authService.resetPassword(dto)
       .pipe(
-        finalize(() => this.loading = false),
-      )
-      .pipe(
+        this.unsubscriber.takeUntilDestroy,
         catchError((error) => {
           if (error.status === 401) {
             this._snackBar.openFromComponent(SnackBarComponent, {
@@ -78,7 +83,8 @@ export class ResetPasswordComponent implements OnInit {
             });
           }
           return EMPTY;
-        })
+        }),
+        finalize(() => this.loading = false),
       )
       .subscribe(() => {
         this._snackBar.openFromComponent(SnackBarComponent, {

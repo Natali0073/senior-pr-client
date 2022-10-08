@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, Form } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/auth/auth.service';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
-import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { MatchValidator } from 'src/app/shared/utils/match-validator';
 import { passwordValidator } from 'src/app/shared/utils/password-validator';
 import { checkFieldValid, formErrorMessage, validateImageSize } from 'src/app/shared/utils/utils';
@@ -14,13 +13,14 @@ import { getCurrentUser } from 'src/app/state/users/users.actions';
 import { User } from '../home.service';
 import { finalize } from 'rxjs/operators';
 import { selectCurrentUser } from 'src/app/state/users/users.selectors';
+import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 
 @Component({
   selector: 'user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  styleUrls: ['./user-profile.component.scss'],
+  providers: [UnsubscriberService]
 })
-@AutoUnsubscribe
 export class UserProfileComponent implements OnInit {
   currentUser: User | null = null;
   preview: string = '../../../assets/avatar.png';
@@ -54,8 +54,13 @@ export class UserProfileComponent implements OnInit {
   validImage: boolean = true;
   loading = false;
 
-  constructor(private authService: AuthService, private _snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<UserProfileComponent>, private store: Store) {
+  constructor(
+    private readonly unsubscriber: UnsubscriberService,
+    private authService: AuthService,
+    private _snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<UserProfileComponent>,
+    private store: Store
+  ) {
   }
 
   ngOnInit(): void {
@@ -63,8 +68,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   selectUserStore() {
-    this.store.select(selectCurrentUser as any).subscribe(
-      (user: any) => {
+    this.store.select(selectCurrentUser as any)
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe((user: any) => {
         if (user) {
           this.currentUser = user;
           this.preview = user.avatar || this.preview;
@@ -74,7 +80,7 @@ export class UserProfileComponent implements OnInit {
           });
         }
       }
-    );
+      );
   }
 
   onTabChange(event: MatTabChangeEvent) {
@@ -121,6 +127,7 @@ export class UserProfileComponent implements OnInit {
     this.loading = true;
     this.authService.updatePersonalInfo(formData)
       .pipe(
+        this.unsubscriber.takeUntilDestroy,
         finalize(() => this.loading = false),
       )
       .subscribe((user) => {
@@ -137,6 +144,7 @@ export class UserProfileComponent implements OnInit {
     this.loading = true;
     this.authService.changePassword({ oldPassword: oldPassword, password: password })
       .pipe(
+        this.unsubscriber.takeUntilDestroy,
         finalize(() => this.loading = false),
       )
       .subscribe((user) => {

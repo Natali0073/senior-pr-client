@@ -9,15 +9,15 @@ import { passwordValidator } from 'src/app/shared/utils/password-validator';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
 import { AuthService } from '../auth.service';
-import { AutoUnsubscribe } from 'src/app/shared/utils/AutoUnsubscribe';
 import { finalize } from 'rxjs/operators';
+import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss']
+  styleUrls: ['./registration.component.scss'],
+  providers: [UnsubscriberService]
 })
-@AutoUnsubscribe
 export class RegistrationComponent {
   registrationForm = new FormGroup({
     firstName: new FormControl('', [
@@ -45,7 +45,12 @@ export class RegistrationComponent {
 
   loading = false;
 
-  constructor(public authService: AuthService, public router: Router, private _snackBar: MatSnackBar) {
+  constructor(
+    private readonly unsubscriber: UnsubscriberService,
+    public authService: AuthService,
+    public router: Router,
+    private _snackBar: MatSnackBar
+  ) {
   }
 
   checkValid(fieldName: string) {
@@ -75,6 +80,7 @@ export class RegistrationComponent {
     this.loading = true;
     this.authService.register(dto)
       .pipe(
+        this.unsubscriber.takeUntilDestroy,
         finalize(() => this.loading = false),
       )
       .subscribe(() => {
