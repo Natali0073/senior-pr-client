@@ -88,10 +88,7 @@ export class RegistrationComponent {
           data: 'Account created successfully',
           duration: 1500
         });
-        setTimeout(() => {
-          this.router.navigate(['/']);
-        }, 2000)
-
+        this.router.navigate(['/']);
       });
   }
 }
