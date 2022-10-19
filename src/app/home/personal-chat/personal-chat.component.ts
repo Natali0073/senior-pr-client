@@ -40,7 +40,6 @@ export class PersonalChatComponent implements OnInit {
   ngOnInit() {
     this.getChatStore();
     this.selectUserStore();
-    this.socketMessageSubscribe();
   }
 
   routeEventSubscribe() {
