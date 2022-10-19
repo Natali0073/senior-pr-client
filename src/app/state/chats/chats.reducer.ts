@@ -1,5 +1,6 @@
 import { combineReducers } from "@ngrx/store";
 import { createReducer, on } from '@ngrx/store';
+import { chatsSorting } from "src/app/shared/utils/utils";
 import { getChat, getChats } from "./chats.actions";
 
 export interface UsersStore {
@@ -10,20 +11,16 @@ export const chatsListReducer = createReducer(
   [],
   on(getChats,
     (state, { data }) => {
-      let chatsById = {};
-      data.chats.forEach((chat: any) => {
-        chatsById = { ...chatsById, [chat.id]: chat }
-      });
-      return data.chats;
+      return chatsSorting([...data.chats]);
     }),
   on(getChat,
     (state: any, { chat }) => {
       const index = state.findIndex((el: any) => el.id === chat.id);
       const stateCopy: any = [...state];
-      
-      index === -1 ? stateCopy.push(chat) : stateCopy.splice(index, 1, chat);
-      
-      return stateCopy;
+      // new chat add to the start of array, existed - update
+      index === -1 ? stateCopy.unshift(chat) : stateCopy.splice(index, 1, chat);
+
+      return chatsSorting(stateCopy);
     }),
 );
 

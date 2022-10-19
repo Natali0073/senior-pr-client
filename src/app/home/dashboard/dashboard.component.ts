@@ -60,7 +60,6 @@ export class DashboardComponent implements OnInit {
       .subscribe((user: User) => {
         this.currentUser = user;
         this.store.dispatch(getCurrentUser({ user }));
-        // this.socketMessageSubscribe();
       });
   }
 
@@ -72,14 +71,6 @@ export class DashboardComponent implements OnInit {
       }
       );
   }
-
-  // socketMessageSubscribe() {
-  //   if (this.currentUser) this.chatService.socketGlobalSubscribe(this.currentUser.id)
-  //     .pipe(this.unsubscriber.takeUntilDestroy)
-  //     .subscribe(data => {
-  //       console.log('getMessage from socket', data);
-  //     });
-  // }
 
   openUsersList() {
     this.dialog.open(UsersListComponent, { panelClass: 'users-list-modal' });

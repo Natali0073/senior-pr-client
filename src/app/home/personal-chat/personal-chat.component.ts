@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
+import { getChat } from 'src/app/state/chats/chats.actions';
 import { selectChats } from 'src/app/state/chats/chats.selectors';
 import { selectCurrentUser } from 'src/app/state/users/users.selectors';
 import { HomeService, User } from '../home.service';
@@ -17,15 +18,14 @@ export class PersonalChatComponent implements OnInit {
   @ViewChild('content') content: ElementRef;
 
   currentChatId: string;
+  currentChat: any;
   message: string;
   loading: boolean;
   messages: any[] = [];
 
   currentUser: User;
   currentUserAvatarLink: string;
-  friendAvatarLink: string;
   lastMessagedateSearched?: string;
-  chatName?: string;
 
   constructor(
     private readonly unsubscriber: UnsubscriberService,
@@ -55,6 +55,7 @@ export class PersonalChatComponent implements OnInit {
           if (this.currentChatId) {
             this.getMessages({ resetMessages: true });
             this.getChatStore();
+            this.socketMessageSubscribe();
           }
         }
       });
@@ -86,9 +87,7 @@ export class PersonalChatComponent implements OnInit {
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe(
         (chats: any) => {
-          const currentChat = chats.find((chat: any) => chat.id === this.currentChatId);
-          this.friendAvatarLink = currentChat?.icon || '';
-          this.chatName = currentChat?.name || '';
+          this.currentChat = chats.find((chat: any) => chat.id === this.currentChatId) || {};
         }
       );
   }
@@ -141,22 +140,18 @@ export class PersonalChatComponent implements OnInit {
   }
 
   sendMessage() {
-    this.chatService.sendMessage(this.currentChatId, this.message)
+    const newMessage = this.formatMessage(this.message);
+    this.chatService.sendMessage(this.currentChatId, newMessage.text)
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe(() => {
-        this.emitMessage();
+        this.emitMessage(newMessage);
+        this.chatService.chatsUpdate.next();
+        this.store.dispatch(getChat({ chat: { ...this.currentChat, updatedAt: newMessage.createdAt } }));
         this.message = '';
       });
   }
 
-  emitMessage() {
-    const date = new Date().toISOString();
-    const newMessage = {
-      chatId: this.currentChatId,
-      date: date,
-      senderId: this.currentUser.id,
-      text: this.message
-    }
+  emitMessage(newMessage: any) {
     this.chatService.emitSocketMessage(newMessage);
   }
 
@@ -172,4 +167,16 @@ export class PersonalChatComponent implements OnInit {
   formatValue(number: number) {
     return `${number < 10 ? '0' : ''}${number}`;
   }
+
+  formatMessage(text: string) {
+    const date = new Date().toISOString();
+    const newMessage = {
+      chatId: this.currentChatId,
+      createdAt: date,
+      senderId: this.currentUser.id,
+      text: this.message
+    }
+    return newMessage;
+  }
+
 }

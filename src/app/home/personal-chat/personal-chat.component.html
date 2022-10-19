@@ -5,9 +5,9 @@
         <mat-icon>keyboard_arrow_left</mat-icon>
       </button>
       <div class="chat-container__user-info flex">
-        <user-avatar [preview]="friendAvatarLink"></user-avatar>
+        <user-avatar [preview]="currentChat.icon"></user-avatar>
         <div class="chat-container__user-name flex">
-          <span>{{chatName}}</span>
+          <span>{{currentChat.name}}</span>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
     <div *ngFor="let message of messages; index as i;">
       <chat-message 
       [currentUser]="message.senderId === currentUser.id" 
-      [avatarLink]="message.senderId === currentUser.id ? currentUserAvatarLink : friendAvatarLink" 
+      [avatarLink]="message.senderId === currentUser.id ? currentUserAvatarLink : currentChat.icon" 
       [text]="message.text" 
       [date]="message.formattedDate">
       </chat-message>

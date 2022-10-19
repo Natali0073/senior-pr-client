@@ -29,3 +29,5 @@ export const formErrorMessage = (field: any) => {
 export const validateImageSize = (imageSize: number) => imageSize <= 2048000;
 
 export const redirectionIsAvailable = (request: HttpRequest<unknown>) => request.url !== '/api/auth/reset-password';
+
+export const chatsSorting = (chats: any[]): any => chats.sort((a: any, b: any) => new Date(b.updatedAt).getTime() < new Date(a.updatedAt).getTime() ? -1 : 1);
