@@ -12,8 +12,11 @@ export class HomeService {
 
   constructor(private http: HttpClient, private socket: Socket) { }
 
-  getUsers() {
-    return this.http.get<User[]>('api/users');
+  getUsers(filter: string) {
+    const params = new HttpParams()
+      .set('name', filter || '');
+      
+    return this.http.get<User[]>('api/users', { params });
   }
 
   getCurrentUser() {

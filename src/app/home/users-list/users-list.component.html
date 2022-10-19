@@ -1,5 +1,11 @@
 <div class="users-list">
-  <h2>Find your friend</h2>
+  <div class="users-list__title-container row">
+    <h2>Find your friend</h2>
+    <mat-form-field appearance="outline">
+      <mat-label>Search by name</mat-label>
+      <input matInput [value]="firstName" [formControl]="firstNameControl">
+    </mat-form-field>
+  </div>
   <section *ngIf="!usersList.length; else showUsers" class="users-list__empty-data">
     No users to find
   </section>
