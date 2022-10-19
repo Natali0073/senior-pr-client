@@ -83,13 +83,16 @@ export class PersonalChatComponent implements OnInit {
   }
 
   getChatStore() {
-    this.store.select(selectChats as any)
+    this.store.select(selectChats)
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe(
         (chats: Chat[]) => {
-          this.currentChat = chats.find((chat: any) => chat.id === this.currentChatId) || {} as Chat;
-        }
-      );
+          if (this.currentChat && this.currentChatId && this.currentChat.id === this.currentChatId) {
+            return;
+          }
+
+          this.currentChat = chats.find((chat) => chat.id === this.currentChatId) || {} as Chat;
+        });
   }
 
   getMessages(props: { lastMessageDate?: string, resetMessages?: boolean }) {
@@ -140,7 +143,7 @@ export class PersonalChatComponent implements OnInit {
   }
 
   sendMessage() {
-    const newMessage = this.formatMessage(this.message);
+    const newMessage = this.formatMessage();
     this.chatService.sendMessage(this.currentChatId, newMessage.text)
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe(() => {
@@ -168,7 +171,7 @@ export class PersonalChatComponent implements OnInit {
     return `${number < 10 ? '0' : ''}${number}`;
   }
 
-  formatMessage(text: string) {
+  formatMessage() {
     const date = new Date().toISOString();
     const newMessage = {
       chatId: this.currentChatId,
