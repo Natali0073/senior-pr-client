@@ -11,7 +11,7 @@ export class ChatMessageComponent implements OnChanges {
   }
 
   @Input() currentUser: boolean;
-  @Input() avatarLink: string;
+  @Input() avatarLink?: string;
   @Input() text: string;
   @Input() date: string;
 

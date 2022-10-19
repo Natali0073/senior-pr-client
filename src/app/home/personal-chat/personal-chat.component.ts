@@ -7,7 +7,7 @@ import { AppState } from 'src/app/state/app.state';
 import { getChat } from 'src/app/state/chats/chats.actions';
 import { selectChats } from 'src/app/state/chats/chats.selectors';
 import { selectCurrentUser } from 'src/app/state/users/users.selectors';
-import { HomeService, User } from '../home.service';
+import { Chat, HomeService, User } from '../home.service';
 
 @Component({
   selector: 'personal-chat',
@@ -19,7 +19,7 @@ export class PersonalChatComponent implements OnInit {
   @ViewChild('content') content: ElementRef;
 
   currentChatId: string;
-  currentChat: any;
+  currentChat: Chat;
   message: string;
   loading: boolean;
   messages: any[] = [];
@@ -86,8 +86,8 @@ export class PersonalChatComponent implements OnInit {
     this.store.select(selectChats as any)
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe(
-        (chats: any) => {
-          this.currentChat = chats.find((chat: any) => chat.id === this.currentChatId) || {};
+        (chats: Chat[]) => {
+          this.currentChat = chats.find((chat: any) => chat.id === this.currentChatId) || {} as Chat;
         }
       );
   }
