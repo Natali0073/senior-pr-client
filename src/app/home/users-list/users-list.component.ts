@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
+import { getChat, getChats } from 'src/app/state/chats/chats.actions';
 import { HomeService, User } from '../home.service';
 
 @Component({
@@ -18,7 +20,8 @@ export class UsersListComponent implements OnInit {
     private readonly unsubscriber: UnsubscriberService,
     public dialogRef: MatDialogRef<UsersListComponent>,
     private chatService: HomeService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {
   }
 
@@ -37,6 +40,8 @@ export class UsersListComponent implements OnInit {
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe((chat: any) => {
         this.router.navigate([`/chats/${chat.id}`]);
+        this.store.dispatch(getChat({ chat }));
+        this.chatService.chatsUpdate.next();
         this.dialogRef.close();
       });
   }

@@ -3,11 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 import { Socket } from 'ngx-socket-io';
 import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
+  chatsUpdate = new Subject<boolean>();
 
   constructor(private http: HttpClient, private socket: Socket) { }
 

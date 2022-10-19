@@ -6,6 +6,7 @@ import { HomeService } from '../home.service';
 import { Store } from '@ngrx/store';
 import { getChats } from 'src/app/state/chats/chats.actions';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
+import { selectChats } from 'src/app/state/chats/chats.selectors';
 
 @Component({
   selector: 'chats-list',
@@ -36,15 +37,30 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getAllChats();
+    this.chatsUpdateEvent();
   }
 
   getAllChats() {
     this.chatService.getAllChats({ page: 0, size: 10 })
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe((data: any) => {
-        this.chatsListTable.data = data.chats;
-        this.store.dispatch(getChats({ chats: data }))
+        this.store.dispatch(getChats({ data }));
+        this.selectChatsStore();
       });
+  }
+
+  selectChatsStore() {
+    this.store.select(selectChats as any)
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe((chats: any) => {
+        this.chatsListTable.data = chats;
+      });
+  }
+
+  chatsUpdateEvent() {
+    this.chatService.chatsUpdate.subscribe(() => {
+      this.selectChatsStore();
+    })
   }
 
   openUsersList() {

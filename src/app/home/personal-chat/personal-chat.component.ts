@@ -25,6 +25,7 @@ export class PersonalChatComponent implements OnInit {
   currentUserAvatarLink: string;
   friendAvatarLink: string;
   lastMessagedateSearched?: string;
+  chatName?: string;
 
   constructor(
     private readonly unsubscriber: UnsubscriberService,
@@ -50,7 +51,11 @@ export class PersonalChatComponent implements OnInit {
           const urlSplit = val.urlAfterRedirects.split('/');
           const id = urlSplit.reverse()[0];
           this.currentChatId = id !== 'chats' ? id : '';
-          if (this.currentChatId) this.getMessages();
+
+          if (this.currentChatId) {
+            this.getMessages({ resetMessages: true });
+            this.getChatStore();
+          }
         }
       });
   }
@@ -81,11 +86,17 @@ export class PersonalChatComponent implements OnInit {
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe(
         (chats: any) => {
+          const currentChat = chats.find((chat: any) => chat.id === this.currentChatId);
+          this.friendAvatarLink = currentChat?.icon || '';
+          this.chatName = currentChat?.name || '';
         }
       );
   }
 
-  getMessages(lastMessageDate?: string) {
+  getMessages(props: { lastMessageDate?: string, resetMessages?: boolean }) {
+    const { lastMessageDate, resetMessages = false } = props;
+    if (resetMessages) this.messages = [];
+
     const pagination = {
       lastMessageDate: lastMessageDate,
       size: 10
@@ -97,7 +108,7 @@ export class PersonalChatComponent implements OnInit {
       .pipe(
         this.unsubscriber.takeUntilDestroy,
         map(response => {
-          return response.map(message => ({ ...message, formattedDate: this.formatDisplayDate(message.date) }));
+          return response.map(message => ({ ...message, formattedDate: this.formatDisplayDate(message.createdAt) }));
         })
       )
       .subscribe((response: any) => {
@@ -109,7 +120,7 @@ export class PersonalChatComponent implements OnInit {
     this.chatService.socketChatSubscribe(this.currentChatId)
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe(message => {
-        this.messages.unshift({ ...message, formattedDate: this.formatDisplayDate(message.date) });
+        this.messages.unshift({ ...message, formattedDate: this.formatDisplayDate(message.createdAt) });
       });
   }
 
@@ -121,11 +132,11 @@ export class PersonalChatComponent implements OnInit {
     let element = this.content.nativeElement;
     let atTop = (element.scrollHeight + element.scrollTop) === element.clientHeight;
     if (atTop) {
-      const lastMessageDate = this.messages[this.messages.length - 1].date;
+      const lastMessageDate = this.messages[this.messages.length - 1].createdAt;
       // don't call get messages, if oldest is already present
       if (this.lastMessagedateSearched === lastMessageDate) return;
 
-      this.getMessages(lastMessageDate);
+      this.getMessages({ lastMessageDate: lastMessageDate });
     }
   }
 

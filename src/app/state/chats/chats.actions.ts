@@ -2,5 +2,10 @@ import { createAction, props } from '@ngrx/store';
 
 export const getChats = createAction(
   '[Chats] Get Chats',
-  props<{ chats: any }>()
+  props<{ data: any }>()
+);
+
+export const getChat = createAction(
+  '[Chats] Get Chat',
+  props<{ chat: any }>()
 );
