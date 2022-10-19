@@ -3,6 +3,12 @@
     width: 100%;
   }
 
+  &__table-container {
+    position: relative;
+    max-height: 70vh;
+    overflow: auto;
+  }
+
   .mat-column-avatar {
     width: 32px;
     padding-right: 24px;

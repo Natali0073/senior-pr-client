@@ -4,6 +4,7 @@
     No users to find
   </section>
   <ng-template #showUsers>
+    <div class="users-list__table-container">
     <table mat-table [dataSource]="usersList" class="mat-elevation-z8">
       <ng-container matColumnDef="avatar">
         <th mat-header-cell *matHeaderCellDef></th>
@@ -27,5 +28,6 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    </div>
   </ng-template>
 </div>
