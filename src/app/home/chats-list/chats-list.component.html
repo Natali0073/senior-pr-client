@@ -12,37 +12,42 @@
     Click on "New chat" button to start messaging with other users.
   </section>
   <ng-template #showChats>
-    <table mat-table [dataSource]="chatsListTable" class="mat-elevation-z8">
-      <ng-container matColumnDef="avatar">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element">
-          <user-avatar [preview]="element.icon"></user-avatar>
-        </td>
-      </ng-container>
+    <div class="chats-dashboard__table-container">
+      <table mat-table [dataSource]="chatsListTable" class="mat-elevation-z8">
+        <ng-container matColumnDef="avatar">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <user-avatar [preview]="element.icon"></user-avatar>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}}</td>
-      </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+        </ng-container>
 
-      <ng-container matColumnDef="lastMessage">
-        <th mat-header-cell *matHeaderCellDef> lastMessage </th>
-        <td mat-cell *matCellDef="let element"> {{ element.updatedAt | passedTime }} </td>
-      </ng-container>
+        <ng-container matColumnDef="lastMessage">
+          <th mat-header-cell *matHeaderCellDef> Last message </th>
+          <td mat-cell *matCellDef="let element"> {{ element.updatedAt | passedTime }} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button color="primary" [routerLink]="['/chats', element.id]">Message</button>
-        </td>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button color="primary" [routerLink]="['/chats', element.id]">Message</button>
+          </td>
 
-      </ng-container>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{highlighted: row.id === currentChatId}"></tr>
-    </table>
-    <mat-paginator *ngIf="chatsListTable.data.length>=10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-      aria-label="Select page of periodic elements">
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          [ngClass]="{highlighted: row.id === currentChatId}">
+        </tr>
+      </table>
+    </div>
+    <mat-paginator *ngIf="dataPagination.totalItems >= pagination.size" [length]="dataPagination.totalItems"
+      [pageIndex]="dataPagination.currentPage" [pageSize]="pagination.size" [pageSizeOptions]="[5, 10, 20]"
+      (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
   </ng-template>
 </div>

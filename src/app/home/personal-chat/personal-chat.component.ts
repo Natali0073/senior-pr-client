@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
+import { AppState } from 'src/app/state/app.state';
 import { getChat } from 'src/app/state/chats/chats.actions';
 import { selectChats } from 'src/app/state/chats/chats.selectors';
 import { selectCurrentUser } from 'src/app/state/users/users.selectors';
@@ -31,7 +32,7 @@ export class PersonalChatComponent implements OnInit {
     private readonly unsubscriber: UnsubscriberService,
     private chatService: HomeService,
     private route: ActivatedRoute,
-    private store: Store,
+    private store: Store<AppState>,
     private router: Router
   ) {
     this.routeEventSubscribe();
@@ -61,13 +62,13 @@ export class PersonalChatComponent implements OnInit {
   }
 
   selectUserStore() {
-    this.store.select(selectCurrentUser as any)
+    this.store.select(selectCurrentUser)
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe(
-        (user: any) => {
+        (user) => {
           if (user) {
             this.currentUser = user;
-            this.currentUserAvatarLink = user.avatar;
+            this.currentUserAvatarLink = user.avatar || '';
           }
         }
       );
@@ -105,8 +106,8 @@ export class PersonalChatComponent implements OnInit {
     this.chatService.getMessagesByChat(this.currentChatId, pagination)
       .pipe(
         this.unsubscriber.takeUntilDestroy,
-        map(response => {
-          return response.map(message => ({ ...message, formattedDate: this.formatDisplayDate(message.createdAt) }));
+        map((response: any) => {
+          return response.map((message: any) => ({ ...message, formattedDate: this.formatDisplayDate(message.createdAt) }));
         })
       )
       .subscribe((response: any) => {

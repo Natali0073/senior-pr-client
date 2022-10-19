@@ -9,3 +9,8 @@ export const getChat = createAction(
   '[Chats] Get Chat',
   props<{ chat: any }>()
 );
+
+export const getChatsPagination = createAction(
+  '[Chats] Get Chats Pagination',
+  props<{ data: any }>()
+);

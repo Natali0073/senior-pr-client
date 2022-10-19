@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from '../auth/auth.service';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Socket } from 'ngx-socket-io';
 import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -21,23 +20,33 @@ export class HomeService {
     return this.http.get<User>('api/current-user');
   }
 
-  getAllChats(pagination: any) {
-    return this.http.get<any[]>('api/chats', { params: pagination });
+  getAllChats(pagination: Pagination) {
+    const params = new HttpParams()
+      .set('page', pagination.page || 0)
+      .set('size', pagination.size);
+    return this.http.get<Chat[]>('api/chats', { params });
   }
 
-  startConversation(receiverData: any) {
-    return this.http.get<any[]>('api/chat', { params: receiverData });
+  startConversation(receiverData: { receiverId: string }) {
+    return this.http.get<Chat>('api/chat', { params: receiverData });
   }
 
-  getMessagesByChat(chatId: string, pagination: any) {
-    return this.http.get<any[]>(`/api/chat/${chatId}/messages`, { params: pagination });
+  getMessagesByChat(chatId: string, pagination: Pagination) {
+    const params = pagination.lastMessageDate ?
+      new HttpParams()
+        .set('lastMessageDate', pagination.lastMessageDate)
+        .set('size', pagination.size) :
+      new HttpParams()
+        .set('size', pagination.size);
+
+    return this.http.get<any[]>(`/api/chat/${chatId}/messages`, { params });
   }
 
   sendMessage(chatId: string, message: string) {
     return this.http.post<any[]>(`/api/chat/${chatId}/send`, { text: message });
   }
 
-  emitSocketMessage(message: any) {
+  emitSocketMessage(message: string) {
     this.socket.emit('message', message);
   }
 
@@ -61,4 +70,32 @@ export interface User {
   role: string;
   updatedAt: string;
   accessToken?: string;
+}
+
+export interface ChatsPagination {
+  currentPage: number;
+  totalItems: number;
+  totalPages: number;
+}
+
+export interface ChatListDTO extends ChatsPagination {
+  chats: Chat[];
+}
+
+export interface Chat {
+  icon?: string;
+  id: string;
+  lastMessageText: string;
+  name: string;
+  updatedAt: string;
+}
+
+export interface Message {
+  text: string;
+}
+
+export interface Pagination {
+  lastMessageDate?: string;
+  page?: number;
+  size: number;
 }

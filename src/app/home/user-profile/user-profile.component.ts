@@ -14,6 +14,7 @@ import { User } from '../home.service';
 import { finalize } from 'rxjs/operators';
 import { selectCurrentUser } from 'src/app/state/users/users.selectors';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
+import { AppState } from 'src/app/state/app.state';
 
 @Component({
   selector: 'user-profile',
@@ -49,7 +50,7 @@ export class UserProfileComponent implements OnInit {
 
   activeTabIndex = 0;
   selectedFileNames: string[] = [];
-  selectedFiles?: FileList;
+  selectedFiles: FileList | null;
   message: string[] = [];
   validImage: boolean = true;
   loading = false;
@@ -59,7 +60,7 @@ export class UserProfileComponent implements OnInit {
     private authService: AuthService,
     private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<UserProfileComponent>,
-    private store: Store
+    private store: Store<AppState>
   ) {
   }
 
@@ -68,9 +69,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   selectUserStore() {
-    this.store.select(selectCurrentUser as any)
+    this.store.select(selectCurrentUser)
       .pipe(this.unsubscriber.takeUntilDestroy)
-      .subscribe((user: any) => {
+      .subscribe((user) => {
         if (user) {
           this.currentUser = user;
           this.preview = user.avatar || this.preview;
@@ -87,10 +88,10 @@ export class UserProfileComponent implements OnInit {
     this.activeTabIndex = event.index;
   }
 
-  selectFiles(event: any) {
+  selectFiles(event: Event) {
     this.message = [];
     this.selectedFileNames = [];
-    this.selectedFiles = event.target.files;
+    this.selectedFiles = (event.target as HTMLInputElement).files;
     if (this.selectedFiles && this.selectedFiles[0]) {
       const reader = new FileReader();
       reader.onload = (e: any) => {

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
+import { AppState } from 'src/app/state/app.state';
 import { getCurrentUser } from 'src/app/state/users/users.actions';
 import { selectCurrentUser } from 'src/app/state/users/users.selectors';
 import { HomeService, User } from '../home.service';
@@ -23,7 +24,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private readonly unsubscriber: UnsubscriberService,
     private chatService: HomeService,
-    private store: Store,
+    private store: Store<AppState>,
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router
@@ -64,9 +65,9 @@ export class DashboardComponent implements OnInit {
   }
 
   selectUserStore() {
-    this.store.select(selectCurrentUser as any)
+    this.store.select(selectCurrentUser)
       .pipe(this.unsubscriber.takeUntilDestroy)
-      .subscribe((user: any) => {
+      .subscribe((user) => {
         if (user && user.avatar) this.preview = user.avatar;
       }
       );

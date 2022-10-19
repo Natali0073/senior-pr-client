@@ -3,7 +3,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
-import { getChat, getChats } from 'src/app/state/chats/chats.actions';
+import { AppState } from 'src/app/state/app.state';
+import { getChat } from 'src/app/state/chats/chats.actions';
 import { HomeService, User } from '../home.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class UsersListComponent implements OnInit {
     public dialogRef: MatDialogRef<UsersListComponent>,
     private chatService: HomeService,
     private router: Router,
-    private store: Store
+    private store: Store<AppState>
   ) {
   }
 
@@ -38,7 +39,7 @@ export class UsersListComponent implements OnInit {
   startConversation(user: User) {
     this.chatService.startConversation({ receiverId: user.id })
       .pipe(this.unsubscriber.takeUntilDestroy)
-      .subscribe((chat: any) => {
+      .subscribe((chat) => {
         this.router.navigate([`/chats/${chat.id}`]);
         this.store.dispatch(getChat({ chat }));
         this.chatService.chatsUpdate.next();
