@@ -2,12 +2,13 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChil
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Chat, ChatsPagination, HomeService } from '../home.service';
+import { Chat, ChatsPagination, HomeService, User } from '../home.service';
 import { Store } from '@ngrx/store';
-import { getChats, getChatsPagination } from 'src/app/state/chats/chats.actions';
+import { getChat, getChats, getChatsPagination } from 'src/app/state/chats/chats.actions';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 import { selectChats, selectChatsPagination } from 'src/app/state/chats/chats.selectors';
 import { AppState } from 'src/app/state/app.state';
+import { selectCurrentUser } from 'src/app/state/users/users.selectors';
 @Component({
   selector: 'chats-list',
   templateUrl: './chats-list.component.html',
@@ -39,7 +40,8 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getAllChats(this.pagination);
-    this.chatsUpdateEvent();
+    this.chatsUpdateEventSubscribe();
+    this.selectUserStore();
   }
 
   getAllChats(paginationData: { page: number; size: number; }) {
@@ -72,10 +74,12 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
       });
   }
 
-  chatsUpdateEvent() {
-    this.chatService.chatsUpdate.subscribe(() => {
-      this.selectChatsData();
-    })
+  chatsUpdateEventSubscribe() {
+    this.chatService.chatsUpdate
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe(() => {
+        this.selectChatsData();
+      })
   }
 
   selectChatsData() {
@@ -89,5 +93,26 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
 
   pageChanged(event: PageEvent) {
     this.getAllChats({ page: event.pageIndex, size: event.pageSize });
+  }
+
+  socketChatsSubscribe(user: User) {
+    this.chatService.socketGlobalSubscribe(user.id)
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe((chat) => {
+        this.store.dispatch(getChat({ chat: chat }));
+        this.selectChatsData();
+      });
+  }
+
+  selectUserStore() {
+    this.store.select(selectCurrentUser)
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe(
+        (user) => {
+          if (user) {
+            this.socketChatsSubscribe(user);
+          }
+        }
+      );
   }
 }
