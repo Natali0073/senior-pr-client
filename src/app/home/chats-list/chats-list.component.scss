@@ -36,6 +36,15 @@
     opacity: 0.5;
   }
 
+  &__message {
+    opacity: 0.5;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 10px;
+  }
+
   .highlighted {
     background-color: #f5f5f5;
   }

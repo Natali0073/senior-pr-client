@@ -16,7 +16,7 @@ import { selectCurrentUser } from 'src/app/state/users/users.selectors';
   providers: [UnsubscriberService]
 })
 export class ChatsListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['avatar', 'name', 'lastMessage', 'action'];
+  displayedColumns: string[] = ['avatar', 'name', 'lastMessageDate', 'lastMessage', 'action'];
   preview: string = '../../assets/avatar.png';
   chatsListTable = new MatTableDataSource<Chat>([]);
   pagination = { page: 0, size: 10 };
