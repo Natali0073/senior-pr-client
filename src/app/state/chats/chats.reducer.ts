@@ -10,7 +10,7 @@ export interface ChatsStore {
 }
 
 export const chatsListReducer = createReducer(
-  [],
+  [] as Chat[],
   on(getChats,
     (state, { data }) => {
       return chatsSorting([...data.chats]);

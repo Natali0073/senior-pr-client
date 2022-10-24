@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChil
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Chat, ChatsPagination, HomeService, User } from '../home.service';
+import { Chat, ChatListDTO, ChatsPagination, HomeService, User } from '../home.service';
 import { Store } from '@ngrx/store';
 import { getChat, getChats, getChatsPagination } from 'src/app/state/chats/chats.actions';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
@@ -51,7 +51,7 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
     };
     this.chatService.getAllChats(pagination)
       .pipe(this.unsubscriber.takeUntilDestroy)
-      .subscribe((data) => {
+      .subscribe((data: ChatListDTO) => {
         this.store.dispatch(getChats({ data }));
         this.store.dispatch(getChatsPagination({ data }));
         this.selectChatsData();
@@ -98,7 +98,7 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
   socketChatsSubscribe(user: User) {
     this.chatService.socketGlobalSubscribe(user.id)
       .pipe(this.unsubscriber.takeUntilDestroy)
-      .subscribe((chat) => {
+      .subscribe((chat: Chat) => {
         this.store.dispatch(getChat({ chat: chat }));
         this.selectChatsData();
       });

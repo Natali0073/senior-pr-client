@@ -8,5 +8,5 @@ export const getCurrentUser = createAction(
 
 export const getUsers = createAction(
   '[Users] Get Users',
-  props<{ users: any }>()
+  props<{ users: User[] }>()
 );

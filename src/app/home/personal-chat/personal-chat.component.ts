@@ -7,7 +7,7 @@ import { AppState } from 'src/app/state/app.state';
 import { getChat } from 'src/app/state/chats/chats.actions';
 import { selectChats } from 'src/app/state/chats/chats.selectors';
 import { selectCurrentUser } from 'src/app/state/users/users.selectors';
-import { Chat, HomeService, User } from '../home.service';
+import { Chat, HomeService, Message, User } from '../home.service';
 
 @Component({
   selector: 'personal-chat',
@@ -22,7 +22,7 @@ export class PersonalChatComponent implements OnInit {
   currentChat: Chat;
   message: string;
   loading: boolean;
-  messages: any[] = [];
+  messages: Message[] = [];
 
   currentUser: User;
   currentUserAvatarLink: string;
@@ -109,11 +109,11 @@ export class PersonalChatComponent implements OnInit {
     this.chatService.getMessagesByChat(this.currentChatId, pagination)
       .pipe(
         this.unsubscriber.takeUntilDestroy,
-        map((response: any) => {
-          return response.map((message: any) => ({ ...message, formattedDate: this.formatDisplayDate(message.createdAt) }));
+        map((response: Message[]) => {
+          return response.map((message) => ({ ...message, formattedDate: this.formatDisplayDate(message.createdAt) }));
         })
       )
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.messages.push(...response);
       });
   }
@@ -121,7 +121,7 @@ export class PersonalChatComponent implements OnInit {
   socketMessageSubscribe() {
     this.chatService.socketChatSubscribe(this.currentChatId)
       .pipe(this.unsubscriber.takeUntilDestroy)
-      .subscribe(message => {
+      .subscribe((message: Message) => {
         this.messages.unshift({ ...message, formattedDate: this.formatDisplayDate(message.createdAt) });
       });
   }
@@ -154,7 +154,7 @@ export class PersonalChatComponent implements OnInit {
       });
   }
 
-  emitMessage(newMessage: any) {
+  emitMessage(newMessage: Message) {
     this.chatService.emitSocketMessage(newMessage);
   }
 
@@ -176,7 +176,7 @@ export class PersonalChatComponent implements OnInit {
     const newMessage = {
       chatId: this.currentChatId,
       createdAt: date,
-      senderId: this.currentUser.id,
+      userId: this.currentUser.id,
       text: this.message
     }
     return newMessage;

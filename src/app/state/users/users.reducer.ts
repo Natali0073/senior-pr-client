@@ -14,7 +14,7 @@ export const currentUserReducer = createReducer(
 );
 
 export const usersListReducer = createReducer(
-  [],
+  [] as User[],
   on(getUsers, (state, { users }) => users)
 );
 

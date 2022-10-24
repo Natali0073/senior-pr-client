@@ -94,8 +94,8 @@ export class UserProfileComponent implements OnInit {
     this.selectedFiles = (event.target as HTMLInputElement).files;
     if (this.selectedFiles && this.selectedFiles[0]) {
       const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.preview = e.target.result;
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.preview = e.target?.result as string || '';
       };
       reader.readAsDataURL(this.selectedFiles[0]);
       this.selectedFileNames.push(this.selectedFiles[0].name);
@@ -121,7 +121,7 @@ export class UserProfileComponent implements OnInit {
   submitUserData() {
     const formValues = { ...this.userProfile.value };
 
-    const formData: any = new FormData();
+    const formData = new FormData();
     formData.append('firstName', formValues.firstName);
     formData.append('lastName', formValues.lastName);
     this.selectedFiles && formData.append('avatar', this.selectedFiles[0]);

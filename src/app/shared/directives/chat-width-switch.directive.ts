@@ -4,20 +4,22 @@ import { Directive, ElementRef, HostListener, Input, OnChanges, OnInit, Renderer
 })
 export class ChatSwitchDirective implements OnInit, OnChanges {
   @Input() appChatWidthSwitch: string;
+  
+  public innerWidth: number;
+
   constructor(private elmRef: ElementRef, private renderer: Renderer2) { }
 
   ngOnChanges() {
     this.setContainerWidth();
   }
 
-  public innerWidth: any;
   ngOnInit() {
     this.innerWidth = window.innerWidth;
     this.setContainerWidth();
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
+  onResize() {
     this.innerWidth = window.innerWidth;
     this.setContainerWidth();
   }

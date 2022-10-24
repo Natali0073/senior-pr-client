@@ -4,13 +4,15 @@ import { Directive, ElementRef, HostListener, Input, OnChanges, OnInit, Renderer
 })
 export class SideBarWidthSwitchDirective implements OnInit, OnChanges {
   @Input() appSideBarWidthSwitch: string;
+  
+  public innerWidth: number;
+  
   constructor(private elmRef: ElementRef, private renderer: Renderer2) { }
 
   ngOnChanges() {
     this.setContainerWidth();
   }
 
-  public innerWidth: any;
   ngOnInit() {
     this.innerWidth = window.innerWidth;
     this.setContainerWidth();

@@ -58,7 +58,7 @@ export class UsersListComponent implements OnInit {
     this.chatService.startConversation({ receiverId: user.id })
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe((chat) => {
-        this.router.navigate([`/chats/${chat.id}`]);
+        this.router.navigate([`/home/chats/${chat.id}`]);
         this.store.dispatch(getChat({ chat }));
         this.chatService.chatsUpdate.next();
         this.dialogRef.close();

@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'passedTime'
 })
 export class PassedTimePipe implements PipeTransform {
-  transform(value: string, args?: any): any {
+  transform(value: string) {
     const dateValue = new Date(value);
     const valueSeconds = +dateValue;
     if (isNaN(valueSeconds)) return value;

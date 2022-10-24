@@ -19,10 +19,10 @@
   <ng-template #messegasList>
     <div *ngFor="let message of messages; index as i;">
       <chat-message 
-      [currentUser]="message.senderId === currentUser.id" 
-      [avatarLink]="message.senderId === currentUser.id ? currentUserAvatarLink : currentChat.icon" 
+      [currentUser]="message.userId === currentUser.id" 
+      [avatarLink]="message.userId === currentUser.id ? currentUserAvatarLink : currentChat.icon" 
       [text]="message.text" 
-      [date]="message.formattedDate">
+      [date]="message.formattedDate || ''">
       </chat-message>
     </div>
   </ng-template>

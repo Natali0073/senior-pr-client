@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Socket } from 'ngx-socket-io';
 import { map } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class HomeService {
   getUsers(filter: string) {
     const params = new HttpParams()
       .set('name', filter || '');
-      
+
     return this.http.get<User[]>('api/users', { params });
   }
 
@@ -27,7 +27,7 @@ export class HomeService {
     const params = new HttpParams()
       .set('page', pagination.page || 0)
       .set('size', pagination.size);
-    return this.http.get<Chat[]>('api/chats', { params });
+    return this.http.get<ChatListDTO>('api/chats', { params });
   }
 
   startConversation(receiverData: { receiverId: string }) {
@@ -42,23 +42,23 @@ export class HomeService {
       new HttpParams()
         .set('size', pagination.size);
 
-    return this.http.get<any[]>(`/api/chat/${chatId}/messages`, { params });
+    return this.http.get<Message[]>(`/api/chat/${chatId}/messages`, { params });
   }
 
   sendMessage(chatId: string, message: string) {
-    return this.http.post<any[]>(`/api/chat/${chatId}/send`, { text: message });
+    return this.http.post<Message[]>(`/api/chat/${chatId}/send`, { text: message });
   }
 
-  emitSocketMessage(message: string) {
+  emitSocketMessage(message: Message) {
     this.socket.emit('message', message);
   }
 
-  socketChatSubscribe(chatId: string) {
-    return this.socket.fromEvent(`newMessageInChatId/${chatId}`).pipe(map((data: any) => data));
+  socketChatSubscribe(chatId: string): Observable<Message> {
+    return this.socket.fromEvent(`newMessageInChatId/${chatId}`).pipe(map((message) => message)) as Observable<Message>;
   }
 
-  socketGlobalSubscribe(userId: string) {
-    return this.socket.fromEvent(`chatUpdatedForUserId/${userId}`).pipe(map((data: any) => data));
+  socketGlobalSubscribe(userId: string): Observable<Chat> {
+    return this.socket.fromEvent(`chatUpdatedForUserId/${userId}`).pipe(map((chat) => chat)) as Observable<Chat>;
   }
 
 }
@@ -101,4 +101,14 @@ export interface Pagination {
   lastMessageDate?: string;
   page?: number;
   size: number;
+}
+
+export interface Message {
+  chatId: string;
+  createdAt: string;
+  id?: string;
+  text: string;
+  updatedAt?: string;
+  userId: string;
+  formattedDate?: string;
 }
