@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChil
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Chat, ChatListDTO, ChatsPagination, HomeService, User } from '../home.service';
+import { Chat, ChatListDTO, ListPagination, HomeService, User } from '../home.service';
 import { Store } from '@ngrx/store';
 import { getChat, getChats, getChatsPagination } from 'src/app/state/chats/chats.actions';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
@@ -20,7 +20,7 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
   preview: string = '../../assets/avatar.png';
   chatsListTable = new MatTableDataSource<Chat>([]);
   pagination = { page: 0, size: 10 };
-  dataPagination: ChatsPagination;
+  dataPagination: ListPagination;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Output() openUsersListHandler = new EventEmitter();

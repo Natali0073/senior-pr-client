@@ -29,7 +29,8 @@
         </ng-container>
 
         <ng-container matColumnDef="lastMessage">
-          <td mat-cell *matCellDef="let element" class="chats-dashboard__message"> {{ element.lastMessageText || '...' }} </td>
+          <td mat-cell *matCellDef="let element"> <span class="chats-dashboard__message">{{ element.lastMessageText ||
+              '...' }}</span> </td>
         </ng-container>
 
         <ng-container matColumnDef="action">

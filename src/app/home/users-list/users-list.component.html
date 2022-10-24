@@ -6,12 +6,12 @@
       <input matInput [value]="firstName" [formControl]="firstNameControl">
     </mat-form-field>
   </div>
-  <section *ngIf="!usersList.length; else showUsers" class="users-list__empty-data">
+  <section *ngIf="!usersListTable.data.length; else showUsers" class="users-list__empty-data">
     No users to find
   </section>
   <ng-template #showUsers>
     <div class="users-list__table-container">
-    <table mat-table [dataSource]="usersList" class="mat-elevation-z8">
+    <table mat-table [dataSource]="usersListTable" class="mat-elevation-z8">
       <ng-container matColumnDef="avatar">
         <td mat-cell *matCellDef="let element">
           <user-avatar [preview]="element.avatar"></user-avatar>
@@ -31,5 +31,9 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     </div>
+    <mat-paginator *ngIf="dataPagination.totalItems >= pagination.size" [length]="dataPagination.totalItems"
+      [pageIndex]="dataPagination.currentPage" [pageSize]="pagination.size" [pageSizeOptions]="[5, 10, 20]"
+      (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
   </ng-template>
 </div>

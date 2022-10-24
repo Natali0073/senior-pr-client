@@ -12,11 +12,13 @@ export class HomeService {
 
   constructor(private http: HttpClient, private socket: Socket) { }
 
-  getUsers(filter: string) {
+  getUsers(filter: string, pagination: Pagination) {
     const params = new HttpParams()
-      .set('name', filter || '');
+      .set('name', filter || '')
+      .set('page', pagination.page || 0)
+      .set('size', pagination.size);
 
-    return this.http.get<User[]>('api/users', { params });
+    return this.http.get<UserListDTO>('api/users', { params });
   }
 
   getCurrentUser() {
@@ -75,13 +77,17 @@ export interface User {
   accessToken?: string;
 }
 
-export interface ChatsPagination {
+export interface UserListDTO extends ListPagination {
+  users: User[];
+}
+
+export interface ListPagination {
   currentPage: number;
   totalItems: number;
   totalPages: number;
 }
 
-export interface ChatListDTO extends ChatsPagination {
+export interface ChatListDTO extends ListPagination {
   chats: Chat[];
 }
 

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Chat, ChatListDTO, ChatsPagination } from 'src/app/home/home.service';
+import { Chat, ChatListDTO, ListPagination } from 'src/app/home/home.service';
 
 export const getChats = createAction(
   '[Chats] Get Chats',
@@ -13,5 +13,5 @@ export const getChat = createAction(
 
 export const getChatsPagination = createAction(
   '[Chats] Get Chats Pagination',
-  props<{ data: ChatsPagination }>()
+  props<{ data: ListPagination }>()
 );

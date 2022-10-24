@@ -1,12 +1,12 @@
 import { combineReducers } from "@ngrx/store";
 import { createReducer, on } from '@ngrx/store';
-import { Chat, ChatsPagination } from "src/app/home/home.service";
+import { Chat, ListPagination } from "src/app/home/home.service";
 import { chatsSorting } from "src/app/shared/utils/utils";
 import { getChat, getChats, getChatsPagination } from "./chats.actions";
 
 export interface ChatsStore {
   chatsData: Chat[];
-  chatsPagination: ChatsPagination;
+  chatsPagination: ListPagination;
 }
 
 export const chatsListReducer = createReducer(
@@ -30,7 +30,7 @@ export const chatsPaginationReducer = createReducer(
   {},
   on(getChatsPagination,
     (state, { data }) => {
-      const pagination: ChatsPagination = {
+      const pagination: ListPagination = {
         currentPage: data.currentPage,
         totalItems: data.totalItems,
         totalPages: data.totalPages
