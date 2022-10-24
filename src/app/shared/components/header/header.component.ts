@@ -15,6 +15,7 @@ import { UserProfileComponent } from '../../../home/user-profile/user-profile.co
 })
 export class HeaderComponent {
   @Input() preview: string;
+  @Input() isAdmin: boolean = false;
 
   constructor(
     private readonly unsubscriber: UnsubscriberService,
@@ -31,6 +32,10 @@ export class HeaderComponent {
 
   redirectToMain() {
     this.router.navigate(['/']);
+  }
+
+  openAdminPanel() {
+    this.router.navigate(['/home/admin-panel']);
   }
 
   logout() {

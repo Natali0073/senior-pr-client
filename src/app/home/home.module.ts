@@ -11,6 +11,7 @@ import { ChatsListComponent } from './chats-list/chats-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { PersonalChatComponent } from './personal-chat/personal-chat.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     UserProfileComponent,
     ChatsListComponent,
     UsersListComponent,
-    PersonalChatComponent
+    PersonalChatComponent,
+    AdminPanelComponent
   ]
 })
 export class HomeModule { }

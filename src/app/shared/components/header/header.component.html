@@ -9,6 +9,7 @@
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="openMyProfile()">My profile</button>
+    <button *ngIf="isAdmin" mat-menu-item (click)="openAdminPanel()">Admin panel</button>
     <button mat-menu-item (click)="logout()">Logout</button>
   </mat-menu>
 </mat-toolbar>
