@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 import { logoutAction } from 'src/app/state/global/global.actions';
-import { UserProfileComponent } from '../user-profile/user-profile.component';
+import { UserProfileComponent } from '../../../home/user-profile/user-profile.component';
 
 @Component({
   selector: 'header',
@@ -29,6 +29,9 @@ export class HeaderComponent {
     this.dialog.open(UserProfileComponent, { panelClass: 'my-profile-modal' });
   }
 
+  redirectToMain() {
+    this.router.navigate(['/']);
+  }
 
   logout() {
     this.authService.logout()

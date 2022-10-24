@@ -10,6 +10,7 @@ import { PassedTimePipe } from "./pipes/passedTime.pipe";
 import { SideBarWidthSwitchDirective } from "./directives/side-bar-width-switch.directive";
 import { ChatSwitchDirective } from "./directives/chat-width-switch.directive";
 import { ChatMessageComponent } from "./components/chat-message/chat-message.component";
+import { HeaderComponent } from "./components/header/header.component";
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { ChatMessageComponent } from "./components/chat-message/chat-message.com
     PassedTimePipe,
     SideBarWidthSwitchDirective,
     ChatSwitchDirective,
-    ChatMessageComponent
+    ChatMessageComponent,
+    HeaderComponent
   ],
   exports: [
     UserVatarComponent,
@@ -35,7 +37,8 @@ import { ChatMessageComponent } from "./components/chat-message/chat-message.com
     PassedTimePipe,
     SideBarWidthSwitchDirective,
     ChatSwitchDirective,
-    ChatMessageComponent
+    ChatMessageComponent,
+    HeaderComponent
   ],
   providers: [
     snackBarDefaultOptions

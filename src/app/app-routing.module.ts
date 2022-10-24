@@ -9,6 +9,7 @@ import { TermsAndPolicy } from './components/terms-and-policy/terms-and-policy.c
 
 const routes: Routes = [
   { path: 'chats', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+  { path: 'admin-panel', loadChildren: () => import('./admin-panel/admin-panel.module').then(m => m.AdminPanelModule) },
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password/:token', component: ResetPasswordComponent },
