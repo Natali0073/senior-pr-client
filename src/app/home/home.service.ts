@@ -61,6 +61,14 @@ export class HomeService {
     return this.socket.fromEvent(`chatUpdatedForUserId/${userId}`).pipe(map((chat) => chat)) as Observable<Chat>;
   }
 
+  getBannedUsers() {
+    return this.http.get<User[]>('api/admin/banned');
+  }
+
+  banUser(data: UserBanData) {
+    return this.http.post<User>('api/admin/ban', { ...data });
+  }
+
 }
 
 export interface User {
@@ -115,4 +123,9 @@ export interface Message {
   updatedAt?: string;
   userId: string;
   formattedDate?: string;
+}
+
+export interface UserBanData {
+  userId: string;
+  isBanned: boolean;
 }
