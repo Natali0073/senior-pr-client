@@ -4,7 +4,7 @@ import { User } from "src/app/home/home.service";
 import { getCurrentUser } from './users.actions';
 
 export interface UsersStore {
-  currentUser: User | null;
+  currentUser: User;
 }
 
 export const currentUserReducer = createReducer(

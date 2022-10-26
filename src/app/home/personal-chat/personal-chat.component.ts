@@ -148,8 +148,6 @@ export class PersonalChatComponent implements OnInit {
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe(() => {
         this.emitMessage(newMessage);
-        this.chatService.chatsUpdate.next();
-        this.store.dispatch(getChat({ chat: { ...this.currentChat, updatedAt: newMessage.createdAt } }));
         this.message = '';
       });
   }

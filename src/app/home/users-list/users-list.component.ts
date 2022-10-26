@@ -86,7 +86,6 @@ export class UsersListComponent implements OnInit, AfterViewInit {
       .subscribe((chat) => {
         this.router.navigate([`/home/chats/${chat.id}`]);
         this.store.dispatch(getChat({ chat }));
-        this.chatService.chatsUpdate.next();
         this.dialogRef.close();
       });
   }
