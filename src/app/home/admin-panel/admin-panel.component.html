@@ -4,13 +4,13 @@
   </div>
   <div class="admin-panel__content">
     <mat-card>
-      <h3>Users</h3>
+      <h3>Active users</h3>
       <section *ngIf="!usersListTable.data.length; else showUsers" class="admin-panel__empty-data">
         No users to find
       </section>
       <ng-template #showUsers>
         <div class="admin-panel__table-container">
-          <table mat-table [dataSource]="usersListTable" class="mat-elevation-z8">
+          <table mat-table [dataSource]="usersListTable">
             <ng-container matColumnDef="avatar">
               <td mat-cell *matCellDef="let element">
                 <user-avatar [preview]="element.avatar"></user-avatar>
@@ -23,7 +23,7 @@
 
             <ng-container matColumnDef="action">
               <td mat-cell *matCellDef="let element">
-                <button mat-icon-button aria-label="Block" (click)="adminAction(element, true)" color="primary">
+                <button mat-icon-button aria-label="Block" (click)="adminAction(element, true)" color="warn">
                   <mat-icon>block</mat-icon>
                 </button>
               </td>
@@ -39,13 +39,13 @@
       </ng-template>
     </mat-card>
     <mat-card>
-      <h3>Bunned Users</h3>
+      <h3>Bunned users</h3>
       <section *ngIf="!bannedUsers.length; else showBanned" class="admin-panel__empty-data">
         No users to find
       </section>
       <ng-template #showBanned>
         <div class="admin-panel__table-container">
-          <table mat-table [dataSource]="bannedUsers" class="mat-elevation-z8">
+          <table mat-table [dataSource]="bannedUsers">
             <ng-container matColumnDef="avatar">
               <td mat-cell *matCellDef="let element">
                 <user-avatar [preview]="element.avatar"></user-avatar>
@@ -58,7 +58,7 @@
 
             <ng-container matColumnDef="action">
               <td mat-cell *matCellDef="let element">
-                <button mat-icon-button aria-label="Block" (click)="adminAction(element, false)" color="primary">
+                <button mat-icon-button aria-label="Block" (click)="adminAction(element, false)" color="accent">
                   <mat-icon>clear</mat-icon>
                 </button>
               </td>

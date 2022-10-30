@@ -6,17 +6,21 @@
   padding: 20px;
 
   table {
-    width: 70%;
     box-shadow: none;
+    width: 70%;
+    min-width: 400px;
   }
 
   &__content {
-    // height: calc(100vh - 64px);
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
 
   .mat-card {
-    width: 50%;
+    width: 45%;
+    min-width: 400px;
+    margin-bottom: 10px;
   }
 
   &__empty-data {
