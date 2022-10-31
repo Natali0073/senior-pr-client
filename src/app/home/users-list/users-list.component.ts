@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -23,7 +23,7 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['avatar', 'name', 'action'];
   filter: string;
   firstName = '';
-  firstNameControl = new FormControl();
+  firstNameControl = new UntypedFormControl();
   formCtrlSub: Subscription;
 
   usersListTable = new MatTableDataSource<User>([]);

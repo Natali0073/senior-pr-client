@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
 import { catchError, finalize } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
@@ -18,12 +18,12 @@ import { customErrorHandling } from 'src/app/shared/utils/customErrorHandling';
   providers: [UnsubscriberService]
 })
 export class LoginComponent {
-  loginForm: FormGroup = new FormGroup({
-    email: new FormControl('', [
+  loginForm: UntypedFormGroup = new UntypedFormGroup({
+    email: new UntypedFormControl('', [
       Validators.required,
       Validators.email
     ]),
-    password: new FormControl('', [
+    password: new UntypedFormControl('', [
       Validators.required
     ]),
   });

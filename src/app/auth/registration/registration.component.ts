@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatchValidator } from 'src/app/shared/utils/match-validator';
@@ -17,26 +17,26 @@ import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.servic
   providers: [UnsubscriberService]
 })
 export class RegistrationComponent {
-  registrationForm = new FormGroup({
-    firstName: new FormControl('', [
+  registrationForm = new UntypedFormGroup({
+    firstName: new UntypedFormControl('', [
       Validators.required
     ]),
-    lastName: new FormControl('', [
+    lastName: new UntypedFormControl('', [
       Validators.required
     ]),
-    email: new FormControl('', [
+    email: new UntypedFormControl('', [
       Validators.required,
       Validators.email
     ]),
-    password: new FormControl('', [
+    password: new UntypedFormControl('', [
       Validators.required,
       passwordValidator()
     ]),
-    passwordConfirmation: new FormControl('', [
+    passwordConfirmation: new UntypedFormControl('', [
       Validators.required,
       passwordValidator()
     ]),
-    termsPolicyAgree: new FormControl('', [
+    termsPolicyAgree: new UntypedFormControl('', [
       Validators.required
     ]),
   }, [MatchValidator('password', 'passwordConfirmation')]);

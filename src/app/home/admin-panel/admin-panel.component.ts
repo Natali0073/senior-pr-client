@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -17,7 +17,7 @@ export class AdminPanelComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['avatar', 'name', 'action'];
   filter: string;
   firstName = '';
-  firstNameControl = new FormControl();
+  firstNameControl = new UntypedFormControl();
   formCtrlSub: Subscription;
 
   usersListTable = new MatTableDataSource<User>([]);

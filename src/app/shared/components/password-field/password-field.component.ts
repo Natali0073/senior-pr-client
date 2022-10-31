@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { AbstractControl, ControlContainer, ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlContainer, ControlValueAccessor, UntypedFormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'password-field',
@@ -18,7 +18,7 @@ export class PassWordFieldComponent implements ControlValueAccessor, OnInit {
   constructor(private controlContainer: ControlContainer) {
   }
 
-  control: FormControl;
+  control: UntypedFormControl;
   showPassword = false;
 
   @Input() formControlName: string;
@@ -28,7 +28,7 @@ export class PassWordFieldComponent implements ControlValueAccessor, OnInit {
 
   ngOnInit() {
     if (this.controlContainer && this.controlContainer.control && this.formControlName) {
-      this.control = this.controlContainer.control.get(this.formControlName) as FormControl;
+      this.control = this.controlContainer.control.get(this.formControlName) as UntypedFormControl;
     }
   }
 

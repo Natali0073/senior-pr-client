@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -25,24 +25,24 @@ import { AppState } from 'src/app/state/app.state';
 export class UserProfileComponent implements OnInit {
   currentUser: User | null = null;
   preview: string = '../../../assets/avatar.png';
-  userProfile = new FormGroup({
-    firstName: new FormControl(this.currentUser ? this.currentUser.firstName : '', [
+  userProfile = new UntypedFormGroup({
+    firstName: new UntypedFormControl(this.currentUser ? this.currentUser.firstName : '', [
       Validators.required
     ]),
-    lastName: new FormControl(this.currentUser ? this.currentUser.lastName : '', [
+    lastName: new UntypedFormControl(this.currentUser ? this.currentUser.lastName : '', [
       Validators.required
     ]),
   });
 
-  changePassword = new FormGroup({
-    oldPassword: new FormControl('', [
+  changePassword = new UntypedFormGroup({
+    oldPassword: new UntypedFormControl('', [
       Validators.required
     ]),
-    password: new FormControl('', [
+    password: new UntypedFormControl('', [
       Validators.required,
       passwordValidator()
     ]),
-    passwordConfirmation: new FormControl('', [
+    passwordConfirmation: new UntypedFormControl('', [
       Validators.required,
       passwordValidator()
     ]),
@@ -103,11 +103,11 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  checkValid(form: FormGroup, fieldName: string) {
+  checkValid(form: UntypedFormGroup, fieldName: string) {
     return checkFieldValid(form.get(fieldName));
   }
 
-  getErrorMessage(form: FormGroup, fieldName: string) {
+  getErrorMessage(form: UntypedFormGroup, fieldName: string) {
     return formErrorMessage(form.get(fieldName));
   }
 

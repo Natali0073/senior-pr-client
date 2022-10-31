@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
@@ -14,7 +14,7 @@ import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.servic
   providers: [UnsubscriberService]
 })
 export class ForgotPasswordComponent implements OnInit {
-  email = new FormControl('', [
+  email = new UntypedFormControl('', [
     Validators.required,
     Validators.email,
   ]);

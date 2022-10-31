@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
@@ -20,12 +20,12 @@ import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.servic
 })
 export class ResetPasswordComponent implements OnInit {
   userToken: string = '';
-  changePasswordForm = new FormGroup({
-    password: new FormControl('', [
+  changePasswordForm = new UntypedFormGroup({
+    password: new UntypedFormControl('', [
       Validators.required,
       passwordValidator()
     ]),
-    passwordConfirmation: new FormControl('', [
+    passwordConfirmation: new UntypedFormControl('', [
       Validators.required,
       passwordValidator()
     ]),
