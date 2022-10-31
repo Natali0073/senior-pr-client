@@ -27,14 +27,15 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
               });
             }
             this.router.navigate(['/login']);
-            return throwError(error);
+            return throwError(() => error);
           }
 
-          this._snackBar.openFromComponent(SnackBarComponent, {
-            data: error.error.message,
-            panelClass: 'snack-bar-error'
-          });
-          return throwError(error);
+          error && error.error && error.error.message &&
+            this._snackBar.openFromComponent(SnackBarComponent, {
+              data: error.error.message,
+              panelClass: 'snack-bar-error'
+            });
+          return throwError(() => error);
         })
       )
   }
