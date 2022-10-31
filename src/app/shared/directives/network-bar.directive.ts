@@ -2,20 +2,24 @@ import { Directive, ElementRef, HostListener, Input, OnChanges, OnInit, Renderer
 @Directive({
   selector: '[appNetworkBarAppearance]'
 })
-export class NetworkBarAppearance {
+export class NetworkBarAppearance implements OnInit {
 
   public innerWidth: number;
 
   constructor(private elmRef: ElementRef, private renderer: Renderer2) { }
 
   @HostListener('window:online', ['$event'])
-  onOnline(event: Event) {
+  onOnline() {
     this.showOnline();
   }
 
   @HostListener('window:offline', ['$event'])
-  onOffline(event: Event) {
+  onOffline() {
     this.showOffline();
+  }
+
+  ngOnInit(): void {
+    !navigator.onLine && this.showOffline();
   }
 
   showOffline() {

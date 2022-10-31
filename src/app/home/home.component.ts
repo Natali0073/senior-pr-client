@@ -23,6 +23,7 @@ export class HomeComponent {
 
   ngOnInit() {
     this.getCurrentUser();
+    this.networkUpdateSubscribe();
   }
 
   getCurrentUser() {
@@ -46,5 +47,11 @@ export class HomeComponent {
 
   isAdmin() {
     return this.currentUser && this.currentUser.role === 'admin';
+  }
+
+  networkUpdateSubscribe() {
+    this.chatService.networkOnline
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe(isOnline => isOnline && this.getCurrentUser())
   }
 }

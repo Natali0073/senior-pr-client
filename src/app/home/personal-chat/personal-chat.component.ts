@@ -41,6 +41,7 @@ export class PersonalChatComponent implements OnInit {
   ngOnInit() {
     this.getChatStore();
     this.selectUserStore();
+    this.networkUpdateSubscribe();
   }
 
   routeEventSubscribe() {
@@ -178,6 +179,12 @@ export class PersonalChatComponent implements OnInit {
       text: this.message
     }
     return newMessage;
+  }
+
+  networkUpdateSubscribe() {
+    this.chatService.networkOnline
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe(isOnline => isOnline && this.getMessages({ resetMessages: true }))
   }
 
 }

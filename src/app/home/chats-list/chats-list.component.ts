@@ -40,8 +40,9 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getAllChats(this.pagination);
-     this.selectUserStore();
+    this.selectUserStore();
     this.selectChatsData();
+    this.networkUpdateSubscribe();
   }
 
   getAllChats(paginationData: { page: number; size: number; }) {
@@ -54,7 +55,6 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
       .subscribe((data: ChatListDTO) => {
         this.store.dispatch(getChats({ data }));
         this.store.dispatch(getChatsPagination({ data }));
-
       });
   }
 
@@ -103,5 +103,11 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
           this.socketChatsSubscribe(user);
         }
       );
+  }
+
+  networkUpdateSubscribe() {
+    this.chatService.networkOnline
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe(isOnline => isOnline && this.getAllChats(this.pagination))
   }
 }
