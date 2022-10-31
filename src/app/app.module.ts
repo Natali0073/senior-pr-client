@@ -17,6 +17,8 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { usersReducer } from './state/users/users.reducer';
 import { chatssReducer } from './state/chats/chats.reducer';
 import { metaReducers } from './state/global/metaReducers';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 const config: SocketIoConfig = { url: 'http://localhost:80', options: {} };
 
@@ -39,7 +41,13 @@ const config: SocketIoConfig = { url: 'http://localhost:80', options: {} };
       { metaReducers }
     ),
     SocketIoModule.forRoot(config),
-    ...material
+    ...material,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     {
