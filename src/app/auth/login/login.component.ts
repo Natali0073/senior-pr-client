@@ -8,6 +8,8 @@ import { EMPTY } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { customErrorHandling } from 'src/app/shared/utils/customErrorHandling';
 
 @Component({
   selector: 'app-login',
@@ -51,12 +53,7 @@ export class LoginComponent {
       .pipe(
         this.unsubscriber.takeUntilDestroy,
         catchError((error) => {
-          if (error.status === 401 || error.status === 404) {
-            this._snackBar.openFromComponent(SnackBarComponent, {
-              data: 'Credentials are invalid! Please check email and password',
-              panelClass: 'snack-bar-error'
-            });
-          }
+          this.errorHandling(error);
           return EMPTY;
         }),
         finalize(() => this.loading = false)
@@ -68,5 +65,24 @@ export class LoginComponent {
 
   logout() {
     this.authService.logout();
+  }
+
+  errorHandling(error: HttpErrorResponse) {
+    let message = customErrorHandling(error);
+    switch (true) {
+      case error.status === 401 || error.status === 404:
+        message = 'Credentials are invalid! Please check email and password';
+        break;
+
+      default:
+        break;
+    }
+
+    if (message) {
+      this._snackBar.openFromComponent(SnackBarComponent, {
+        data: message,
+        panelClass: 'snack-bar-error'
+      });
+    }
   }
 }
