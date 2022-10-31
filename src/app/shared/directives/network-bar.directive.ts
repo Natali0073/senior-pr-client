@@ -20,7 +20,7 @@ export class NetworkBarAppearance {
 
   showOffline() {
     this.renderer.setStyle(this.elmRef.nativeElement, 'background-color', 'black');
-    this.renderer.setStyle(this.elmRef.nativeElement, 'display', 'block');
+    this.renderer.setStyle(this.elmRef.nativeElement, 'height', '20px');
     this.elmRef.nativeElement.innerText = `You're offline!`;
   }
 
@@ -28,7 +28,7 @@ export class NetworkBarAppearance {
     this.renderer.setStyle(this.elmRef.nativeElement, 'background-color', 'green');
     this.elmRef.nativeElement.innerText = `You're online!`;
     setTimeout(() => {
-      this.renderer.setStyle(this.elmRef.nativeElement, 'display', 'none');
+      this.renderer.setStyle(this.elmRef.nativeElement, 'height', '0px');
     }, 1000)
   }
 
