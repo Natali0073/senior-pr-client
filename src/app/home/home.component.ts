@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { UnsubscriberService } from '../shared/services/unsubscriber.service';
 import { AppState } from '../state/app.state';
 import { getCurrentUser } from '../state/users/users.actions';
+import { selectCurrentUser } from '../state/users/users.selectors';
 import { User, HomeService } from './home.service';
 @Component({
   selector: 'app-home',
@@ -29,7 +30,17 @@ export class HomeComponent {
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe((user: User) => {
         this.currentUser = user;
+        if (user && user.avatar) this.preview = user.avatar;
         this.store.dispatch(getCurrentUser({ user }));
+        this.selectUserStore();
+      });
+  }
+
+  selectUserStore() {
+    this.store.select(selectCurrentUser)
+      .pipe(this.unsubscriber.takeUntilDestroy)
+      .subscribe((user: User) => {
+        if (user && user.avatar) this.preview = user.avatar;
       });
   }
 

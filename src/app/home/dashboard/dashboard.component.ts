@@ -28,7 +28,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRouteParams();
-    this.selectUserStore();
   }
 
   getRouteParams() {
@@ -47,15 +46,6 @@ export class DashboardComponent implements OnInit {
           this.currentChatId = id !== 'chats' ? id : '';
         }
       });
-  }
-
-  selectUserStore() {
-    this.store.select(selectCurrentUser)
-      .pipe(this.unsubscriber.takeUntilDestroy)
-      .subscribe((user) => {
-        if (user && user.avatar) this.preview = user.avatar;
-      }
-      );
   }
 
   openUsersList() {
