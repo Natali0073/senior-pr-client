@@ -86,10 +86,8 @@ export class AdminPanelComponent implements OnInit, AfterViewInit {
     this.chatService.banUser({ userId: user.id, isBanned: banned })
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe((data) => {
-        console.log(data);
-
+        this.getUsers();
+        this.getBannedUsers();
       });
   }
-
-
 }
