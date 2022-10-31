@@ -19,7 +19,7 @@
   &__label {
     display: flex;
     margin-bottom: 15px;
-    color: rgba(0, 0, 0, .6)
+    color: var(--dark-label);
   }
 
   &__tooltip {
@@ -31,7 +31,7 @@
     .mat-icon {
       font-size: 18px;
       width: 18px;
-      height: 18px;
+      height: 20px;
       vertical-align: top;
     }
   }

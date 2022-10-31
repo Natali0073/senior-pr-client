@@ -1,8 +1,8 @@
 .terms-and-policy {
   height: 100%;
   &__toolbar {
-    background-color: #040D32;
-    color: #EAEDF3;
+    background-color: var(--toolbar-dark-blue);
+    color: var(--light-text);
   }
 
   &__content {
