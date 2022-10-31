@@ -11,6 +11,7 @@ import { SideBarWidthSwitchDirective } from "./directives/side-bar-width-switch.
 import { ChatSwitchDirective } from "./directives/chat-width-switch.directive";
 import { ChatMessageComponent } from "./components/chat-message/chat-message.component";
 import { HeaderComponent } from "./components/header/header.component";
+import { NetworkBannerComponent } from './components/network-banner/network-banner.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { HeaderComponent } from "./components/header/header.component";
     SideBarWidthSwitchDirective,
     ChatSwitchDirective,
     ChatMessageComponent,
-    HeaderComponent
+    HeaderComponent,
+    NetworkBannerComponent
   ],
   exports: [
     UserVatarComponent,
@@ -38,7 +40,8 @@ import { HeaderComponent } from "./components/header/header.component";
     SideBarWidthSwitchDirective,
     ChatSwitchDirective,
     ChatMessageComponent,
-    HeaderComponent
+    HeaderComponent,
+    NetworkBannerComponent
   ],
   providers: [
     snackBarDefaultOptions

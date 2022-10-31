@@ -8,6 +8,8 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class HomeService {
+  networkOnline = new Subject<boolean>();
+
   constructor(private http: HttpClient, private socket: Socket) { }
 
   getUsers(filter: string, pagination: Pagination) {

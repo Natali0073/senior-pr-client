@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
-import { AppState } from 'src/app/state/app.state';
-import { selectCurrentUser } from 'src/app/state/users/users.selectors';
 import { UsersListComponent } from '../users-list/users-list.component';
 
 @Component({
@@ -19,7 +16,6 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private readonly unsubscriber: UnsubscriberService,
-    private store: Store<AppState>,
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router

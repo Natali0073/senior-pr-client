@@ -44,8 +44,6 @@ const config: SocketIoConfig = { url: 'http://localhost:80', options: {} };
     ...material,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
