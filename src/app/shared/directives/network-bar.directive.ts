@@ -33,6 +33,7 @@ export class NetworkBarAppearance implements OnInit {
     this.elmRef.nativeElement.innerText = `You're online!`;
     setTimeout(() => {
       this.renderer.setStyle(this.elmRef.nativeElement, 'height', '0px');
+      this.renderer.setStyle(this.elmRef.nativeElement, 'color', 'transparent');
     }, 1000)
   }
 

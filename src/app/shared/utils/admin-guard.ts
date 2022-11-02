@@ -17,7 +17,7 @@ export class AdminGuard implements CanActivate {
   ) { }
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    this.getUserRole();
+   
     return this.getUserRole().pipe(
       switchMap((result) => of(!!result)),
       catchError(() => of(false))
