@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -19,6 +19,7 @@ import { chatssReducer } from './state/chats/chats.reducer';
 import { metaReducers } from './state/global/metaReducers';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { fbAppInitializer } from './shared/utils/fbAppInitializer';
 
 const config: SocketIoConfig = { url: 'http://localhost:80', options: {} };
 
@@ -51,6 +52,11 @@ const config: SocketIoConfig = { url: 'http://localhost:80', options: {} };
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorCatchingInterceptor,
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => fbAppInitializer,
       multi: true
     }
   ],

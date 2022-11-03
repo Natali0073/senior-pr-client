@@ -23,6 +23,12 @@
         <app-button class="big-button" type="submit" [disabled]="!loginForm.valid" label="Log in" [loading]="loading">
         </app-button>
       </form>
+      <button mat-button aria-label="facebook icon" color="primary" (click)="fbLogin()">
+        <mat-icon>facebook</mat-icon>
+      </button>
+      <button mat-button aria-label="google icon" color="primary" (click)="fbLogin()">
+        <mat-icon>google-plus-box</mat-icon>
+      </button>
     </div>
     <div class="login-block__form">
       <p class="row"> Don't have an account yet?&nbsp;

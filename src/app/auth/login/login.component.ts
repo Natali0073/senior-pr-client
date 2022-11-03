@@ -85,4 +85,13 @@ export class LoginComponent {
       });
     }
   }
+
+  fbLogin() {
+    this.authService.fbLogin()
+  }
+
+  onlogin(e: any) {
+    console.log(e);
+    
+  }
 }
