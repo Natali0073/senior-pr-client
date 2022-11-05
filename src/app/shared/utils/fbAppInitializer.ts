@@ -1,5 +1,6 @@
 import { AuthService } from "src/app/auth/auth.service";
 import { environment } from "src/environments/environment";
+import { loadScript } from "./loadScript";
 
 export function fbAppInitializer(accountService: AuthService) {
   return new Promise((resolve, reject) => {
@@ -23,5 +24,6 @@ export function fbAppInitializer(accountService: AuthService) {
         resolve(null);
       }
     });
+
   });
 }

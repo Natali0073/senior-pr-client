@@ -20,6 +20,7 @@ import { metaReducers } from './state/global/metaReducers';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { fbAppInitializer } from './shared/utils/fbAppInitializer';
+import { googleAppInitializer } from './shared/utils/googleAppInitializer';
 
 const config: SocketIoConfig = { url: 'http://localhost:80', options: {} };
 
@@ -57,6 +58,11 @@ const config: SocketIoConfig = { url: 'http://localhost:80', options: {} };
     {
       provide: APP_INITIALIZER,
       useFactory: () => fbAppInitializer,
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => googleAppInitializer,
       multi: true
     }
   ],

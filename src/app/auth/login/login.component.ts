@@ -94,4 +94,11 @@ export class LoginComponent {
     console.log(e);
     
   }
+
+  googleOnLogin() {
+    console.log(1);
+    
+    // console.log(e);
+    
+  }
 }
