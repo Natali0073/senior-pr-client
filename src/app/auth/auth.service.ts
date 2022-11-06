@@ -62,18 +62,14 @@ export class AuthService {
   }
 
   fbLogin() {
-      FB.login(function(response: any) {
-        console.log('response', response);
-
+      FB.login(function(response) {
+        console.log('login', response);
+        
         if (response.authResponse) {
-         console.log('Welcome!  Fetching your information.... ');
-         FB.api('/me', function(response: any) {
-          console.log('response', response);
-
-           console.log('Good to see you, ' + response.name + '.');
+         FB.api('/me', function(response) {
+          console.log('response ME', response);
          });
         } else {
-         console.log('User cancelled login or did not fully authorize.');
         }
     });
 

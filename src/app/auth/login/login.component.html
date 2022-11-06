@@ -26,21 +26,24 @@
       <button mat-button aria-label="facebook icon" color="primary" (click)="fbLogin()">
         <mat-icon>facebook</mat-icon>
       </button>
-      <!-- <button mat-button aria-label="google icon" color="primary" (click)="fbLogin()">
-        <mat-icon>google-plus-box</mat-icon>
-      </button> -->
-      <div style="width: 200px; margin-bottom: 10px;">
-        <div class="fb-login-button" data-width="100" data-size="medium" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="true"></div>
-
+      <div style="margin-bottom: 10px;">
+          <div class="fb-login-button" 
+          data-width="100" 
+          data-size="medium" 
+          data-button-type="login_with" 
+          data-layout="default" 
+          data-auto-logout-link="false" 
+          data-use-continue-as="true">
+        </div>
+      
       </div>
-
-
       <div id="g_id_onload"
          data-client_id="336777826953-p2cboe6lq10rhh7klva43k65vlqs481f.apps.googleusercontent.com"
          data-login_uri="http://localhost:4200/api/auth/login-google"
          data-auto_prompt="false">
       </div>
-      <div class="g_id_signin"
+      <div id="google-signin"
+        class="g_id_signin"
          data-type="standard"
          data-size="large"
          data-theme="outline"

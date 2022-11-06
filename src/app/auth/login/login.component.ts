@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
@@ -10,14 +10,13 @@ import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { customErrorHandling } from 'src/app/shared/utils/customErrorHandling';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   providers: [UnsubscriberService]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: UntypedFormGroup = new UntypedFormGroup({
     email: new UntypedFormControl('', [
       Validators.required,
@@ -36,6 +35,28 @@ export class LoginComponent {
     public router: Router,
     private _snackBar: MatSnackBar
   ) {
+    setTimeout(() => {
+      this.googleRenderButton();
+    }, 100);
+  }
+
+  ngOnInit() {
+  }
+
+  googleRenderButton() {
+    // @ts-ignore
+    google.accounts.id.renderButton(
+      (document as any).getElementById("google-signin"),
+      {
+        type: 'standard',
+        theme: 'outline',
+        size: 'large',
+        text: 'signin_with',
+        shape: 'rectangular',
+        logo_alignment: 'left',
+        width: 200,
+      }
+    );
   }
 
   checkValid(fieldName: string) {
@@ -63,6 +84,10 @@ export class LoginComponent {
       })
   }
 
+  fbLogin() {
+    this.authService.fbLogin()
+  }
+
   logout() {
     this.authService.logout();
   }
@@ -84,21 +109,5 @@ export class LoginComponent {
         panelClass: 'snack-bar-error'
       });
     }
-  }
-
-  fbLogin() {
-    this.authService.fbLogin()
-  }
-
-  onlogin(e: any) {
-    console.log(e);
-    
-  }
-
-  googleOnLogin() {
-    console.log(1);
-    
-    // console.log(e);
-    
   }
 }
