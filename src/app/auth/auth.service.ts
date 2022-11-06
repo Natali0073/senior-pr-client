@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { concatMap, EMPTY, from, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { User } from '../home/home.service';
 
 export interface NewUserDto extends UserLoginDto {
@@ -22,6 +22,27 @@ export interface ChangePwDto {
   oldPassword: string;
   password: string;
 }
+
+export interface FbStatusResponse {
+  status: FbLoginStatus;
+  authResponse: FbAuthResponse;
+}
+
+type FbLoginStatus =
+  | 'authorization_expired'
+  | 'connected'
+  | 'not_authorized'
+  | 'unknown';
+
+export interface FbAuthResponse {
+  accessToken: string;
+  data_access_expiration_time: number;
+  expiresIn: number;
+  signedRequest: string;
+  userID: string;
+  grantedScopes?: string | undefined;
+  reauthorize_required_in?: number | undefined;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -39,6 +60,10 @@ export class AuthService {
 
   login(data: UserLoginDto): Observable<User> {
     return this.http.post<User>(`${this.apiBase}/login`, data);
+  }
+
+  fbLoginHandler(token: string): Observable<User> {
+    return this.http.post<User>(`${this.apiBase}/login-facebook`, token);
   }
 
   logout() {
@@ -62,30 +87,15 @@ export class AuthService {
   }
 
   fbLogin() {
-      FB.login(function(response) {
-        console.log('login', response);
-        
-        if (response.authResponse) {
-         FB.api('/me', function(response) {
-          console.log('response ME', response);
-         });
-        } else {
-        }
+    FB.login((response: FbStatusResponse) => {
+      console.log('login', response);
+      this.fbLoginHandler(response.authResponse.accessToken).subscribe(() => {
+      })
     });
-
-    // login with facebook and return observable with fb access token on success
-    // return from(new Promise<fb.StatusResponse>(resolve => FB.login(resolve)))
-    //   .pipe(concatMap(({ authResponse }) => {
-    //     console.log('fbLogin authResponse', authResponse);
-
-    //     if (!authResponse) return EMPTY;
-    //     return of(authResponse.accessToken);
-    //   }));
   }
 
   apiFBAuthenticate(token: string) {
     console.log('apiFBAuthenticate', token);
     return of(token);
-
   }
 }

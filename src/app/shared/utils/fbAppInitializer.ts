@@ -1,22 +1,12 @@
-import { AuthService } from "src/app/auth/auth.service";
+import { AuthService, FbAuthResponse } from "src/app/auth/auth.service";
 import { environment } from "src/environments/environment";
-
-interface AuthResponse {
-  accessToken: string;
-  data_access_expiration_time: number;
-  expiresIn: number;
-  signedRequest: string;
-  userID: string;
-  grantedScopes?: string | undefined;
-  reauthorize_required_in?: number | undefined;
-}
 
 export function fbAppInitializer(accountService: AuthService) {
   return () => {
     new Promise((resolve, reject) => {
       window.onload = function () {
         // wait for facebook sdk to initialize before starting the angular app
-      window['fbAsyncInit'] = function () {
+      window.fbAsyncInit = () =>{
         FB.init({
           appId: environment.facebookAppId,
           autoLogAppEvents: true,
@@ -48,7 +38,7 @@ export function fbAppInitializer(accountService: AuthService) {
 
 function getLoginStatus(
   resolve: (data: null) => void,
-  callback: (authResponse: AuthResponse) => void
+  callback: (authResponse: FbAuthResponse) => void
 ) {
   FB.getLoginStatus((data) => {
     console.log('getLoginStatus', data);

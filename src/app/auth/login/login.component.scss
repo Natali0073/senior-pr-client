@@ -29,6 +29,12 @@
     margin-bottom: 10px;
   }
 
+  .facebook-button {
+    margin: 10px 0;
+    background: var(--facebook-blue);
+    color: var(--light);
+  }
+
   @media screen and (max-width: 460px) {
     &__image {
       display: none;

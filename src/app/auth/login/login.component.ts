@@ -46,7 +46,8 @@ export class LoginComponent implements OnInit {
   googleRenderButton() {
     // @ts-ignore
     google.accounts.id.renderButton(
-      (document as any).getElementById("google-signin"),
+      // @ts-ignore
+      document.getElementById("google-signin"),
       {
         type: 'standard',
         theme: 'outline',
