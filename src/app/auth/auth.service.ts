@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
 import { User } from '../home/home.service';
 
 export interface NewUserDto extends UserLoginDto {
@@ -51,8 +52,9 @@ export class AuthService {
   private apiBase = '/api/auth';
 
   authToken: string = '';
+  fbLoginSubject = new Subject<FbStatusResponse>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public router: Router) { }
 
   register(data: NewUserDto): Observable<User> {
     return this.http.post<User>(`${this.apiBase}/register`, data);
@@ -63,7 +65,7 @@ export class AuthService {
   }
 
   fbLoginHandler(token: string): Observable<User> {
-    return this.http.post<User>(`${this.apiBase}/login-facebook`, token);
+    return this.http.post<User>(`${this.apiBase}/login-facebook`, { accessToken: token });
   }
 
   logout() {
@@ -88,14 +90,7 @@ export class AuthService {
 
   fbLogin() {
     FB.login((response: FbStatusResponse) => {
-      console.log('login', response);
-      this.fbLoginHandler(response.authResponse.accessToken).subscribe(() => {
-      })
-    });
-  }
-
-  apiFBAuthenticate(token: string) {
-    console.log('apiFBAuthenticate', token);
-    return of(token);
+      this.fbLoginSubject.next(response);
+    }, { scope: 'email' });
   }
 }

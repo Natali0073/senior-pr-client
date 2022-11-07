@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
-import { catchError, finalize } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+import { catchError, finalize, map, mergeMap } from 'rxjs/operators';
+import { EMPTY, iif, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
@@ -33,7 +33,8 @@ export class LoginComponent implements OnInit {
     private readonly unsubscriber: UnsubscriberService,
     public authService: AuthService,
     public router: Router,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private zone: NgZone
   ) {
     setTimeout(() => {
       this.googleRenderButton();
@@ -86,7 +87,22 @@ export class LoginComponent implements OnInit {
   }
 
   fbLogin() {
-    this.authService.fbLogin()
+    this.authService.fbLogin();
+
+    // call server method and redirect to roo route
+    this.authService.fbLoginSubject.pipe(
+      map(response => response),
+      mergeMap(response => iif(() => !!response.authResponse.accessToken, this.fbLoginHandler(response.authResponse.accessToken), of(response))))
+      .subscribe(() => {
+        this.zone.run(() => this.router.navigate(['/']));
+      })
+  }
+
+  fbLoginHandler(accessToken: string) {
+    return this.authService.fbLoginHandler(accessToken)
+      .pipe(
+        map(response => response),
+      )
   }
 
   logout() {
