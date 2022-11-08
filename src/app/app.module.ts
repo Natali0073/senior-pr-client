@@ -64,7 +64,8 @@ const config: SocketIoConfig = { url: 'http://localhost:80', options: {} };
     },
     {
       provide: APP_INITIALIZER,
-      useFactory: () => googleAppInitializer,
+      useFactory: googleAppInitializer,
+      deps: [AuthService],
       multi: true
     }
   ],

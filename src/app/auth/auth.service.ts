@@ -64,8 +64,8 @@ export class AuthService {
     return this.http.post<User>(`${this.apiBase}/login`, data);
   }
 
-  fbLoginHandler(token: string): Observable<User> {
-    return this.http.post<User>(`${this.apiBase}/login-facebook`, { accessToken: token });
+  fbLoginHandler(token: string) {
+    return this.http.post(`${this.apiBase}/login-facebook`, { accessToken: token });
   }
 
   logout() {
@@ -92,5 +92,9 @@ export class AuthService {
     FB.login((response: FbStatusResponse) => {
       this.fbLoginSubject.next(response);
     }, { scope: 'email' });
+  }
+
+  fbLogout() {
+    FB.logout();
   }
 }

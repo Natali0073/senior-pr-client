@@ -17,7 +17,7 @@ export class AdminGuard implements CanActivate {
   ) { }
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-   
+
     return this.getUserRole().pipe(
       switchMap((result) => of(!!result)),
       catchError(() => of(false))
@@ -30,7 +30,10 @@ export class AdminGuard implements CanActivate {
     return this.store.select(selectCurrentUser)
       .pipe(
         map(userData => userData),
-        mergeMap(userData => iif(() => !userData.role, this.fetchUserData(), of(userData && userData.role === 'admin' || false))),
+        mergeMap(userData => iif(() =>
+          !userData.role, this.fetchUserData(),
+          of(userData && userData.role === 'admin' || false))
+        ),
         take(1)
       )
 

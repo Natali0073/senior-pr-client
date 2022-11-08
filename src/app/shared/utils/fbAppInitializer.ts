@@ -3,7 +3,7 @@ import { environment } from "src/environments/environment";
 export function fbAppInitializer() {
   return () => {
     new Promise((resolve, reject) => {
-      window.onload = function () {
+      window.onload = () => {
         // wait for facebook sdk to initialize before starting the angular app
         window.fbAsyncInit = () => {
           FB.init({

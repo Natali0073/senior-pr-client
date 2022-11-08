@@ -4,7 +4,7 @@ import { AuthService } from '../auth.service';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
 import { catchError, finalize, map, mergeMap } from 'rxjs/operators';
-import { EMPTY, iif, of } from 'rxjs';
+import { EMPTY, iif, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
@@ -92,21 +92,26 @@ export class LoginComponent implements OnInit {
     // call server method and redirect to roo route
     this.authService.fbLoginSubject.pipe(
       map(response => response),
-      mergeMap(response => iif(() => !!response.authResponse.accessToken, this.fbLoginHandler(response.authResponse.accessToken), of(response))))
-      .subscribe(() => {
-        this.zone.run(() => this.router.navigate(['/']));
+      mergeMap(response => iif(() =>
+        !!response.authResponse && !!response.authResponse.accessToken,
+        this.fbLoginHandler(response.authResponse && response.authResponse.accessToken || null),
+        throwError(() => 'Fb login failed'))
+      ),
+      catchError((error) => {
+        return EMPTY;
+      }))
+      .subscribe((response) => {
+        this.zone.run(() => {
+          this.router.navigate(['/']);
+          this.authService.fbLogout();
+        });
       })
   }
 
-  fbLoginHandler(accessToken: string) {
-    return this.authService.fbLoginHandler(accessToken)
-      .pipe(
-        map(response => response),
-      )
-  }
-
-  logout() {
-    this.authService.logout();
+  fbLoginHandler(accessToken: string | null) {
+    return accessToken ?
+      this.authService.fbLoginHandler(accessToken).pipe(map(response => response)) :
+      throwError(() => 'Fb login failed');
   }
 
   errorHandling(error: HttpErrorResponse) {
