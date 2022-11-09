@@ -10,10 +10,16 @@ jobs:
     
     steps:
     - name: Checkout
-    - uses: actions/checkout@v3
+      uses: actions/checkout@v3
+
+    - name: NPM
+      run: npm i
+
+    - name: Angular
+      run: npm install -g @angular/cli
     
     - name: Build the app
-      run: ng build --prod
+      run: ng build
       
     - name: Pushes to another repository
       uses: cpina/github-action-push-to-another-repository@main
