@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+    - uses: actions/checkout@v3
+    
+    - name: Build the app
+      run: ng build --prod
+      
+    - name: Pushes to another repository
+      uses: cpina/github-action-push-to-another-repository@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+        source-directory: 'dist/web-chat'
+        destination-github-username: 'Natali0073'
+        destination-repository-name: 'natali0073.github.io'
+        user-email: nataliamakarchuk17@gmail.com
+        target-branch: main
