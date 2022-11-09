@@ -13,6 +13,7 @@ export function fbAppInitializer() {
             version: 'v15.0'
           });
         }
+        resolve(null);
       }
     });
   }
