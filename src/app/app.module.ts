@@ -23,7 +23,7 @@ import { fbAppInitializer } from './shared/utils/fbAppInitializer';
 import { googleAppInitializer } from './shared/utils/googleAppInitializer';
 import { AuthService } from './auth/auth.service';
 
-const config: SocketIoConfig = { url: 'http://localhost:80', options: {} };
+const config: SocketIoConfig = { url: environment.serverUrl, options: {} };
 
 @NgModule({
   declarations: [
