@@ -1,7 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
 import { catchError, finalize, map, mergeMap } from 'rxjs/operators';
 import { EMPTY, iif, throwError } from 'rxjs';
@@ -17,14 +17,16 @@ import { customErrorHandling } from 'src/app/shared/utils/customErrorHandling';
   providers: [UnsubscriberService]
 })
 export class LoginComponent implements OnInit {
-  loginForm: UntypedFormGroup = new UntypedFormGroup({
-    email: new UntypedFormControl('', [
-      Validators.required,
-      Validators.email
-    ]),
-    password: new UntypedFormControl('', [
-      Validators.required
-    ]),
+  loginForm = new FormGroup({
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required,
+      Validators.email]
+    }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required]
+    }),
   });
 
   loading = false;
@@ -70,7 +72,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    const formValues = { ...this.loginForm.value };
+    const formValues = this.loginForm.getRawValue();
+
     this.loading = true;
     this.authService.login(formValues)
       .pipe(

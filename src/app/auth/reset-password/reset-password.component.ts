@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
@@ -8,7 +8,7 @@ import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar
 import { MatchValidator } from 'src/app/shared/utils/match-validator';
 import { passwordValidator } from 'src/app/shared/utils/password-validator';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
-import { AuthService } from '../auth.service';
+import { AuthService, ResetPasswordDto } from '../auth.service';
 import { finalize } from 'rxjs/operators';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 
@@ -20,15 +20,18 @@ import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.servic
 })
 export class ResetPasswordComponent implements OnInit {
   userToken: string = '';
-  changePasswordForm = new UntypedFormGroup({
-    password: new UntypedFormControl('', [
-      Validators.required,
-      passwordValidator()
-    ]),
-    passwordConfirmation: new UntypedFormControl('', [
-      Validators.required,
-      passwordValidator()
-    ]),
+  private fb = new FormBuilder();
+  changePasswordForm = new FormGroup({
+    password: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required,
+      passwordValidator()]
+    }),
+    passwordConfirmation: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required,
+      passwordValidator()]
+    }),
   }, [MatchValidator('password', 'passwordConfirmation')]);
 
   loading = false;
@@ -65,9 +68,8 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    const formValues = { ...this.changePasswordForm.value };
-
-    const dto = {
+    const formValues = this.changePasswordForm.getRawValue();
+    const dto: ResetPasswordDto = {
       token: this.userToken,
       password: formValues.password
     }

@@ -26,28 +26,30 @@ export class UserProfileComponent implements OnInit {
   currentUser: User | null = null;
   preview: string = '../../../assets/avatar.png';
   userProfile = new FormGroup({
-    email: new FormControl({value: this.currentUser?.email, disabled: true}, [
-    ]),
-    firstName: new FormControl(this.currentUser?.firstName, [
-      Validators.required
-    ]),
-    lastName: new FormControl(this.currentUser?.lastName, [
-      Validators.required
-    ]),
+    email: new FormControl({ value: this.currentUser?.email, disabled: true}),
+    firstName: new FormControl(this.currentUser?.firstName || '', {
+      nonNullable: true,
+      validators: [Validators.required]
+    }),
+    lastName: new FormControl(this.currentUser?.lastName || '', {
+      nonNullable: true,
+      validators: [Validators.required]
+    }),
   });
 
   changePassword = new FormGroup({
-    oldPassword: new FormControl('', [
-      Validators.required
-    ]),
-    password: new FormControl('', [
-      Validators.required,
-      passwordValidator()
-    ]),
-    passwordConfirmation: new FormControl('', [
-      Validators.required,
-      passwordValidator()
-    ]),
+    oldPassword: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required]
+    }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, passwordValidator()]
+    }),
+    passwordConfirmation: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, passwordValidator()]
+    }),
   }, [MatchValidator('password', 'passwordConfirmation')]);
 
   activeTabIndex = 0;
@@ -122,11 +124,11 @@ export class UserProfileComponent implements OnInit {
   }
 
   submitUserData() {
-    const formValues = { ...this.userProfile.value };
+    const formValues = this.userProfile.getRawValue();
 
     const formData = new FormData();
-    formData.append('firstName', formValues.firstName || '');
-    formData.append('lastName', formValues.lastName || '');
+    formData.append('firstName', formValues.firstName);
+    formData.append('lastName', formValues.lastName);
     this.selectedFiles && formData.append('avatar', this.selectedFiles[0]);
     this.loading = true;
     this.authService.updatePersonalInfo(formData)
@@ -144,9 +146,13 @@ export class UserProfileComponent implements OnInit {
   }
 
   submitPassword() {
-    const { oldPassword, password } = this.changePassword.value;
+    const formValues = this.changePassword.getRawValue();
+    const dto = {
+      oldPassword: formValues.oldPassword,
+      password: formValues.password,
+    }
     this.loading = true;
-    this.authService.changePassword({ oldPassword: oldPassword || '', password: password || '' })
+    this.authService.changePassword(dto)
       .pipe(
         this.unsubscriber.takeUntilDestroy,
         finalize(() => this.loading = false),

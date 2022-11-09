@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatchValidator } from 'src/app/shared/utils/match-validator';
 import { passwordValidator } from 'src/app/shared/utils/password-validator';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
-import { AuthService } from '../auth.service';
+import { AuthService, NewUserDto } from '../auth.service';
 import { finalize } from 'rxjs/operators';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 
@@ -17,26 +17,30 @@ import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.servic
   providers: [UnsubscriberService]
 })
 export class RegistrationComponent {
-  registrationForm = new UntypedFormGroup({
-    firstName: new UntypedFormControl('', [
-      Validators.required
-    ]),
-    lastName: new UntypedFormControl('', [
-      Validators.required
-    ]),
-    email: new UntypedFormControl('', [
-      Validators.required,
-      Validators.email
-    ]),
-    password: new UntypedFormControl('', [
+  registrationForm = new FormGroup({
+    firstName: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required]
+    }),
+    lastName: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required]
+    }),
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required,
+      Validators.email]
+    }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required,
+      passwordValidator()]
+    }),
+    passwordConfirmation: new FormControl('', [
       Validators.required,
       passwordValidator()
     ]),
-    passwordConfirmation: new UntypedFormControl('', [
-      Validators.required,
-      passwordValidator()
-    ]),
-    termsPolicyAgree: new UntypedFormControl('', [
+    termsPolicyAgree: new FormControl('', [
       Validators.required
     ]),
   }, [MatchValidator('password', 'passwordConfirmation')]);
@@ -67,9 +71,9 @@ export class RegistrationComponent {
   }
 
   onSubmit() {
-    const formValues = { ...this.registrationForm.value };
+    const formValues = this.registrationForm.getRawValue();
 
-    const dto = {
+    const dto: NewUserDto = {
       firstName: formValues.firstName,
       lastName: formValues.lastName,
       email: formValues.email,
