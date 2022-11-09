@@ -6,6 +6,12 @@
       <form [formGroup]="userProfile">
         <p>
           <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
             <mat-label>First Name</mat-label>
             <input matInput formControlName="firstName">
             <mat-error *ngIf="checkValid(userProfile, 'firstName')">{{getErrorMessage(userProfile, 'firstName')}}

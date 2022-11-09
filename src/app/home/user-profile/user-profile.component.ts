@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -25,24 +25,26 @@ import { AppState } from 'src/app/state/app.state';
 export class UserProfileComponent implements OnInit {
   currentUser: User | null = null;
   preview: string = '../../../assets/avatar.png';
-  userProfile = new UntypedFormGroup({
-    firstName: new UntypedFormControl(this.currentUser ? this.currentUser.firstName : '', [
+  userProfile = new FormGroup({
+    email: new FormControl({value: this.currentUser?.email, disabled: true}, [
+    ]),
+    firstName: new FormControl(this.currentUser?.firstName, [
       Validators.required
     ]),
-    lastName: new UntypedFormControl(this.currentUser ? this.currentUser.lastName : '', [
+    lastName: new FormControl(this.currentUser?.lastName, [
       Validators.required
     ]),
   });
 
-  changePassword = new UntypedFormGroup({
-    oldPassword: new UntypedFormControl('', [
+  changePassword = new FormGroup({
+    oldPassword: new FormControl('', [
       Validators.required
     ]),
-    password: new UntypedFormControl('', [
+    password: new FormControl('', [
       Validators.required,
       passwordValidator()
     ]),
-    passwordConfirmation: new UntypedFormControl('', [
+    passwordConfirmation: new FormControl('', [
       Validators.required,
       passwordValidator()
     ]),
@@ -77,7 +79,8 @@ export class UserProfileComponent implements OnInit {
           this.preview = user.avatar || this.preview;
           this.userProfile.setValue({
             firstName: user.firstName,
-            lastName: user.lastName
+            lastName: user.lastName,
+            email: user.email,
           });
         }
       }
@@ -103,11 +106,11 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  checkValid(form: UntypedFormGroup, fieldName: string) {
+  checkValid(form: FormGroup, fieldName: string) {
     return checkFieldValid(form.get(fieldName));
   }
 
-  getErrorMessage(form: UntypedFormGroup, fieldName: string) {
+  getErrorMessage(form: FormGroup, fieldName: string) {
     return formErrorMessage(form.get(fieldName));
   }
 
@@ -122,8 +125,8 @@ export class UserProfileComponent implements OnInit {
     const formValues = { ...this.userProfile.value };
 
     const formData = new FormData();
-    formData.append('firstName', formValues.firstName);
-    formData.append('lastName', formValues.lastName);
+    formData.append('firstName', formValues.firstName || '');
+    formData.append('lastName', formValues.lastName || '');
     this.selectedFiles && formData.append('avatar', this.selectedFiles[0]);
     this.loading = true;
     this.authService.updatePersonalInfo(formData)
@@ -143,7 +146,7 @@ export class UserProfileComponent implements OnInit {
   submitPassword() {
     const { oldPassword, password } = this.changePassword.value;
     this.loading = true;
-    this.authService.changePassword({ oldPassword: oldPassword, password: password })
+    this.authService.changePassword({ oldPassword: oldPassword || '', password: password || '' })
       .pipe(
         this.unsubscriber.takeUntilDestroy,
         finalize(() => this.loading = false),
