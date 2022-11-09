@@ -1,0 +1,30 @@
+.admin-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 20px;
+
+  table {
+    box-shadow: none;
+    width: 70%;
+    min-width: 400px;
+  }
+
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .mat-card {
+    width: 45%;
+    min-width: 400px;
+    margin-bottom: 10px;
+  }
+
+  &__empty-data {
+    text-align: center;
+    opacity: 0.5;
+  }
+}

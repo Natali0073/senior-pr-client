@@ -1,0 +1,18 @@
+<container-element [ngSwitch]="materialType">
+  <div *ngSwitchCase="'matFlatButton'" class="button-container">
+    <button mat-flat-button [type]="type" [color]="color" [class]="class" [disabled]="disabled" (click)="clickEvent()">
+      <ng-container *ngIf="loading;else showLabel">
+        <div class="button-container__spinner">
+          <mat-spinner diameter="24"></mat-spinner>
+        </div>
+      </ng-container>
+      <ng-template #showLabel>
+        {{label}}
+      </ng-template>
+    </button>
+  </div>
+
+  <div *ngSwitchCase="'matDialogClose'" class="button-container">
+    <button mat-button mat-dialog-close>{{label}}</button>
+  </div>
+</container-element>

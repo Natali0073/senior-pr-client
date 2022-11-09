@@ -1,0 +1,59 @@
+<div class="registration-block">
+  <img src="../../../assets/sign-up.png" alt="Registration" class="registration-block__image">
+  <div class="registration-block__main">
+    <div class="registration-block__form">
+      <div class="row">
+        <h1>Get started today</h1>
+      </div>
+      <p>Enter your details to create super account.</p>
+      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName">
+            <mat-error *ngIf="checkValid('firstName')">{{getErrorMessage('firstName')}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName">
+            <mat-error *ngIf="checkValid('lastName')">{{getErrorMessage('lastName')}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+            <mat-error *ngIf="checkValid('email')">{{getErrorMessage('email')}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <password-field formControlName="password" label="Password" [passwordInvalid]="checkValid('password')"
+            [errorMessage]="getErrorMessage('password')"></password-field>
+        </p>
+        <p>
+          <password-field formControlName="passwordConfirmation" label="Confirm password"
+            [passwordInvalid]="checkValid('passwordConfirmation')"
+            [errorMessage]="getErrorMessage('passwordConfirmation')"></password-field>
+          <mat-error *ngIf="passwordMatchError()" class="password-not-mach">Password does not match!
+          </mat-error>
+        </p>
+        <p>
+          <mat-checkbox formControlName="termsPolicyAgree" color="primary">
+            I agree to Product&nbsp;
+            <a routerLink="/terms-and-policy" class="link-color">Terms and Policy.</a>
+          </mat-checkbox>
+        </p>
+        <app-button class="big-button" [disabled]="!registrationForm.valid" type="submit" label="Submit"
+          [loading]="loading"></app-button>
+      </form>
+    </div>
+
+    <div class="registration-block__form">
+      <p>Already have an account?&nbsp;
+        <a routerLink="/login" class="link-color">Log in</a>
+      </p>
+    </div>
+  </div>
+</div>

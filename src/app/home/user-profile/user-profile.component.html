@@ -1,0 +1,79 @@
+<h2 mat-dialog-title>Manage your account</h2>
+<mat-dialog-content>
+  <mat-tab-group (selectedTabChange)="onTabChange($event)">
+    <mat-tab label="Edit Information">
+      <h3 class="tab-title">Change your information</h3>
+      <form [formGroup]="userProfile">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName">
+            <mat-error *ngIf="checkValid(userProfile, 'firstName')">{{getErrorMessage(userProfile, 'firstName')}}
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName">
+            <mat-error *ngIf="checkValid(userProfile, 'lastName')">{{getErrorMessage(userProfile, 'lastName')}}
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p class="avatar-countainer">
+          <mat-label _ngcontent-als-c192="" class="ng-tns-c85-2 ng-star-inserted avatar-countainer__label">Change your
+            photo
+            <button mat-icon-button matTooltip="Upload image size can be only up to 2MB" matTooltipPosition="right"
+              class="avatar-countainer__tooltip">
+              <mat-icon>help</mat-icon>
+            </button>
+          </mat-label>
+          <user-avatar [preview]="preview" [widthFromProp]="'100px'" [heightFromProp]="'100px'"></user-avatar>
+          <input type="file" class="avatar-countainer__file-input" name="fileInput" accept="image/*"
+            (change)="selectFiles($event)" />
+          <mat-error *ngIf="!validImage">Image size is invalid, please reupload
+          </mat-error>
+        </p>
+      </form>
+    </mat-tab>
+    <mat-tab label="Change Password">
+      <h3 class="tab-title">Change your password</h3>
+      <form [formGroup]="changePassword">
+        <p>
+          <password-field formControlName="oldPassword" label="Old password"
+            [passwordInvalid]="checkValid(changePassword, 'oldPassword')"
+            [errorMessage]="getErrorMessage(changePassword, 'oldPassword')"></password-field>
+        </p>
+        <p>
+          <password-field formControlName="password" label="New password"
+            [passwordInvalid]="checkValid(changePassword, 'password')"
+            [errorMessage]="getErrorMessage(changePassword, 'password')"></password-field>
+        </p>
+        <p>
+          <password-field formControlName="passwordConfirmation" label="Confirm password"
+            [passwordInvalid]="checkValid(changePassword, 'passwordConfirmation')"
+            [errorMessage]="getErrorMessage(changePassword, 'passwordConfirmation')"></password-field>
+          <mat-error *ngIf="passwordMatchError()" class="password-not-mach">Password does not match!
+          </mat-error>
+        </p>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <app-button label="Cancel" materialType="matDialogClose"></app-button>
+  <ng-container *ngIf="activeTabIndex === 0;else changePw">
+    <app-button [disabled]="!userProfile.valid || !validImage" (onClick)="submitUserData()" label="Submit"
+      [loading]="loading"></app-button>
+  </ng-container>
+  <ng-template #changePw>
+    <app-button [disabled]="!changePassword.valid" (onClick)="submitPassword()" label="Change password"
+      [loading]="loading"></app-button>
+  </ng-template>
+</mat-dialog-actions>

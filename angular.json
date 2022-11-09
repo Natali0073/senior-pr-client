@@ -28,13 +28,16 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
             "production": {
@@ -73,11 +76,12 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "web-chat:build:production"
+              "browserTarget": "web-chat:build:production",
+              "proxyConfig": "proxy-prod.config.json"
             },
             "development": {
               "browserTarget": "web-chat:build:development",
-              "proxyConfig": "proxy.config.json"
+              "proxyConfig": "proxy-dev.config.json"
             }
           },
           "defaultConfiguration": "development"
@@ -98,7 +102,8 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
@@ -109,6 +114,5 @@
         }
       }
     }
-  },
-  "defaultProject": "web-chat"
+  }
 }

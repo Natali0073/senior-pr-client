@@ -1,6 +1,52 @@
-<h2>Login</h2>
-<p>{{message}}</p>
-<p>
-  <button type="button" (click)="login()"  *ngIf="!authService.isLoggedIn">Login</button>
-  <button type="button" (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
-</p>
+<div class="login-block">
+  <img src="../../../assets/login.png" alt="Login" class="login-block__image">
+  <div class="login-block__main">
+    <div class="login-block__form">
+      <div class="row">
+        <h1>Welcome back</h1>
+        <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon-scope">waving_hand</mat-icon>
+      </div>
+      <p>Sign in to manage your account.</p>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+            <mat-error *ngIf="checkValid('email')">{{getErrorMessage('email')}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <password-field formControlName="password" label="Password" [passwordInvalid]="checkValid('password')"
+            [errorMessage]="getErrorMessage('password')"></password-field>
+        </p>
+        <p class="row"><a routerLink="/forgot-password" class="link-color">Forgot password?</a></p>
+        <app-button class="big-button" type="submit" [disabled]="!loginForm.valid" label="Log in" [loading]="loading">
+        </app-button>
+      </form>
+      <button mat-button class="facebook-button" (click)="fbLogin()">
+        <mat-icon>facebook</mat-icon>
+        Login with Facebook
+      </button>
+      <div id="g_id_onload"
+         data-client_id="336777826953-p2cboe6lq10rhh7klva43k65vlqs481f.apps.googleusercontent.com"
+         data-login_uri="http://localhost:4200/api/auth/login-google"
+         data-auto_prompt="false">
+      </div>
+      <div id="google-signin"
+        class="g_id_signin"
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-shape="rectangular"
+         data-width="200"
+         data-logo_alignment="left">
+      </div>
+    </div>
+    <div class="login-block__form">
+      <p class="row"> Don't have an account yet?&nbsp;
+        <a routerLink="/registration" class="link-color">Sign Up</a>
+      </p>
+    </div>
+  </div>
+</div>

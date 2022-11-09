@@ -1,0 +1,7 @@
+{
+  "/": {
+      "target": "http://node-env.eba-ricdaxpx.eu-west-2.elasticbeanstalk.com/",
+      "secure": false,
+      "logLevel": "debug"
+  }
+}

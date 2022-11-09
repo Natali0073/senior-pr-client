@@ -1,0 +1,19 @@
+.terms-and-policy {
+  height: 100%;
+  &__toolbar {
+    background-color: var(--toolbar-dark-blue);
+    color: var(--light-text);
+  }
+
+  &__content {
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+    max-height: 80%;
+    overflow: auto;
+  }
+
+  &__content-title {
+    margin-bottom: 20px;
+  }
+}

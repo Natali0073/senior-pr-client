@@ -1,0 +1,8 @@
+<div class="home-dashboard__content">
+  <div class="home-dashboard__side-bar" [appSideBarWidthSwitch]="currentChatId">
+    <chats-list (openUsersListHandler)="openUsersList()" [currentChatId]="currentChatId"></chats-list>
+  </div>
+  <div class="home-dashboard__main" [appChatWidthSwitch]="currentChatId">
+    <router-outlet></router-outlet>
+  </div>
+</div>

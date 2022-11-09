@@ -1,4 +1,85 @@
-/* You can add global styles to this file, and also import other style files */
+// default variables
+:root {
+  // colors
+  --primary-blue: #4c6fff;
+  --facebook-blue: #1877f2;
+  --success-green: #155724;
+  --success-green-text: #d4edda;
+  --success-green-border: #c3e6cb;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  --error-red: #571518;
+  --error-red-text: #edd4d4;
+  --error-red-border: #e6c3c4;
+
+  --light-text: #EAEDF3;
+  --toolbar-dark-blue: #040D32;
+
+  --light-grey: #f5f5f5;
+
+  --border-dark: #0000001a;
+
+  --light: #ffffff; 
+
+  --dark-label: rgba(0, 0, 0, .6);
+
+
+  // dimensions
+  --big-button-width: "200px";
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.row {
+  display: flex;
+}
+
+.icon-scope {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.big-button {
+  width: 200px;
+}
+
+.link-color {
+  color: var(--primary-blue);
+}
+
+.snack-bar-success {
+  color: var(--success-green) !important;
+  background-color: var(--success-green-text) !important;
+  border-color: var(--success-green-border) !important;
+
+  .mat-simple-snackbar-action {
+    color: var(--success-green) !important;
+  }
+}
+
+.snack-bar-error {
+  color: var(--error-red) !important;
+  background-color: var(--error-red-text) !important;
+  border-color: var(--error-red-border) !important;
+
+  .mat-simple-snackbar-action {
+    color: var(--error-red) !important;
+  }
+}
+
+.my-profile-modal,
+.users-list-modal {
+  width: 600px;
+}
+
+.mat-form-field {
+  width: 200px;
+}

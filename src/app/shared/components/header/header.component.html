@@ -1,0 +1,15 @@
+<mat-toolbar class="header-container">
+  <div class="header-container__logo" (click)="redirectToMain()">
+    <img src="../../../assets/logo.png" width="150px" />
+  </div>
+  <span class="header-container__spacer"></span>
+  <user-avatar [preview]="preview"></user-avatar>
+  <button mat-button [matMenuTriggerFor]="menu" aria-label="Menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="openMyProfile()">My profile</button>
+    <button *ngIf="isAdmin" mat-menu-item (click)="openAdminPanel()">Admin panel</button>
+    <button mat-menu-item (click)="logout()" class="g_id_signout" id="g_signout_button">Logout</button>
+  </mat-menu>
+</mat-toolbar>

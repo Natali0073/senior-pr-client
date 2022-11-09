@@ -1,0 +1,56 @@
+.chats-dashboard {
+  padding: 20px;
+
+  table {
+    width: 100%;
+  }
+
+  &__table-container {
+    position: relative;
+    max-height: 70vh;
+    overflow: auto;
+  }
+
+  .mat-column-avatar {
+    width: 32px;
+    padding-right: 24px;
+  }
+
+  &__header {
+    h2 {
+      margin: 0;
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+
+  &__new-chat-button {
+    width: 100px;
+  }
+
+  &__empty-data {
+    text-align: center;
+    opacity: 0.5;
+  }
+
+  &__message {
+    display: block;
+    opacity: 0.5;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 10px;
+  }
+
+  .highlighted {
+    background-color: var(--light-grey);
+  }
+
+  .mat-paginator {
+    margin-top: 20px;
+  }
+}

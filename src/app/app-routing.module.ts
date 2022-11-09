@@ -1,11 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegistrationComponent } from './auth/registration/registration.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { PageNotFound } from './components/page-not-found/page-not-found.component';
+import { TermsAndPolicy } from './components/terms-and-policy/terms-and-policy.component';
 
 const routes: Routes = [
-  { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
-  { path: 'login', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
-  { path: '', redirectTo: 'users', pathMatch: 'full' },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+  { path: 'login', component: LoginComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
+  { path: 'registration', component: RegistrationComponent },
+  { path: 'terms-and-policy', component: TermsAndPolicy },
+  { path: '', redirectTo: 'home/chats', pathMatch: 'full' },
+  { path: '**', pathMatch: 'full', component: PageNotFound }
 ];
 
 @NgModule({

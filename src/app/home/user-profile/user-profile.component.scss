@@ -1,0 +1,42 @@
+.tab-title {
+  margin-top: 10px;
+}
+
+.avatar-countainer {
+  position: relative;
+
+  &__file-input {
+    position: absolute;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    height: 100%;
+    width: 100px;
+    left: 0px;
+    top: 0px;
+  }
+
+  &__label {
+    display: flex;
+    margin-bottom: 15px;
+    color: var(--dark-label);
+  }
+
+  &__tooltip {
+    width: 18px;
+    height: 18px;
+    margin-left: 5px;
+    margin-top: -5px;
+
+    .mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 20px;
+      vertical-align: top;
+    }
+  }
+}
+
+.mat-form-field {
+  width: 100%;
+}
