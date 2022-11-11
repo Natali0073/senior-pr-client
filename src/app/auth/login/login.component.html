@@ -27,11 +27,21 @@
         <mat-icon>facebook</mat-icon>
         Login with Facebook
       </button>
-      <div id="g_id_onload"
+      <div *ngIf="isProd; else devGoogleLogin"
+         id="g_id_onload"
          data-client_id="336777826953-p2cboe6lq10rhh7klva43k65vlqs481f.apps.googleusercontent.com"
-         data-login_uri="https://natali0073.github.io/api/auth/login-google"
+         data-login_uri="http://localhost:4200/api/auth/login-google"
          data-auto_prompt="false">
       </div>
+      <ng-template #devGoogleLogin>
+        <div
+            id="g_id_onload"
+            data-client_id="336777826953-p2cboe6lq10rhh7klva43k65vlqs481f.apps.googleusercontent.com"
+            data-login_uri="http://localhost:4200/api/auth/login-google"
+            data-auto_prompt="false">
+        </div>
+      </ng-template>
+      
       <div id="google-signin"
         class="g_id_signin"
          data-type="standard"

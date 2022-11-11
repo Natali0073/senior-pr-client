@@ -10,6 +10,7 @@ import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { customErrorHandling } from 'src/app/shared/utils/customErrorHandling';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
   });
 
   loading = false;
+  isProd = environment.production;
 
   constructor(
     private readonly unsubscriber: UnsubscriberService,
