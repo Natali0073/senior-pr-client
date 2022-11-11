@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "start-pwa": "ng build && http-server -p 4200 -P http://chatapi-env.eba-594gvkfb.eu-west-2.elasticbeanstalk.com -c-1 dist/web-chat"
+    "start-pwa": "ng build && http-server -p 4200 -P http://chatapialb-env.eba-gmfkmzma.eu-west-2.elasticbeanstalk.com/ -c-1 dist/web-chat"
   },
   "private": true,
   "dependencies": {

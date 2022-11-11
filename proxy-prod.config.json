@@ -1,6 +1,6 @@
 {
   "/": {
-      "target": "http://chatapi-env.eba-594gvkfb.eu-west-2.elasticbeanstalk.com/",
+      "target": "http://chatapialb-env.eba-gmfkmzma.eu-west-2.elasticbeanstalk.com/",
       "secure": false,
       "logLevel": "debug"
   }
