@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./login.component.scss'],
   providers: [UnsubscriberService]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   loginForm = new FormGroup({
     email: new FormControl('', {
       nonNullable: true,
@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
   loading = false;
   isProd = environment.production;
 
+  @ViewChild('googleElement') googleElement: ElementRef<HTMLElement>;
+
   constructor(
     private readonly unsubscriber: UnsubscriberService,
     public authService: AuthService,
@@ -46,6 +48,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.googleElement.nativeElement.setAttribute('data-login_uri', `${environment.clientUrl}/api/auth/login-google`);
+    this.googleElement.nativeElement.setAttribute('data-client_id', environment.googleAppId);
   }
 
   googleRenderButton() {
