@@ -14,11 +14,14 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Make build
+      run: npm install && npm install -g @angular/cli@14.2.8 && npm run build
+
     - name: Build the Docker image
-      run: docker build . -t natali/client  
+      run: cd dist && docker build . -t natali/client  
 
     - name: Generate Deployment Package
-      run: zip -r deploy.zip *
+      run: cd dist && zip -r ../deploy.zip *
       
     - name: Get timestamp
       uses: gerred/actions/current-time@master
