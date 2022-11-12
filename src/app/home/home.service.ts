@@ -105,6 +105,7 @@ export interface Chat {
   lastMessageText: string;
   name: string;
   updatedAt: string;
+  chatBanned?: boolean;
 }
 
 export interface Message {

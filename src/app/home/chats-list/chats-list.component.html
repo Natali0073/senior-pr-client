@@ -21,7 +21,12 @@
         </ng-container>
 
         <ng-container matColumnDef="name">
-          <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+          <td mat-cell *matCellDef="let element">
+            <div class="chats-dashboard__name-container row">
+              {{element.name}}
+              <span *ngIf="element.chatBanned" class="banned-label">Banned</span>
+            </div>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="lastMessageDate">
@@ -29,19 +34,18 @@
         </ng-container>
 
         <ng-container matColumnDef="lastMessage">
-          <td mat-cell *matCellDef="let element"> <span class="chats-dashboard__message">{{ element.lastMessageText ||
-              '...' }}</span> </td>
+          <td mat-cell *matCellDef="let element"> <span class="chats-dashboard__message">{{ element.lastMessageText ||'...' }}</span> </td>
         </ng-container>
 
         <ng-container matColumnDef="action">
           <td mat-cell *matCellDef="let element">
-            <button mat-button color="primary" [routerLink]="['/home/chats', element.id]">Message</button>
+              <button mat-button color="primary" [routerLink]="['/home/chats', element.id]">Message</button>
           </td>
 
         </ng-container>
 
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-          [ngClass]="{highlighted: row.id === currentChatId}">
+          [ngClass]="{highlighted: row.id === currentChatId, banned: !!row.chatBanned}">
         </tr>
       </table>
     </div>
