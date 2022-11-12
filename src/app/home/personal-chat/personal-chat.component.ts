@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
 import { AppState } from 'src/app/state/app.state';
-import { getChat } from 'src/app/state/chats/chats.actions';
 import { selectChats } from 'src/app/state/chats/chats.selectors';
 import { selectCurrentUser } from 'src/app/state/users/users.selectors';
 import { Chat, HomeService, Message, User } from '../home.service';
@@ -144,6 +143,8 @@ export class PersonalChatComponent implements OnInit {
   }
 
   sendMessage() {
+    if(!this.message.trim()) return;
+    
     const newMessage = this.formatMessage();
     this.chatService.sendMessage(this.currentChatId, newMessage.text)
       .pipe(this.unsubscriber.takeUntilDestroy)
