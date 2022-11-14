@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { material } from 'src/app/shared/material/material';
 import { environment } from 'src/environments/environment';
 import { AdminPanelComponent } from './admin-panel.component';
 
@@ -13,6 +14,7 @@ describe('AdminPanelComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        ...material,
         HttpClientModule,
         SocketIoModule.forRoot(config)
       ],

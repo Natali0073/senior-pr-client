@@ -89,12 +89,12 @@ export class AuthService {
   }
 
   fbLogin() {
-    FB.login((response: FbStatusResponse) => {
+    window.FB.login((response: FbStatusResponse) => {
       this.fbLoginSubject.next(response);
     }, { scope: 'email' });
   }
 
   fbLogout() {
-    FB.logout();
+    window.FB.logout();
   }
 }
