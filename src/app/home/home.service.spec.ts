@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { Socket, SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { currentUserMock } from '../mocks/home.service.mocks';
+import { chatsListMock, currentUserMock } from '../mocks/home.service.mocks';
 
 import { HomeService } from './home.service';
 
@@ -35,7 +35,7 @@ describe('HomeService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return surrent user', (done: DoneFn) => {
+  it('should return current user', (done: DoneFn) => {
     httpClientSpy.get.and.returnValue(of(currentUserMock));
 
     service.getCurrentUser().subscribe({
@@ -47,7 +47,25 @@ describe('HomeService', () => {
       },
       error: done.fail
     });
-    
+
+    expect(httpClientSpy.get.calls.count())
+      .withContext('one call')
+      .toBe(1);
+  })
+
+  it('should return chats list', (done: DoneFn) => {
+    httpClientSpy.get.and.returnValue(of(chatsListMock));
+
+    service.getAllChats({ page: 0, size: 10 }).subscribe({
+      next: user => {
+        expect(user)
+          .withContext('expected chats list')
+          .toEqual(chatsListMock);
+        done();
+      },
+      error: done.fail
+    });
+
     expect(httpClientSpy.get.calls.count())
       .withContext('one call')
       .toBe(1);

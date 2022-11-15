@@ -4,6 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { UserVatarComponent } from 'src/app/shared/components/user-avatar/user-avatar.component';
 import { material } from 'src/app/shared/material/material';
 import { environment } from 'src/environments/environment';
 import { PersonalChatComponent } from './personal-chat.component';
@@ -27,7 +28,7 @@ describe('PersonalChatComponent', () => {
       providers: [
         provideMockStore({ initialState }),
       ],
-      declarations: [PersonalChatComponent]
+      declarations: [PersonalChatComponent, UserVatarComponent]
     })
       .compileComponents();
   });

@@ -2,6 +2,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AppButtonComponent } from 'src/app/shared/components/in-app-button/app-button.component';
+import { PassWordFieldComponent } from 'src/app/shared/components/password-field/password-field.component';
 
 import { ResetPasswordComponent } from './reset-password.component';
 
@@ -16,7 +18,7 @@ describe('ResetPasswordComponent', () => {
         MatSnackBarModule,
         RouterTestingModule
       ],
-      declarations: [ ResetPasswordComponent ]
+      declarations: [ ResetPasswordComponent, AppButtonComponent, PassWordFieldComponent ]
     })
     .compileComponents();
   });

@@ -1,7 +1,8 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { material } from 'src/app/shared/material/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AppButtonComponent } from 'src/app/shared/components/in-app-button/app-button.component';
 
 import { ForgotPasswordComponent } from './forgot-password.component';
 
@@ -13,9 +14,11 @@ describe('ForgotPasswordComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        ReactiveFormsModule,
+        FormsModule
       ],
-      declarations: [ ForgotPasswordComponent ]
+      declarations: [ ForgotPasswordComponent, AppButtonComponent ]
     })
     .compileComponents();
   });

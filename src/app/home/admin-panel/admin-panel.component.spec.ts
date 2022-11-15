@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { UserVatarComponent } from 'src/app/shared/components/user-avatar/user-avatar.component';
 import { material } from 'src/app/shared/material/material';
 import { environment } from 'src/environments/environment';
 import { AdminPanelComponent } from './admin-panel.component';
@@ -18,7 +19,7 @@ describe('AdminPanelComponent', () => {
         HttpClientModule,
         SocketIoModule.forRoot(config)
       ],
-      declarations: [ AdminPanelComponent ]
+      declarations: [ AdminPanelComponent, UserVatarComponent ]
     })
     .compileComponents();
   });

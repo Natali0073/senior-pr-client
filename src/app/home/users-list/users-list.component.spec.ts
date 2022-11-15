@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { provideMockStore } from '@ngrx/store/testing';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { UserVatarComponent } from 'src/app/shared/components/user-avatar/user-avatar.component';
 import { environment } from 'src/environments/environment';
 import { UsersListComponent } from './users-list.component';
 
@@ -20,7 +21,7 @@ describe('UsersListComponent', () => {
         HttpClientModule,
         SocketIoModule.forRoot(config)
       ],
-      declarations: [ UsersListComponent ],
+      declarations: [ UsersListComponent, UserVatarComponent ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
         provideMockStore({ initialState }),
