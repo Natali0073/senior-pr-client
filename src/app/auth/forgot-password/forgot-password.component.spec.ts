@@ -14,11 +14,9 @@ describe('ForgotPasswordComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
-        MatSnackBarModule,
-        ReactiveFormsModule,
-        FormsModule
+        MatSnackBarModule
       ],
-      declarations: [ ForgotPasswordComponent, AppButtonComponent ]
+      declarations: [ ForgotPasswordComponent ]
     })
     .compileComponents();
   });
