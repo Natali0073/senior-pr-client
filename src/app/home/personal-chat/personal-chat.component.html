@@ -4,10 +4,11 @@
       <button mat-icon-button aria-label="back icon" routerLink="/">
         <mat-icon>keyboard_arrow_left</mat-icon>
       </button>
-      <div class="chat-container__user-info flex">
+      <div class="chat-container__user-info flex" *ngIf="currentChat">
         <user-avatar [preview]="currentChat.icon"></user-avatar>
         <div class="chat-container__user-name flex">
           <span>{{currentChat.name}}</span>
+          <span *ngIf="currentChat.chatBanned" class="banned-label">Banned</span>
         </div>
       </div>
     </div>
@@ -15,22 +16,21 @@
   <div class="chat-container__messages flex" (scroll)="onScroll()" #content>
     <div class="chat-container__empty-block" *ngIf="messages.length === 0; else messegasList">
       You don't have messages yet.
-  </div>
-  <ng-template #messegasList>
-    <div *ngFor="let message of messages; index as i;">
-      <chat-message 
-      [currentUser]="message.userId === currentUser.id" 
-      [avatarLink]="message.userId === currentUser.id ? currentUserAvatarLink : currentChat.icon" 
-      [text]="message.text" 
-      [date]="message.formattedDate || ''">
-      </chat-message>
     </div>
-  </ng-template>
+    <ng-template #messegasList>
+      <div *ngFor="let message of messages; index as i;">
+        <chat-message [currentUser]="message.userId === currentUser.id"
+          [avatarLink]="message.userId === currentUser.id ? currentUserAvatarLink : currentChat.icon"
+          [text]="message.text" [date]="message.formattedDate || ''">
+        </chat-message>
+      </div>
+    </ng-template>
   </div>
   <div class="chat-container__message-field">
     <mat-form-field appearance="outline">
       <mat-label>Message</mat-label>
-      <textarea matInput placeholder="Enter your message here" [(ngModel)]="message" (keyup.enter)="onEnter()"></textarea>
+      <textarea matInput placeholder="Enter your message here" [(ngModel)]="message"
+        (keyup.enter)="onEnter()"></textarea>
       <button matSuffix mat-icon-button [disabled]="!message" aria-label="Clear" type="button" (click)="sendMessage()">
         <mat-icon>send</mat-icon>
       </button>
