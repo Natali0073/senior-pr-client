@@ -1,8 +1,10 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { UserVatarComponent } from 'src/app/shared/components/user-avatar/user-avatar.component';
 import { material } from 'src/app/shared/material/material';
 import { environment } from 'src/environments/environment';
 import { PersonalChatComponent } from './personal-chat.component';
@@ -18,14 +20,15 @@ describe('PersonalChatComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ...material,
-        HttpClientModule,
+        HttpClientTestingModule,
         SocketIoModule.forRoot(config),
-        RouterTestingModule
+        RouterTestingModule,
+        NoopAnimationsModule
       ],
       providers: [
         provideMockStore({ initialState }),
       ],
-      declarations: [PersonalChatComponent]
+      declarations: [PersonalChatComponent, UserVatarComponent]
     })
       .compileComponents();
   });

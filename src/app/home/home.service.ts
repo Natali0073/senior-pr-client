@@ -75,6 +75,7 @@ export class HomeService {
 
 export interface User {
   id: string;
+  fullName?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -83,6 +84,7 @@ export interface User {
   role: string;
   updatedAt: string;
   accessToken?: string;
+  isBanned: boolean;
 }
 
 export interface UserListDTO extends ListPagination {
@@ -100,7 +102,7 @@ export interface ChatListDTO extends ListPagination {
 }
 
 export interface Chat {
-  icon?: string;
+  icon: string | null;
   id: string;
   lastMessageText: string;
   name: string;

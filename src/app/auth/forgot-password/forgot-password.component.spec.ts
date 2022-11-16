@@ -1,7 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { material } from 'src/app/shared/material/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { ForgotPasswordComponent } from './forgot-password.component';
 
@@ -12,7 +11,7 @@ describe('ForgotPasswordComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
         MatSnackBarModule
       ],
       declarations: [ ForgotPasswordComponent ]

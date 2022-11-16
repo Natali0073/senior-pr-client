@@ -13,7 +13,7 @@ export class UserVatarComponent implements OnChanges {
   constructor() {
   }
 
-  @Input() preview?: string;
+  @Input() preview?: string | null;
   @Input() widthFromProp: string;
   @Input() heightFromProp: string;
 
