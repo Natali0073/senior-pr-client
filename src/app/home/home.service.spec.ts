@@ -1,4 +1,5 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Socket, SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { of } from 'rxjs';
@@ -17,7 +18,7 @@ describe('HomeService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
         SocketIoModule.forRoot(config)
       ],
     });

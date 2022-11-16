@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -22,7 +22,7 @@ describe('DashboardComponent', () => {
       imports: [
         ...material,
         RouterTestingModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         SocketIoModule.forRoot(config)
       ],
       declarations: [ DashboardComponent, ChatSwitchDirective, ChatsListComponent ],

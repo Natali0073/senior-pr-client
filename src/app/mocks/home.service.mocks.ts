@@ -1,4 +1,4 @@
-import { User, ChatListDTO, Chat } from "../home/home.service";
+import { User, ChatListDTO, Chat, UserListDTO } from "../home/home.service";
 
 export const currentUserMock: User = {
   fullName: "Natalia Test2",
@@ -38,3 +38,39 @@ export const chatsListMock: ChatListDTO = {
   totalPages: 1,
   chats: chatsMock
 }
+
+export const usersMock: User[] = [
+  {
+    fullName: "Natalia Test2",
+    id: "9ff6801b-b7b4-49a4-886b-b8212d50181e",
+    firstName: "Natalia",
+    lastName: "Test2",
+    email: "mail2@mail.com",
+    avatar: "https://web-chat-storage.s3.amazonaws.com/users-avatars/undefined_Simulator%20Screen%20Shot%20-%20iPhone%2011%20-%202022-11-14%20at%2012.38.30.png",
+    role: "user",
+    isBanned: false,
+    createdAt: "2022-11-09T06:43:50.000Z",
+    updatedAt: "2022-11-14T19:15:44.000Z"
+  },
+  {
+    fullName: "Natalia Test2",
+    id: "9ff6801b-b7b4-49a4-886b-b8212d501812",
+    firstName: "Natalia",
+    lastName: "Test1",
+    email: "mail1@mail.com",
+    avatar: null,
+    role: "user",
+    isBanned: false,
+    createdAt: "2022-11-09T06:43:50.000Z",
+    updatedAt: "2022-11-14T19:15:44.000Z"
+  }
+]
+
+export const usersListMock: UserListDTO = {
+  currentPage: 0,
+  totalItems: 2,
+  totalPages: 1,
+  users: usersMock
+}
+
+
