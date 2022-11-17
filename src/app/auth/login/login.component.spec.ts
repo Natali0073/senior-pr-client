@@ -7,7 +7,7 @@ import { PassWordFieldComponent } from 'src/app/shared/components/password-field
 
 import { LoginComponent } from './login.component';
 
-fdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
