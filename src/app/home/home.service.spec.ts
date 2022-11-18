@@ -26,7 +26,6 @@ describe('HomeService', () => {
   });
 
   beforeEach(() => {
-    // TODO: spy on other methods too
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
     socketSpy = jasmine.createSpyObj('Socket', ['get']);
     service = new HomeService(httpClientSpy, socketSpy);

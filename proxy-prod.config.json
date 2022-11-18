@@ -1,6 +1,6 @@
 {
   "/": {
-      "target": "http://chatapialb-env.eba-gmfkmzma.eu-west-2.elasticbeanstalk.com/",
+      "target": "https://www.web-chat-api.store/",
       "secure": false,
       "logLevel": "debug"
   }

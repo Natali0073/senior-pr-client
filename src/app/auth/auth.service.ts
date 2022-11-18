@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { User } from '../home/home.service';
 
 export interface NewUserDto extends UserLoginDto {
@@ -56,12 +56,12 @@ export class AuthService {
 
   constructor(private http: HttpClient, public router: Router) { }
 
-  register(data: NewUserDto): Observable<User> {
-    return this.http.post<User>(`${this.apiBase}/register`, data);
+  register(data: NewUserDto) {
+    return this.http.post(`${this.apiBase}/register`, data);
   }
 
-  login(data: UserLoginDto): Observable<User> {
-    return this.http.post<User>(`${this.apiBase}/login`, data);
+  login(data: UserLoginDto) {
+    return this.http.post(`${this.apiBase}/login`, data);
   }
 
   fbLoginHandler(token: string) {
@@ -90,8 +90,12 @@ export class AuthService {
 
   fbLogin() {
     window.FB.login((response: FbStatusResponse) => {
-      this.fbLoginSubject.next(response);
+      this.setFbStatusResponse(response);
     }, { scope: 'email' });
+  }
+
+  setFbStatusResponse(response: FbStatusResponse) {
+    this.fbLoginSubject.next(response);
   }
 
   fbLogout() {

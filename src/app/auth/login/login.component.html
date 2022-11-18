@@ -20,7 +20,7 @@
             [errorMessage]="getErrorMessage('password')"></password-field>
         </p>
         <p class="row"><a routerLink="/forgot-password" class="link-color">Forgot password?</a></p>
-        <app-button class="big-button" type="submit" [disabled]="!loginForm.valid" label="Log in" [loading]="loading">
+        <app-button class="big-button login-button" type="submit" [disabled]="!loginForm.valid" label="Log in" [loading]="loading">
         </app-button>
       </form>
       <button mat-button class="facebook-button" (click)="fbLogin()">
