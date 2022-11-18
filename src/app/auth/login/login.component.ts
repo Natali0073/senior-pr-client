@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     // this.googleElement.nativeElement.setAttribute('data-login_uri', `${environment.clientUrl}/api/auth/login-google`);
-    this.googleElement.nativeElement.setAttribute('data-client_id', environment.googleAppId);
+    // this.googleElement.nativeElement.setAttribute('data-client_id', environment.googleAppId);
   }
 
   googleRenderButton() {
