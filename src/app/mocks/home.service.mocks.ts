@@ -87,9 +87,30 @@ export const messagesMock: Message[] = [
     createdAt: "2022-11-17T16:22:09.000Z",
     id: "35df0b26-608e-47a6-a5f0-066aa4615a4r",
     text: "Hola",
-    updatedAt: "2022-11-117T16:22:09.000Z",
+    updatedAt: "2022-11-17T16:22:09.000Z",
     userId: "e132f231-6fbd-48b7-8d80-36e715f1d1f0"
   }
-]
+];
+
+export const messagesFormattedMock: Message[] = [
+  {
+    chatId: "eb5ec184-9927-487e-aaec-935feca2631a",
+    createdAt: "2022-11-18T16:22:09.000Z",
+    id: "35df0b26-608e-47a6-a5f0-066aa4615a4e",
+    text: "Hello",
+    updatedAt: "2022-11-18T16:22:09.000Z",
+    userId: "e132f231-6fbd-48b7-8d80-36e715f1d1f0",
+    formattedDate: "18/11 18:22"
+  },
+  {
+    chatId: "eb5ec184-9927-487e-aaec-935feca2631a",
+    createdAt: "2022-11-17T16:22:09.000Z",
+    id: "35df0b26-608e-47a6-a5f0-066aa4615a4r",
+    text: "Hola",
+    updatedAt: "2022-11-17T16:22:09.000Z",
+    userId: "e132f231-6fbd-48b7-8d80-36e715f1d1f0",
+    formattedDate: "17/11 18:22"
+  }
+];
 
 

@@ -1,13 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
-import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
-import { currentUserMock } from 'src/app/mocks/home.service.mocks';
+import { Socket, SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { of } from 'rxjs';
+import { currentUserMock, messagesFormattedMock, messagesMock } from 'src/app/mocks/home.service.mocks';
 import { UserVatarComponent } from 'src/app/shared/components/user-avatar/user-avatar.component';
 import { material } from 'src/app/shared/material/material';
 import { environment } from 'src/environments/environment';
+import { HomeService } from '../home.service';
 import { PersonalChatComponent } from './personal-chat.component';
 
 const config: SocketIoConfig = { url: environment.serverUrl, options: {} };
@@ -15,6 +18,9 @@ const config: SocketIoConfig = { url: environment.serverUrl, options: {} };
 describe('PersonalChatComponent', () => {
   let component: PersonalChatComponent;
   let fixture: ComponentFixture<PersonalChatComponent>;
+  let service: HomeService;
+  let httpClientSpy: jasmine.SpyObj<HttpClient>;
+  let socketSpy: jasmine.SpyObj<Socket>;
 
   beforeEach(async () => {
     const initialState = {};
@@ -36,8 +42,15 @@ describe('PersonalChatComponent', () => {
   });
 
   beforeEach(() => {
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+    socketSpy = jasmine.createSpyObj('Socket', ['get']);
+    service = new HomeService(httpClientSpy, socketSpy);
+  });
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(PersonalChatComponent);
     component = fixture.componentInstance;
+    service = TestBed.inject(HomeService);
     fixture.detectChanges();
   });
 
@@ -78,4 +91,17 @@ describe('PersonalChatComponent', () => {
     }
     expect(newMessage).toEqual(expectedMessage);
   });
+
+  it('messages should be equal as response after first messages get', fakeAsync(() => {
+    spyOn(service, 'getMessagesByChat').and.returnValue(of(messagesMock));
+    component.getMessages({});
+    expect(service.getMessagesByChat).toHaveBeenCalledTimes(1);
+    expect(component.messages.length).toEqual(messagesMock.length);
+  }))
+
+  it('messages should be formatted', fakeAsync(() => {
+    spyOn(service, 'getMessagesByChat').and.returnValue(of(messagesMock));
+    component.getMessages({});
+    expect(component.messages).toEqual(messagesFormattedMock);
+  }))
 });

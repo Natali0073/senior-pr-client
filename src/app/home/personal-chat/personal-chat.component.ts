@@ -165,7 +165,7 @@ export class PersonalChatComponent implements OnInit {
   formatDisplayDate(date: string) {
     const hours = new Date(date).getHours();
     const mins = new Date(date).getMinutes();
-    const month = new Date(date).getMonth();
+    const month = new Date(date).getMonth() + 1;
     const day = new Date(date).getDate();
 
     return `${this.formatValue(day)}/${this.formatValue(month)} ${this.formatValue(hours)}:${this.formatValue(mins)}`;
