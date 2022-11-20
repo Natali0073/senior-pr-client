@@ -1,4 +1,4 @@
-import { User, ChatListDTO, Chat, UserListDTO, Message } from "../home/home.service";
+import { User, ChatListDTO, Chat, UserListDTO, Message, ListPagination } from "../home/home.service";
 
 export const currentUserMock: User = {
   fullName: "Natalia Test2",
@@ -45,10 +45,14 @@ export const chatsMock: Chat[] = [
   }
 ]
 
-export const chatsListMock: ChatListDTO = {
+export const chatsListPaginationMock: ListPagination = {
   currentPage: 0,
   totalItems: 2,
   totalPages: 1,
+}
+
+export const chatsListMock: ChatListDTO = {
+  ...chatsListPaginationMock,
   chats: chatsMock
 }
 
