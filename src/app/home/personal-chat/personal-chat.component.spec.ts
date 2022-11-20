@@ -92,16 +92,34 @@ describe('PersonalChatComponent', () => {
     expect(newMessage).toEqual(expectedMessage);
   });
 
-  it('messages should be equal as response after first messages get', fakeAsync(() => {
+  it('messages should be equal as response after first messages get', () => {
     spyOn(service, 'getMessagesByChat').and.returnValue(of(messagesMock));
     component.getMessages({});
     expect(service.getMessagesByChat).toHaveBeenCalledTimes(1);
     expect(component.messages.length).toEqual(messagesMock.length);
-  }))
+  })
 
-  it('messages should be formatted', fakeAsync(() => {
+  it('messages should be formatted', () => {
     spyOn(service, 'getMessagesByChat').and.returnValue(of(messagesMock));
     component.getMessages({});
     expect(component.messages).toEqual(messagesFormattedMock);
-  }))
+  })
+
+  it('should update messages after async fync', (done: DoneFn) => {
+    spyOn(service, 'getMessagesByChat').and.returnValue(of(messagesMock));
+    fixture.detectChanges();
+    service.getMessagesByChat('chatId', { size: 10 }).subscribe({
+      next: user => {
+        expect(user)
+          .withContext('expected messages')
+          .toEqual(messagesMock);
+        done();
+      }
+    });
+
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      expect(component.messages).toEqual(messagesFormattedMock);
+    });
+  });
 });
