@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { provideMockStore } from '@ngrx/store/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Socket, SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { of } from 'rxjs';
 import { currentUserMock, messagesFormattedMock, messagesMock } from 'src/app/mocks/home.service.mocks';
@@ -22,9 +22,15 @@ describe('PersonalChatComponent', () => {
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
   let socketSpy: jasmine.SpyObj<Socket>;
 
-  beforeEach(async () => {
-    const initialState = {};
+  let store: MockStore;
+  const initialState = {
+    chatsStore: {
+      chatsData: []
+    },
+    usersStore: {}
+  }; 
 
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         ...material,
@@ -45,6 +51,7 @@ describe('PersonalChatComponent', () => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
     socketSpy = jasmine.createSpyObj('Socket', ['get']);
     service = new HomeService(httpClientSpy, socketSpy);
+    store = TestBed.inject(MockStore);
   });
 
   beforeEach(() => {
