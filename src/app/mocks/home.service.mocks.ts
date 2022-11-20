@@ -1,4 +1,4 @@
-import { User, ChatListDTO, Chat, UserListDTO } from "../home/home.service";
+import { User, ChatListDTO, Chat, UserListDTO, Message } from "../home/home.service";
 
 export const currentUserMock: User = {
   fullName: "Natalia Test2",
@@ -72,5 +72,24 @@ export const usersListMock: UserListDTO = {
   totalPages: 1,
   users: usersMock
 }
+
+export const messagesMock: Message[] = [
+  {
+    chatId: "eb5ec184-9927-487e-aaec-935feca2631a",
+    createdAt: "2022-11-18T16:22:09.000Z",
+    id: "35df0b26-608e-47a6-a5f0-066aa4615a4e",
+    text: "Hello",
+    updatedAt: "2022-11-18T16:22:09.000Z",
+    userId: "e132f231-6fbd-48b7-8d80-36e715f1d1f0"
+  },
+  {
+    chatId: "eb5ec184-9927-487e-aaec-935feca2631a",
+    createdAt: "2022-11-17T16:22:09.000Z",
+    id: "35df0b26-608e-47a6-a5f0-066aa4615a4r",
+    text: "Hola",
+    updatedAt: "2022-11-117T16:22:09.000Z",
+    userId: "e132f231-6fbd-48b7-8d80-36e715f1d1f0"
+  }
+]
 
 

@@ -19,7 +19,7 @@ export class PersonalChatComponent implements OnInit {
 
   currentChatId: string;
   currentChat: Chat;
-  message: string;
+  message: string = '';
   loading: boolean;
   messages: Message[] = [];
 
@@ -143,9 +143,13 @@ export class PersonalChatComponent implements OnInit {
   }
 
   sendMessage() {
-    if(!this.message.trim()) return;
-    
+    if (!this.message.trim()) return;
+
     const newMessage = this.formatMessage();
+    this.sendMessageSvc(newMessage);
+  }
+
+  sendMessageSvc(newMessage: Message) {
     this.chatService.sendMessage(this.currentChatId, newMessage.text)
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe(() => {

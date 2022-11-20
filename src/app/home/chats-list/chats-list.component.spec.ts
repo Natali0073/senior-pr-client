@@ -25,7 +25,7 @@ describe('ChatsListComponent', () => {
       providers: [
         provideMockStore({ initialState }),
       ],
-      declarations: [ ChatsListComponent, UserVatarComponent ]
+      declarations: [ChatsListComponent, UserVatarComponent]
     })
       .compileComponents();
   });
@@ -41,7 +41,7 @@ describe('ChatsListComponent', () => {
   });
 
   it('should have a title "Chats"', () => {
-    const title = fixture.debugElement.query(By.css('h2')).nativeElement;
-    expect(title.innerHTML).toBe('Chats');
+    const title = fixture.nativeElement.querySelector('h2');
+    expect(title.textContent).toContain('Chats');
   });
 });

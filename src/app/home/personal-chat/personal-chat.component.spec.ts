@@ -4,6 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { currentUserMock } from 'src/app/mocks/home.service.mocks';
 import { UserVatarComponent } from 'src/app/shared/components/user-avatar/user-avatar.component';
 import { material } from 'src/app/shared/material/material';
 import { environment } from 'src/environments/environment';
@@ -17,6 +18,7 @@ describe('PersonalChatComponent', () => {
 
   beforeEach(async () => {
     const initialState = {};
+
     await TestBed.configureTestingModule({
       imports: [
         ...material,
@@ -41,5 +43,39 @@ describe('PersonalChatComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('empty message should not call send message svc func', () => {
+    spyOn(component, 'sendMessage');
+    spyOn(component, 'sendMessageSvc');
+    expect(component.message).toBe('');
+    component.onEnter();
+    expect(component.sendMessage).toHaveBeenCalledTimes(1);
+    expect(component.sendMessageSvc).toHaveBeenCalledTimes(0);
+  });
+
+  it('message with text should not call send message svc func', () => {
+    spyOn(component, 'sendMessage');
+    spyOn(component, 'sendMessageSvc');
+    expect(component.message).toBe('');
+    component.message = 'Hello';
+    component.onEnter();
+    expect(component.sendMessage).toHaveBeenCalledTimes(1);
+    expect(component.sendMessageSvc).toHaveBeenCalledTimes(0);
+  });
+
+  it('should reformat the message', () => {
+    component.message = 'Hello';
+    component.currentChatId = 'currentChatId';
+    component.currentUser = currentUserMock;
+
+    const newMessage = component.formatMessage();
+    const expectedMessage = {
+      chatId: 'currentChatId',
+      createdAt: new Date().toISOString(),
+      userId: currentUserMock.id,
+      text: 'Hello'
+    }
+    expect(newMessage).toEqual(expectedMessage);
   });
 });
