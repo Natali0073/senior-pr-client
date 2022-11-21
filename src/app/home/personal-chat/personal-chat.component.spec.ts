@@ -90,9 +90,10 @@ describe('PersonalChatComponent', () => {
     component.currentUser = currentUserMock;
 
     const newMessage = component.formatMessage();
+    const date = new Date().toISOString();
     const expectedMessage = {
       chatId: 'currentChatId',
-      createdAt: new Date().toISOString(),
+      createdAt: date,
       userId: currentUserMock.id,
       text: 'Hello'
     }

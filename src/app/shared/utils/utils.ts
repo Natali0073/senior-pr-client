@@ -33,3 +33,16 @@ export const validateImageSize = (imageSize: number) => imageSize <= 2048000;
 export const redirectionIsAvailable = (request: HttpRequest<unknown>) => request.url !== '/api/auth/reset-password';
 
 export const chatsSorting = (chats: Chat[]): Chat[] => chats.sort((a: Chat, b: Chat) => new Date(b.updatedAt).getTime() < new Date(a.updatedAt).getTime() ? -1 : 1);
+
+export const formatDisplayDate = (date: string) => {
+  const hours = new Date(date).getHours();
+  const mins = new Date(date).getMinutes();
+  const month = new Date(date).getMonth() + 1;
+  const day = new Date(date).getDate();
+
+  return `${formatValue(day)}/${formatValue(month)} ${formatValue(hours)}:${formatValue(mins)}`;
+}
+
+const formatValue = (number: number) => {
+  return `${number < 10 ? '0' : ''}${number}`;
+}

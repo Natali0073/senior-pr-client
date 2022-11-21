@@ -1,4 +1,5 @@
 import { User, ChatListDTO, Chat, UserListDTO, Message, ListPagination } from "../home/home.service";
+import { formatDisplayDate } from "../shared/utils/utils";
 
 export const currentUserMock: User = {
   fullName: "Natalia Test2",
@@ -117,7 +118,7 @@ export const messagesFormattedMock: Message[] = [
     text: "Hello",
     updatedAt: "2022-11-18T16:22:09.000Z",
     userId: "e132f231-6fbd-48b7-8d80-36e715f1d1f0",
-    formattedDate: "18/11 18:22"
+    formattedDate: formatDisplayDate("2022-11-18T16:22:09.000Z")
   },
   {
     chatId: "eb5ec184-9927-487e-aaec-935feca2631a",
@@ -126,7 +127,7 @@ export const messagesFormattedMock: Message[] = [
     text: "Hola",
     updatedAt: "2022-11-17T16:22:09.000Z",
     userId: "e132f231-6fbd-48b7-8d80-36e715f1d1f0",
-    formattedDate: "17/11 18:22"
+    formattedDate: formatDisplayDate("2022-11-17T16:22:09.000Z")
   }
 ];
 

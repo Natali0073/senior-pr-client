@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
+import { formatDisplayDate } from 'src/app/shared/utils/utils';
 import { AppState } from 'src/app/state/app.state';
 import { selectChats } from 'src/app/state/chats/chats.selectors';
 import { selectCurrentUser } from 'src/app/state/users/users.selectors';
@@ -110,7 +111,7 @@ export class PersonalChatComponent implements OnInit {
       .pipe(
         this.unsubscriber.takeUntilDestroy,
         map((response: Message[]) => {
-          return response.map((message) => ({ ...message, formattedDate: this.formatDisplayDate(message.createdAt) }));
+          return response.map((message) => ({ ...message, formattedDate: formatDisplayDate(message.createdAt) }));
         })
       )
       .subscribe((response) => {
@@ -122,7 +123,7 @@ export class PersonalChatComponent implements OnInit {
     this.chatService.socketChatSubscribe(this.currentChatId)
       .pipe(this.unsubscriber.takeUntilDestroy)
       .subscribe((message: Message) => {
-        this.messages.unshift({ ...message, formattedDate: this.formatDisplayDate(message.createdAt) });
+        this.messages.unshift({ ...message, formattedDate: formatDisplayDate(message.createdAt) });
       });
   }
 
@@ -162,18 +163,7 @@ export class PersonalChatComponent implements OnInit {
     this.chatService.emitSocketMessage(newMessage);
   }
 
-  formatDisplayDate(date: string) {
-    const hours = new Date(date).getHours();
-    const mins = new Date(date).getMinutes();
-    const month = new Date(date).getMonth() + 1;
-    const day = new Date(date).getDate();
-
-    return `${this.formatValue(day)}/${this.formatValue(month)} ${this.formatValue(hours)}:${this.formatValue(mins)}`;
-  }
-
-  formatValue(number: number) {
-    return `${number < 10 ? '0' : ''}${number}`;
-  }
+ 
 
   formatMessage() {
     const date = new Date().toISOString();
