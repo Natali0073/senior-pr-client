@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test --browsers=Chrome",
     "test-coverage": "ng test --no-watch --code-coverage --browsers=Chrome",
-    "start-pwa": "ng build && http-server -p 80 -P http://chatapialb-env.eba-gmfkmzma.eu-west-2.elasticbeanstalk.com/ -c-1 dist/web-chat"
+    "start-pwa": "ng build && http-server -p 4200 -P http://localhost:80/ -c-1 dist/web-chat"
   },
   "private": true,
   "dependencies": {
