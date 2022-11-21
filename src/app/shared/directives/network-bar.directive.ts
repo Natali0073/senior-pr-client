@@ -25,6 +25,7 @@ export class NetworkBarAppearance implements OnInit {
   showOffline() {
     this.renderer.setStyle(this.elmRef.nativeElement, 'background-color', 'black');
     this.renderer.setStyle(this.elmRef.nativeElement, 'height', '20px');
+    this.renderer.setStyle(this.elmRef.nativeElement, 'color', 'var(--light)');
     this.elmRef.nativeElement.innerText = `You're offline!`;
   }
 

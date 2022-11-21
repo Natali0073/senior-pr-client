@@ -29,15 +29,26 @@
   ],
   "dataGroups": [
     {
-      "name": "api",
+      "name": "api-chats",
       "urls": [
-        "/api/chat/**"
+        "/api/chat/**",
+        "/api/chats"
       ],
       "cacheConfig": {
         "strategy": "freshness",
-        "maxSize": 10,
-        "maxAge": "30s",
-        "timeout": "5s"
+        "maxSize": 30,
+        "maxAge": "1m"
+      }
+    },
+    {
+      "name": "api-current-user",
+      "urls": [
+        "/api/current-user"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 30,
+        "maxAge": "1d"
       }
     }
   ]
