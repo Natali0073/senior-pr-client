@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -28,7 +28,7 @@ describe('PersonalChatComponent', () => {
       chatsData: []
     },
     usersStore: {}
-  }; 
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -130,4 +130,21 @@ describe('PersonalChatComponent', () => {
       expect(component.messages).toEqual(messagesFormattedMock);
     });
   });
+
+  it('should emit socked on send', fakeAsync(() => {
+    spyOn(service, 'emitSocketMessage');
+    const date = new Date().toISOString();
+    const formattedMessage = {
+      chatId: 'currentChatId',
+      createdAt: date,
+      userId: currentUserMock.id,
+      text: 'Hello'
+    }
+    component.sendMessageSvc(formattedMessage);
+    tick(1000);
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(service.emitSocketMessage).toHaveBeenCalledTimes(1);
+    })
+  }))
 });
