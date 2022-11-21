@@ -31,7 +31,7 @@
     {
       "name": "api",
       "urls": [
-        "/api/chats"
+        "/api/chat/**"
       ],
       "cacheConfig": {
         "strategy": "freshness",
