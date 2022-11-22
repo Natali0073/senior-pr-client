@@ -9,7 +9,7 @@
     "test": "ng test --browsers=Chrome",
     "test-coverage": "ng test --no-watch --code-coverage --browsers=Chrome",
     "start-pwa": "ng build && http-server -p 4200 -P http://localhost:80/ -c-1 dist/web-chat",
-    "e2e": "ng e2e",
+    "e2e": "ng e2e --browser chrome",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
