@@ -8,7 +8,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test --browsers=Chrome",
     "test-coverage": "ng test --no-watch --code-coverage --browsers=Chrome",
-    "start-pwa": "ng build && http-server -p 4200 -P http://localhost:80/ -c-1 dist/web-chat"
+    "start-pwa": "ng build && http-server -p 4200 -P http://localhost:80/ -c-1 dist/web-chat",
+    "e2e": "ng e2e",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "private": true,
   "dependencies": {
@@ -35,6 +38,7 @@
     "@angular-devkit/build-angular": "^14.2.7",
     "@angular/cli": "^14.2.8",
     "@angular/compiler-cli": "^14.2.8",
+    "@cypress/schematic": "^2.3.0",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
     "jasmine-core": "~3.8.0",
@@ -44,6 +48,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "tslib": "^2.4.0",
-    "typescript": "~4.6.4"
+    "typescript": "~4.6.4",
+    "cypress": "latest"
   }
 }
