@@ -6,7 +6,7 @@ import { AppButtonComponent } from "src/app/shared/components/in-app-button/app-
 import { PassWordFieldComponent } from "src/app/shared/components/password-field/password-field.component"
 import { LoginComponent } from "./login.component"
 
-describe('My First Test', () => {
+describe('LoginComponent', () => {
   beforeEach(() => {
     cy.mount(LoginComponent, {
       imports: [
@@ -25,7 +25,7 @@ describe('My First Test', () => {
   it('Form should be valid', () => {
     cy.get('input[formControlName=email]').type('mail1@mail.com');
     cy.get('password-field').type('Sombra1234');
-    cy.get('button[type=submit]').should('not.be.disabled');
+    cy.get('button[type=submit]').should('be.enabled');
   })
 
   it('Email error should appear', () => {
