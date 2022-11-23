@@ -1,4 +1,4 @@
-describe('LoginComponent', () => {
+describe('Login', () => {
   beforeEach(() => {
     cy.visit('/#/login');
   })

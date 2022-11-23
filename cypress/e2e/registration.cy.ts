@@ -1,6 +1,6 @@
 import { newUser } from "cypress/mocks/auth.service.mocks";
 
-describe('RegistrationComponent', () => {
+describe('Registration', () => {
   beforeEach(() => {
     cy.visit('/#/registration');
   })
