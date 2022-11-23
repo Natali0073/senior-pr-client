@@ -1,4 +1,4 @@
-import { currentUserMock } from "cypress/mocks/home.service.mocks"
+import { chatsListMock, currentUserMock } from "cypress/mocks/home.service.mocks"
 
 describe('My First Test', () => {
   it('Visits the initial page for logged out user', () => {
@@ -14,7 +14,7 @@ describe('My First Test', () => {
 
     cy.intercept(
       {method: 'GET', url: 'api/chats?page=0&size=10'},
-      []
+      chatsListMock
     ).as('getChats')
     
     cy.visit('/')
