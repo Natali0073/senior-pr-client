@@ -101,4 +101,8 @@ export class AuthService {
   fbLogout() {
     window.FB.logout();
   }
+
+  googleLogin(credential: string) {
+    return this.http.post(`${this.apiBase}/login-google`, { credential });
+  }
 }

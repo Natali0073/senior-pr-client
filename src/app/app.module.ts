@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule, NgZone } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -22,6 +22,7 @@ import { environment } from '../environments/environment';
 import { fbAppInitializer } from './shared/utils/fbAppInitializer';
 import { googleAppInitializer } from './shared/utils/googleAppInitializer';
 import { AuthService } from './auth/auth.service';
+import { Router } from '@angular/router';
 
 const config: SocketIoConfig = { url: environment.serverUrl, options: {} };
 
@@ -65,7 +66,7 @@ const config: SocketIoConfig = { url: environment.serverUrl, options: {} };
     {
       provide: APP_INITIALIZER,
       useFactory: googleAppInitializer,
-      deps: [AuthService],
+      deps: [AuthService, NgZone, Router],
       multi: true
     }
   ],
