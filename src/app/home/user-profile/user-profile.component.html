@@ -70,7 +70,7 @@
   <app-button label="Cancel" materialType="matDialogClose"></app-button>
   <ng-container *ngIf="activeTabIndex === 0;else changePw">
     <app-button [disabled]="!userProfile.valid || !validImage" (onClick)="submitUserData()" label="Submit"
-      [loading]="loading"></app-button>
+      [loading]="loading" class="submit"></app-button>
   </ng-container>
   <ng-template #changePw>
     <app-button [disabled]="!changePassword.valid" (onClick)="submitPassword()" label="Change password"
