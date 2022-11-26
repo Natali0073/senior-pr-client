@@ -10,8 +10,7 @@ export function googleAppInitializer(authService: AuthService, zone: NgZone, rou
       window.onload = () => {
         const handleCredentialResponse = (response: CredentialResponse) => {
           authService.googleLogin(response.credential)
-            .subscribe(res => {
-              console.log(res);
+            .subscribe(() => {
               zone.run(() => {
                 router.navigate(['/']);
               });
