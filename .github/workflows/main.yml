@@ -19,9 +19,9 @@ jobs:
 
     - name: Unit tests
       run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-      
+
     - name: E2E tests
-      run: npm run cypress:run
+      run: npm run start & npm run cypress:run && kill -9 $(lsof -ti:4200)
 
     - name: Make build
       run: npm run build

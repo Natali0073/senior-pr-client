@@ -6,6 +6,7 @@ export default defineConfig({
   e2e: {
     baseUrl: environment.clientUrl,
     supportFile: false,
+    video: false
   },
   
   
