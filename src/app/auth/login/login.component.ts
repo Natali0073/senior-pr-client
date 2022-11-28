@@ -4,7 +4,7 @@ import { AuthService } from '../auth.service';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { checkFieldValid, formErrorMessage } from 'src/app/shared/utils/utils';
 import { catchError, finalize, map, mergeMap } from 'rxjs/operators';
-import { EMPTY, iif, throwError } from 'rxjs';
+import { iif, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { UnsubscriberService } from 'src/app/shared/services/unsubscriber.service';
@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.unsubscriber.takeUntilDestroy,
         catchError((error) => {
           this.errorHandling(error);
-          return EMPTY;
+          return throwError(() => error);
         }),
         finalize(() => this.loading = false)
       )
@@ -108,11 +108,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
         !!response.authResponse && !!response.authResponse.accessToken,
         this.fbLoginHandler(response.authResponse && response.authResponse.accessToken || null),
         throwError(() => 'Fb login failed'))
-      ),
-      catchError((error) => {
-        return EMPTY;
-      }))
-      .subscribe((response) => {
+      ))
+      .subscribe(() => {
         this.zone.run(() => {
           this.router.navigate(['/']);
           this.authService.fbLogout();

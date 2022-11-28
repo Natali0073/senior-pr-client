@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { MatchValidator } from 'src/app/shared/utils/match-validator';
@@ -84,7 +84,7 @@ export class ResetPasswordComponent implements OnInit {
               panelClass: 'snack-bar-error'
             });
           }
-          return EMPTY;
+          return throwError(() => error);
         }),
         finalize(() => this.loading = false),
       )
