@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,7 +13,7 @@ import { User, ListPagination, HomeService, UserListDTO } from '../home.service'
   styleUrls: ['./admin-panel.component.scss'],
   providers: [UnsubscriberService]
 })
-export class AdminPanelComponent implements OnInit, AfterViewInit {
+export class AdminPanelComponent implements OnInit {
   displayedColumns: string[] = ['avatar', 'name', 'action'];
   filter: string;
   firstName = '';
@@ -32,10 +32,6 @@ export class AdminPanelComponent implements OnInit, AfterViewInit {
     private readonly unsubscriber: UnsubscriberService,
     private chatService: HomeService,
   ) {
-  }
-
-  ngAfterViewInit() {
-    this.usersListTable.paginator = this.paginator;
   }
 
   ngOnInit(): void {

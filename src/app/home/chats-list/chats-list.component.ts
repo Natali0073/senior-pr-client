@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -15,7 +15,7 @@ import { selectCurrentUser } from 'src/app/state/users/users.selectors';
   styleUrls: ['./chats-list.component.scss'],
   providers: [UnsubscriberService]
 })
-export class ChatsListComponent implements OnInit, AfterViewInit {
+export class ChatsListComponent implements OnInit {
   displayedColumns: string[] = ['avatar', 'name', 'lastMessageDate', 'lastMessage', 'action'];
   preview: string = '../../assets/avatar.png';
   chatsListTable = new MatTableDataSource<Chat>([]);
@@ -32,10 +32,6 @@ export class ChatsListComponent implements OnInit, AfterViewInit {
     private chatService: HomeService,
     private store: Store<AppState>
   ) {
-  }
-
-  ngAfterViewInit() {
-    this.chatsListTable.paginator = this.paginator;
   }
 
   ngOnInit() {

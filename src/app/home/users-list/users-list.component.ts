@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./users-list.component.scss'],
   providers: [UnsubscriberService]
 })
-export class UsersListComponent implements OnInit, AfterViewInit {
+export class UsersListComponent implements OnInit {
   displayedColumns: string[] = ['avatar', 'name', 'action'];
   filter: string;
   firstName = '';
@@ -39,10 +39,6 @@ export class UsersListComponent implements OnInit, AfterViewInit {
     private router: Router,
     private store: Store<AppState>
   ) {
-  }
-
-  ngAfterViewInit() {
-    this.usersListTable.paginator = this.paginator;
   }
 
   ngOnInit(): void {
